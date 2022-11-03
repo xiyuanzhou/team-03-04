@@ -1,13 +1,15 @@
 package application;
 	
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.control.*;
+
 
 
 public class Main extends Application {
@@ -15,26 +17,13 @@ public class Main extends Application {
 	public void start(Stage primaryStage) {
 		try {
 			//testing
-			Button button = new Button();
-			button.setText("Click me!");
-			button.setOnAction(new EventHandler<ActionEvent>(){
-
-				@Override
-				public void handle(ActionEvent t) {
-					// TODO Auto-generated method stub
-					System.out.println("Hello world");
-				}
-			});
-			StackPane root = new StackPane();
-			root.getChildren().add(button);
-			
-			Scene scene = new Scene(root,400,400);
-			//scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			// set home page as the first page
+			Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("view/HomePage.fxml"));
+			Scene scene = new Scene(root);
+			scene.getStylesheets().add(getClass().getClassLoader().getResource("css/application.css").toExternalForm());
 			primaryStage.setScene(scene);
+			primaryStage.setTitle("Index Card Manager");
 			primaryStage.show();
-	
-			
-			primaryStage.setTitle("demo");
 			
 			
 		} catch(Exception e) {
