@@ -9,9 +9,9 @@
 <?import javafx.scene.paint.LinearGradient?>
 <?import javafx.scene.paint.RadialGradient?>
 <?import javafx.scene.paint.Stop?>
+<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
-
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <top>
@@ -70,16 +70,17 @@
                   </RadialGradient>
                </fill>
             </Text>
-            <Button layoutX="390.0" layoutY="179.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="154.0" style="-fx-padding: 10 px 15px; -fx-background-color: lightblue; -fx-border-radius: 5px;" text="Log In">
+            <Button fx:id="loginButton" layoutX="390.0" layoutY="179.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="154.0" style="-fx-padding: 10 px 15px; -fx-background-color: lightblue; -fx-border-radius: 5px;" text="Log In">
                <font>
                   <Font size="14.0" />
                </font>
             </Button>
-            <Button layoutX="429.0" layoutY="245.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="76.0" style="-fx-padding: 10px 15px; -fx-background-color: lightblue; -fx-border-radius: 5 px;" text="Sign up">
+            <Button fx:id="signUpButton" layoutX="429.0" layoutY="245.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="76.0" style="-fx-padding: 10px 15px; -fx-background-color: lightblue; -fx-border-radius: 5 px;" text="Sign up">
                <font>
                   <Font size="14.0" />
                </font>
             </Button>
+            <Line endY="195.5" layoutX="300.0" layoutY="114.0" startY="-203.0" stroke="#abadeb" strokeWidth="3.0" />
          </children>
       </AnchorPane>
    </bottom>
