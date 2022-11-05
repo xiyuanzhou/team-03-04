@@ -56,9 +56,9 @@
                   <Font size="16.0" />
                </font>
             </Text>
-            <TextField layoutX="230.0" layoutY="165.0" />
-            <TextField layoutX="230.0" layoutY="203.0" />
-            <TextField layoutX="230.0" layoutY="241.0" />
+            <TextField fx:id="tf_username" layoutX="230.0" layoutY="165.0" />
+            <TextField fx:id="tf_email" layoutX="230.0" layoutY="203.0" />
+            <TextField fx:id="tf_password" layoutX="230.0" layoutY="241.0" />
             <TextField layoutX="230.0" layoutY="282.0" />
             <ButtonBar layoutX="357.0" layoutY="335.0" prefHeight="40.0" prefWidth="200.0">
               <buttons>
@@ -82,7 +82,8 @@
                   </Button>
               </buttons>
             </ButtonBar>
-            <Button layoutX="273.0" layoutY="323.0" mnemonicParsing="false" text="Submit" />
+            <Button fx:id="button_signup" layoutX="273.0" layoutY="323.0" mnemonicParsing="false" text="Submit" />
+            <Button fx:id="button_login" layoutX="22.0" layoutY="343.0" mnemonicParsing="false" text="Log in" />
          </children>
       </AnchorPane>
    </center>
