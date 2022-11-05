@@ -46,11 +46,6 @@
                   <Font size="16.0" />
                </font>
             </Text>
-            <Text layoutX="112.0" layoutY="300.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password again">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Text>
             <Text layoutX="150.0" layoutY="259.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password">
                <font>
                   <Font size="16.0" />
@@ -59,7 +54,6 @@
             <TextField fx:id="tf_username" layoutX="230.0" layoutY="165.0" />
             <TextField fx:id="tf_email" layoutX="230.0" layoutY="203.0" />
             <TextField fx:id="tf_password" layoutX="230.0" layoutY="241.0" />
-            <TextField layoutX="230.0" layoutY="282.0" />
             <ButtonBar layoutX="357.0" layoutY="335.0" prefHeight="40.0" prefWidth="200.0">
               <buttons>
                 <Button fx:id="homepage" mnemonicParsing="false" onAction="#handleBtnHomePageWindow" text="Home Page">
@@ -82,7 +76,7 @@
                   </Button>
               </buttons>
             </ButtonBar>
-            <Button fx:id="button_signup" layoutX="273.0" layoutY="323.0" mnemonicParsing="false" text="Submit" />
+            <Button fx:id="button_signup" layoutX="272.0" layoutY="287.0" mnemonicParsing="false" text="Submit" />
             <Button fx:id="button_login" layoutX="22.0" layoutY="343.0" mnemonicParsing="false" text="Log in" />
          </children>
       </AnchorPane>

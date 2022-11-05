@@ -26,7 +26,7 @@ public class UserPageControl implements Initializable{
 			@Override
 			public void handle(ActionEvent event) {
 				// TODO Auto-generated method stub
-				DatabaseUtils.changeScene(event, "view/Login.fxml", "Log in", null);
+				DatabaseUtils.changeScene(event, "view/HomePage.fxml", "Index Manager card", null);
 			}
 			
 			
