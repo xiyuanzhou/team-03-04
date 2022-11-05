@@ -1,20 +1,88 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SignupPageControl">
    <center>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <Text layoutX="173.0" layoutY="160.0" strokeType="OUTSIDE" strokeWidth="0.0" text="sign up">
+            <Text layoutX="230.0" layoutY="117.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sign Up" wrappingWidth="140.82080078125">
                <font>
-                  <Font size="67.0" />
+                  <Font size="40.0" />
+               </font>
+               <fill>
+                  <LinearGradient endX="1.0" endY="1.0">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color red="0.16118420660495758" green="0.5963816046714783" blue="0.6447368264198303" />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color red="0.38425925374031067" green="0.6408178806304932" blue="1.0" />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </LinearGradient>
+               </fill>
+            </Text>
+            <Text layoutX="149.0" layoutY="184.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username">
+               <font>
+                  <Font size="16.0" />
                </font>
             </Text>
+            <Text layoutX="165.0" layoutY="221.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email" wrappingWidth="36.28125">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Text>
+            <Text layoutX="112.0" layoutY="300.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password again">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Text>
+            <Text layoutX="150.0" layoutY="259.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Text>
+            <TextField layoutX="230.0" layoutY="165.0" />
+            <TextField layoutX="230.0" layoutY="203.0" />
+            <TextField layoutX="230.0" layoutY="241.0" />
+            <TextField layoutX="230.0" layoutY="282.0" />
+            <ButtonBar layoutX="357.0" layoutY="335.0" prefHeight="40.0" prefWidth="200.0">
+              <buttons>
+                <Button fx:id="homepage" mnemonicParsing="false" onAction="#handleBtnHomePageWindow" text="Home Page">
+                     <textFill>
+                        <LinearGradient endY="1.0" startY="0.9144893111638955">
+                           <stops>
+                              <Stop>
+                                 <color>
+                                    <Color red="0.21856725215911865" green="0.5367568135261536" blue="0.6842105388641357" />
+                                 </color>
+                              </Stop>
+                              <Stop offset="1.0">
+                                 <color>
+                                    <Color red="1.0" green="1.0" blue="1.0" />
+                                 </color>
+                              </Stop>
+                           </stops>
+                        </LinearGradient>
+                     </textFill>
+                  </Button>
+              </buttons>
+            </ButtonBar>
+            <Button layoutX="273.0" layoutY="323.0" mnemonicParsing="false" text="Submit" />
          </children>
       </AnchorPane>
    </center>
