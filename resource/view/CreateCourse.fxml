@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Text?>
+
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Text layoutX="34.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name of Course:" />
+      <TextField layoutX="34.0" layoutY="71.0" prefHeight="26.0" prefWidth="295.0" />
+      <Button layoutX="34.0" layoutY="116.0" mnemonicParsing="false" text="Create New Course" />
+   </children>
+</Pane>
