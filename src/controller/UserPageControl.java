@@ -1,9 +1,11 @@
 package controller;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 import application.DatabaseUtils;
+import application.SceneChangingUtils;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -17,6 +19,15 @@ public class UserPageControl implements Initializable{
 
     @FXML
     private Button button_logout;
+    
+    @FXML
+    private Button button_course;
+    
+    @FXML
+    private Button button_delete;
+    
+    @FXML
+    private Button button_rename;
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -32,6 +43,29 @@ public class UserPageControl implements Initializable{
 			
 		});
 		
+		button_course.setOnMouseClicked(e -> {
+			try {
+				SceneChangingUtils.changeScene(e, "Create New Course", "view/CreateCourse.fxml");
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+		});
+		
+		button_delete.setOnMouseClicked(e -> {
+			try {
+				SceneChangingUtils.changeScene(e, "Delete Course", "view/RenameDeleteCourse.fxml");
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+		});
+		
+		button_rename.setOnMouseClicked(e -> {
+			try {
+				SceneChangingUtils.changeScene(e, "Rename Course", "view/RenameCourse.fxml");
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+		});
 		
 		
 	}

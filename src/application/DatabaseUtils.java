@@ -187,4 +187,161 @@ public class DatabaseUtils {
 			}
 		}
 	}
+	
+	public static void newCourse(ActionEvent event, String courses, String password, String email) throws ClassNotFoundException {
+		Connection connection = null;
+	    Statement stmt = null;
+
+		PreparedStatement psInsert = null;
+		PreparedStatement psCheckUserExists = null;
+		ResultSet resultSet = null;
+		
+		try {
+
+			Class.forName("org.sqlite.JDBC");
+		    connection = DriverManager.getConnection("jdbc:sqlite:UserDb.sqlite");
+		    System.out.println("Opened database successfully");
+		    //connection.close();
+		    
+		    
+		    //System.out.println("Table created successfully");
+			
+			psCheckUserExists = connection.prepareStatement("SELECT * FROM courses WHERE coursename = ?");
+			psCheckUserExists.setString(1,courses);
+			
+			resultSet = psCheckUserExists.executeQuery();
+			
+			if (resultSet.isBeforeFirst()) {
+				System.out.println("courses exist ");
+				Alert alert = new Alert(Alert.AlertType.ERROR);
+				alert.setContentText("You cannot add this courses.");
+				alert.show();
+			}else {
+				psInsert = connection.prepareStatement("INSERT INTO courses (coursename) VALUES (?)");
+				psInsert.setString(1, courses);
+				
+				psInsert.executeUpdate();
+				
+				changeScene(event,"view/UserPage.fxml","Add successful!", null);
+			}
+			
+
+		}catch(SQLException e ) {
+			e.printStackTrace();
+			
+		}finally {
+			if(resultSet != null) {
+				try {
+					resultSet.close();
+					
+				}catch(SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (psCheckUserExists != null) {
+				try {
+					psCheckUserExists.close();
+				} catch ( SQLException e) {
+					e.printStackTrace();
+				}
+				
+			}
+			if (psInsert != null) {
+				try {
+					psInsert.close();
+					
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (connection != null) {
+				try { 
+					connection.close();
+				} catch(SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		
+	
+	}
+	
+	public static void deleteCourse(ActionEvent event, String coursename, String password,String email) throws ClassNotFoundException {
+		Connection connection = null;
+	    Statement stmt = null;
+
+		PreparedStatement psInsert = null;
+		PreparedStatement psCheckUserExists = null;
+		ResultSet resultSet = null;
+		
+		try {
+
+			Class.forName("org.sqlite.JDBC");
+		    connection = DriverManager.getConnection("jdbc:sqlite:UserDb.sqlite");
+		    System.out.println("Opened database successfully");
+		    //connection.close();
+		    
+		    
+		    //System.out.println("Table created successfully");
+			
+			psCheckUserExists = connection.prepareStatement("SELECT * FROM courses WHERE coursename = ?");
+			psCheckUserExists.setString(1,coursename);
+			
+			resultSet = psCheckUserExists.executeQuery();
+			
+			if (resultSet.isBeforeFirst()) {
+				System.out.println("courses found");
+				psInsert = connection.prepareStatement("DELETE FROM courses WHERE coursename = '"+coursename+"'");
+				psInsert.executeUpdate();
+				
+				changeScene(event,"view/UserPage.fxml","Welcome!", "delete successful");
+
+			}else {
+				Alert alert = new Alert(Alert.AlertType.ERROR);
+				alert.setContentText("can't find course");
+				alert.show();
+			}
+				
+			
+			
+
+		}catch(SQLException e ) {
+			e.printStackTrace();
+			
+		}finally {
+			if(resultSet != null) {
+				try {
+					resultSet.close();
+					
+				}catch(SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (psCheckUserExists != null) {
+				try {
+					psCheckUserExists.close();
+				} catch ( SQLException e) {
+					e.printStackTrace();
+				}
+				
+			}
+			if (psInsert != null) {
+				try {
+					psInsert.close();
+					
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (connection != null) {
+				try { 
+					connection.close();
+				} catch(SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+	
+
 }

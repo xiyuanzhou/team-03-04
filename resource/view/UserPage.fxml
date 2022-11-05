@@ -10,16 +10,19 @@
    <center>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <Text fx:id="label_welcome" layoutX="196.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome">
+            <Text fx:id="label_welcome" layoutX="14.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome" wrappingWidth="256.33984375">
                <font>
-                  <Font size="52.0" />
+                  <Font size="21.0" />
                </font>
             </Text>
-            <Button fx:id="button_logout" layoutX="230.0" layoutY="258.0" mnemonicParsing="false" text="Log out">
+            <Button fx:id="button_logout" layoutX="506.0" layoutY="10.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="80.0" text="Log out">
                <font>
-                  <Font size="31.0" />
+                  <Font size="17.0" />
                </font>
             </Button>
+            <Button fx:id="button_course" layoutX="252.0" layoutY="292.0" mnemonicParsing="false" text="Create Course" />
+            <Button fx:id="button_delete" layoutX="95.0" layoutY="292.0" mnemonicParsing="false" text="Delete Course" />
+            <Button fx:id="button_rename" layoutX="407.0" layoutY="292.0" mnemonicParsing="false" text="Rename Course " />
          </children>
       </AnchorPane>
    </center>

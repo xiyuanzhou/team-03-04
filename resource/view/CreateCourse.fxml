@@ -5,11 +5,11 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Text?>
 
-
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CreateCourseControl">
    <children>
       <Text layoutX="34.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name of Course:" />
-      <TextField layoutX="34.0" layoutY="71.0" prefHeight="26.0" prefWidth="295.0" />
-      <Button layoutX="34.0" layoutY="116.0" mnemonicParsing="false" text="Create New Course" />
+      <TextField fx:id="tf_course" layoutX="34.0" layoutY="71.0" prefHeight="26.0" prefWidth="295.0" />
+      <Button fx:id="button_newcourse" layoutX="34.0" layoutY="116.0" mnemonicParsing="false" text="Create New Course" />
+      <Button fx:id="button_back" layoutX="482.0" layoutY="349.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="91.0" text="Go Back" />
    </children>
 </Pane>

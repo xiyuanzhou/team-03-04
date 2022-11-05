@@ -6,16 +6,15 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Text?>
 
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.RenameDeleteCourseControl">
    <center>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <Text layoutX="27.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="New Name of Course: " />
-            <Button layoutX="27.0" layoutY="100.0" mnemonicParsing="false" text="Submit" />
-            <TextField layoutX="27.0" layoutY="63.0" prefHeight="26.0" prefWidth="348.0" />
-            <Text layoutX="27.0" layoutY="163.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Delete Course?" />
-            <Button layoutX="28.0" layoutY="175.0" mnemonicParsing="false" text="Delete Course" />
+            <Text layoutX="27.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name of Course: " />
+            <TextField fx:id="tf_delete" layoutX="27.0" layoutY="63.0" prefHeight="26.0" prefWidth="348.0" />
+            <Text layoutX="27.0" layoutY="113.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Delete Course?" />
+            <Button fx:id="button_delete" layoutX="27.0" layoutY="127.0" mnemonicParsing="false" text="Delete Course" />
+            <Button fx:id="button_back" layoutX="483.0" layoutY="349.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="81.0" text="Go Back" />
          </children>
       </AnchorPane>
    </center>
