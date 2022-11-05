@@ -40,6 +40,9 @@ public class LoginPageControl implements Initializable {
     
     @FXML
     private Button button_welcome;
+    
+    @FXML
+    private Button button_forgetpassword;
 
 
     @FXML
@@ -48,7 +51,15 @@ public class LoginPageControl implements Initializable {
     }
 
 
-
+	/**
+	 * Called to initialize a controller after its root element has been completely
+	 * processed.
+	 * 
+	 * @param location  - The location used to resolve relative paths for the root
+	 *                  object, or null if the location is not known.
+	 * @param resources - The resources used to localize the root object, or null if
+	 *                  the root object was not localized.
+	 */
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// TODO Auto-generated method stub
@@ -87,6 +98,14 @@ public class LoginPageControl implements Initializable {
     	button_welcome.setOnMouseClicked(e -> {
 			try {
 				SceneChangingUtils.changeScene(e, "Welcome", "view/UserPage.fxml");
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+		});
+    	
+    	button_forgetpassword.setOnMouseClicked(e -> {
+			try {
+				SceneChangingUtils.changeScene(e, "Rset Password", "view/ResetPassword.fxml");
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}

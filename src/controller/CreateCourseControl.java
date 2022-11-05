@@ -30,7 +30,17 @@ public class CreateCourseControl implements Initializable{
 	@FXML
 	private TextField tf_course;
 	
-
+	
+	
+	/**
+	 * Called to initialize a controller after its root element has been completely
+	 * processed.
+	 * 
+	 * @param location  - The location used to resolve relative paths for the root
+	 *                  object, or null if the location is not known.
+	 * @param resources - The resources used to localize the root object, or null if
+	 *                  the root object was not localized.
+	 */
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// TODO Auto-generated method stub

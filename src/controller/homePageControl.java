@@ -22,6 +22,13 @@ public class homePageControl implements Initializable{
 	@FXML
 	private Button loginButton;
 	
+	
+	/**
+	 * Called my own function to show the scene change,
+	 * which mean allow user when click button,
+	 * open a new window
+	 * 
+	 */
 	@FXML
 	public void handleBtnSignupWindow(ActionEvent actionEvent) throws IOException{
 		signupButton.setOnMouseClicked(e -> {
@@ -45,6 +52,7 @@ public class homePageControl implements Initializable{
 		});
     }
 
+    
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// TODO Auto-generated method stub

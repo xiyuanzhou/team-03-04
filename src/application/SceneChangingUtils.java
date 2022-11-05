@@ -14,7 +14,16 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 public class SceneChangingUtils {
-
+	
+	
+	
+	/**
+	 * Own function implenment the windows or new windows
+	 * 
+	 * @param fxml files, window title
+	 * 
+	 * @return nothing
+	 */
 	public static void changeScene(MouseEvent e, String title, String file) throws IOException {
 		// TODO Auto-generated method stub
 		Parent root = null;

@@ -17,6 +17,13 @@ import javafx.stage.Stage;
 
 
 public class DatabaseUtils {
+	
+	/**
+	 * Chaning each the window each time click on the button
+	 * 
+	 * @param event, fxmlFile, window title, username
+	 * @return nothing
+	 */
 	public static void changeScene(ActionEvent event, String fxmlFile, String title,  String username) {
 		Parent root = null;
 		
@@ -48,6 +55,13 @@ public class DatabaseUtils {
 		
 	}
 	
+	
+	/**
+	 * By signing up for user, passing value to funtion and access into database sqlite
+	 * 
+	 * @param event, username, password, email
+	 * @return nothing
+	 */
 	public static void signUpUser(ActionEvent event, String username, String password, String email) throws ClassNotFoundException {
 		Connection connection = null;
 	    Statement stmt = null;
@@ -57,8 +71,10 @@ public class DatabaseUtils {
 		ResultSet resultSet = null;
 		
 		try {
-
+			
 			Class.forName("org.sqlite.JDBC");
+			
+			//database inside the build path (jar)
 		    connection = DriverManager.getConnection("jdbc:sqlite:UserDb.sqlite");
 		    System.out.println("Opened database successfully");
 		    //connection.close();
@@ -128,6 +144,14 @@ public class DatabaseUtils {
 		
 	}
 	
+	
+	/**
+	 * By loin function for user, passing value to funtion and access into database sqlite
+	 * check if the username and password matching the database 
+	 * 
+	 * @param event, username, password
+	 * @return nothing
+	 */
 	public static void logInUser(ActionEvent event, String username, String password) throws ClassNotFoundException {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
@@ -188,6 +212,12 @@ public class DatabaseUtils {
 		}
 	}
 	
+	/**
+	 * By Add new course function, add course into the database
+	 * 
+	 * @param  event, new courses, password, email
+	 * @return nothing
+	 */
 	public static void newCourse(ActionEvent event, String courses, String password, String email) throws ClassNotFoundException {
 		Connection connection = null;
 	    Statement stmt = null;
@@ -266,6 +296,13 @@ public class DatabaseUtils {
 	
 	}
 	
+	/**
+	 * Delete course function by user enter course name and search database for the informatin
+	 * check if found in db
+	 * 
+	 * @param  event,  coursename,  password, email
+	 * @return nothing
+	 */
 	public static void deleteCourse(ActionEvent event, String coursename, String password,String email) throws ClassNotFoundException {
 		Connection connection = null;
 	    Statement stmt = null;
@@ -299,6 +336,175 @@ public class DatabaseUtils {
 			}else {
 				Alert alert = new Alert(Alert.AlertType.ERROR);
 				alert.setContentText("can't find course");
+				alert.show();
+			}
+				
+			
+			
+
+		}catch(SQLException e ) {
+			e.printStackTrace();
+			
+		}finally {
+			if(resultSet != null) {
+				try {
+					resultSet.close();
+					
+				}catch(SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (psCheckUserExists != null) {
+				try {
+					psCheckUserExists.close();
+				} catch ( SQLException e) {
+					e.printStackTrace();
+				}
+				
+			}
+			if (psInsert != null) {
+				try {
+					psInsert.close();
+					
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (connection != null) {
+				try { 
+					connection.close();
+				} catch(SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+	
+	/**
+	 * rename course function by user enter course name and search database for the informatin
+	 * check if found in db, after it rename new name that user enter
+	 * 
+	 * @param  event,  coursename,  password, email
+	 * @return nothing
+	 */
+	public static void renameCourse(ActionEvent event, String coursename, String rename,String email) throws ClassNotFoundException {
+		Connection connection = null;
+	    Statement stmt = null;
+
+		PreparedStatement psInsert = null;
+		PreparedStatement psCheckUserExists = null;
+		ResultSet resultSet = null;
+		
+		try {
+
+			Class.forName("org.sqlite.JDBC");
+		    connection = DriverManager.getConnection("jdbc:sqlite:UserDb.sqlite");
+		    System.out.println("Opened database successfully");
+		    //connection.close();
+		    
+		    
+		    //System.out.println("Table created successfully");
+			
+			psCheckUserExists = connection.prepareStatement("SELECT * FROM courses WHERE coursename = ?");
+			psCheckUserExists.setString(1,coursename);
+			
+			resultSet = psCheckUserExists.executeQuery();
+			
+			if (resultSet.isBeforeFirst()) {
+				System.out.println("courses found");
+				psInsert = connection.prepareStatement("UPDATE courses set coursename = '"+rename+"' where coursename = '"+coursename+"'");
+				psInsert.executeUpdate();
+				
+				changeScene(event,"view/UserPage.fxml","Welcome!", "Rename successful");
+
+			}else {
+				Alert alert = new Alert(Alert.AlertType.ERROR);
+				alert.setContentText("can't find course");
+				alert.show();
+			}
+				
+			
+			
+
+		}catch(SQLException e ) {
+			e.printStackTrace();
+			
+		}finally {
+			if(resultSet != null) {
+				try {
+					resultSet.close();
+					
+				}catch(SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (psCheckUserExists != null) {
+				try {
+					psCheckUserExists.close();
+				} catch ( SQLException e) {
+					e.printStackTrace();
+				}
+				
+			}
+			if (psInsert != null) {
+				try {
+					psInsert.close();
+					
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (connection != null) {
+				try { 
+					connection.close();
+				} catch(SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+	
+	/**
+	 * reset password function, it allow user to passing email by verfiy and enter new password
+	 * only email for checking user exist
+	 * 
+	 * @param  event, password, email
+	 * @return nothing
+	 */
+	
+	public static void resetPassword(ActionEvent event, String email, String newpassword) throws ClassNotFoundException {
+		Connection connection = null;
+	    Statement stmt = null;
+
+		PreparedStatement psInsert = null;
+		PreparedStatement psCheckUserExists = null;
+		ResultSet resultSet = null;
+		
+		try {
+
+			Class.forName("org.sqlite.JDBC");
+		    connection = DriverManager.getConnection("jdbc:sqlite:UserDb.sqlite");
+		    System.out.println("Opened database successfully");
+		    //connection.close();
+		    
+		    
+		    //System.out.println("Table created successfully");
+			
+			psCheckUserExists = connection.prepareStatement("SELECT * FROM users WHERE email = ?");
+			psCheckUserExists.setString(1,email);
+			
+			resultSet = psCheckUserExists.executeQuery();
+			
+			if (resultSet.isBeforeFirst()) {
+				System.out.println("email found");
+				psInsert = connection.prepareStatement("UPDATE users set password = '"+newpassword+"' where email = '"+email+"'");
+				psInsert.executeUpdate();
+				
+				changeScene(event,"view/UserPage.fxml","Welcome!", "Password Reset successful");
+
+			}else {
+				Alert alert = new Alert(Alert.AlertType.ERROR);
+				alert.setContentText("can't find email");
 				alert.show();
 			}
 				
