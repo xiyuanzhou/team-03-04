@@ -11,8 +11,23 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.control.*;
 
 
+/**
+ * Index Card Manager 
+ * @Verion 0.5
+ * @author Xiyuan Zhou
+ * @author Honghao Ma
+ * @author Mengzhen Zhao
+ * @author Zach Woo
+ * Team 4
+ */
 
 public class Main extends Application {
+	/**
+	 * The main entry point for all JavaFx applications
+	 * has returned
+	 * @param primaryStage - the primary stage for this application, onto which the
+	 *                     application scene can be set.
+	 */
 	@Override
 	public void start(Stage primaryStage) {
 		try {

@@ -18,7 +18,9 @@
                </font>
             </Text>
             <TextField fx:id="tf_rename" layoutX="220.0" layoutY="128.0" />
-            <Button fx:id="button_rename" layoutX="272.0" layoutY="174.0" mnemonicParsing="false" text="Submit" />
+            <Button fx:id="button_rename" layoutX="272.0" layoutY="220.0" mnemonicParsing="false" text="Submit" />
+            <Text layoutX="175.0" layoutY="198.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rename" />
+            <TextField fx:id="tf_changename" layoutX="220.0" layoutY="180.0" />
          </children>
       </AnchorPane>
    </center>

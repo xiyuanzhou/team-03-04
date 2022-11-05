@@ -19,21 +19,20 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-
-public class RenameCourseControl implements Initializable{
+public class ResetPasswordControl implements Initializable {
+	
     @FXML
     private Button button_back;
 
     @FXML
-    private Button button_rename;
+    private TextField tf_email;
 
     @FXML
-    private TextField tf_rename;
+    private TextField tf_newpassword;
     
     @FXML
-    private TextField tf_changename;
-
-
+    private Button button_reset;
+    
 	/**
 	 * Called to initialize a controller after its root element has been completely
 	 * processed.
@@ -46,25 +45,23 @@ public class RenameCourseControl implements Initializable{
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// TODO Auto-generated method stub
-		
 		button_back.setOnMouseClicked(e -> {
 			try {
-				SceneChangingUtils.changeScene(e, "Sign Up", "view/UserPage.fxml");
+				SceneChangingUtils.changeScene(e, "Welcome", "view/Login.fxml");
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
 		});
 		
-		
-		button_rename.setOnAction(new EventHandler<ActionEvent>() {
+		button_reset.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
 			public void handle(ActionEvent event) {
 				// TODO Auto-generated method stub
 				
-				if (!tf_rename.getText().trim().isEmpty() ) {
+				if (!tf_email.getText().trim().isEmpty() && !tf_newpassword.getText().trim().isEmpty()) {
 					try {
-						DatabaseUtils.renameCourse(event, tf_rename.getText(),tf_changename.getText(),null);
+						DatabaseUtils.resetPassword(event, tf_email.getText(),tf_newpassword.getText());
 					} catch (ClassNotFoundException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -78,7 +75,11 @@ public class RenameCourseControl implements Initializable{
 			}
 	   		
 	   	});
+		
+		
+		
 	}
 	
-	
 }
+
+
