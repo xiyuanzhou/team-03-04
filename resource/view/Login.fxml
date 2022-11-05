@@ -74,6 +74,7 @@
             <Button fx:id="loginBtn" layoutX="273.0" layoutY="273.0" mnemonicParsing="false" text="Submit" />
             <Label fx:id="isConnected" layoutX="53.0" layoutY="42.0" prefHeight="17.0" prefWidth="76.0" text="Status" />
             <Button fx:id="button_signup" layoutX="36.0" layoutY="340.0" mnemonicParsing="false" text="Sign up" />
+            <Button fx:id="button_welcome" layoutX="53.0" layoutY="75.0" mnemonicParsing="false" text="Welcome Demo" />
          </children>
       </AnchorPane>
    </center>

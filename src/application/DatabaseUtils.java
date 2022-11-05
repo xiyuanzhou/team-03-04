@@ -21,8 +21,9 @@ public class DatabaseUtils {
 		Parent root = null;
 		
 		if (username != null) {
+			
 			try {
-				FXMLLoader loader = new FXMLLoader(DatabaseUtils.class.getResource(fxmlFile));
+				FXMLLoader loader = new FXMLLoader(DatabaseUtils.class.getClassLoader().getResource(fxmlFile));
 				root = loader.load();
 				UserPageControl userPageControl = loader.getController();
 				userPageControl.setUserInformation(username);
@@ -32,14 +33,17 @@ public class DatabaseUtils {
 			}
 		}else {
 			try {
-				root = FXMLLoader.load(DatabaseUtils.class.getResource(fxmlFile));
-			}catch(IOException e) {
+				root = FXMLLoader.load(DatabaseUtils.class.getClassLoader().getResource(fxmlFile));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+
 		}
+		
 		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		stage.setTitle(title);
-		stage.setScene(new Scene(root, 600, 400));
+		stage.setScene(new Scene(root));
 		stage.show();
 		
 	}
@@ -80,7 +84,7 @@ public class DatabaseUtils {
 				
 				psInsert.executeUpdate();
 				
-				changeScene(event,"UserPage.fxml","Welcome!", username);
+				changeScene(event,"view/UserPage.fxml","Welcome!", username);
 			}
 			
 
@@ -145,7 +149,7 @@ public class DatabaseUtils {
 				while (resultSet.next()) {
 					String retrievedPassword = resultSet.getString("password");
 					if (retrievedPassword.equals(password)) {
-						changeScene(event,"UserPage.fxml","Welcome!",username);
+						changeScene(event,"view/UserPage.fxml","Welcome!",username);
 					}else {
 						System.out.println("Passwords did not match!");
 						Alert alert = new Alert(Alert.AlertType.ERROR);

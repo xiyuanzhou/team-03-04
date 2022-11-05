@@ -37,6 +37,9 @@ public class LoginPageControl implements Initializable {
     
     @FXML
     private Button button_signup;
+    
+    @FXML
+    private Button button_welcome;
 
 
     @FXML
@@ -80,6 +83,14 @@ public class LoginPageControl implements Initializable {
 			}
     		
     	});
+    	
+    	button_welcome.setOnMouseClicked(e -> {
+			try {
+				SceneChangingUtils.changeScene(e, "Welcome", "view/UserPage.fxml");
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+		});
     	
 	}
    
