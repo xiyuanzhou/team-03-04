@@ -13,7 +13,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.homePageControl">
    <top>
       <AnchorPane prefHeight="93.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
@@ -70,12 +70,12 @@
                   </RadialGradient>
                </fill>
             </Text>
-            <Button fx:id="loginButton" layoutX="390.0" layoutY="179.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="154.0" style="-fx-padding: 10 px 15px; -fx-background-color: lightblue; -fx-border-radius: 5px;" text="Log In">
+            <Button fx:id="loginButton" layoutX="390.0" layoutY="179.0" mnemonicParsing="false" onAction="#handleBtnLoginWindow" prefHeight="34.0" prefWidth="154.0" style="-fx-padding: 10 px 15px; -fx-background-color: lightblue; -fx-border-radius: 5px;" text="Log In">
                <font>
                   <Font size="14.0" />
                </font>
             </Button>
-            <Button fx:id="signUpButton" layoutX="429.0" layoutY="245.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="76.0" style="-fx-padding: 10px 15px; -fx-background-color: lightblue; -fx-border-radius: 5 px;" text="Sign up">
+            <Button fx:id="signupButton" layoutX="429.0" layoutY="245.0" mnemonicParsing="false" onAction="#handleBtnSignupWindow" prefHeight="32.0" prefWidth="76.0" style="-fx-padding: 10px 15px; -fx-background-color: lightblue; -fx-border-radius: 5 px;" text="Sign up">
                <font>
                   <Font size="14.0" />
                </font>
