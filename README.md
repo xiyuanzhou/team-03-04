@@ -30,7 +30,7 @@
     git merge (Your name branch)   -> merge/updated your own branch
     git switch (Your name branch)  -> Now go back to your own branch, al the code should be updated
 ```
-### __JavaFx SetUp - Eclipse__
+### __JavaFx SetUp - Eclipse__ 👽
 > MacOS version recommand
 
 > javafx jar download [JavaFx.jar](https://gluonhq.com/products/javafx/)
@@ -39,7 +39,7 @@
 
 > Run Configurations -> VM arguments -> --module-path (your jar local files path) --add-modules javafx.controls,javafx.fxml
 
-### __Sqlite Database SetUp__
+### __Sqlite Database SetUp__ 👽
 > Download [sqlite Database app](https://sqlitebrowser.org/) for Mac
 
 > Before access into db.splite, [sqlite-jdbc.jar](https://mvnrepository.com/artifact/org.xerial/sqlite-jdbc) need to be download
@@ -50,14 +50,39 @@
 /**
 each time code access into the Database need to include this two line code
 */
-    		Class.forName("org.sqlite.JDBC");
-			connection = DriverManager.getConnection("jdbc:sqlite:UserDb.sqlite");
+    Class.forName("org.sqlite.JDBC");
+    connection = DriverManager.getConnection("jdbc:sqlite:UserDb.sqlite");
 ```
-### __FXML files - build by SceneBuilder__ 
+### __FXML files - build by SceneBuilder__ 👽
 > SceneBuilder download from website https://gluonhq.com/products/scene-builder/
 
 > SetUp SceneBuilder path -> Preference -> JavaFx -> SceneBuilder executable -> Browse(your scenebuilder app)
 
+### __JavaFx Project path tree__ 👍
+```bash
+team-03-04
+├── src
+│   ├── application
+│       └── Main.java (always run main)
+│       └── DatabaseUtils.java (only deal with database, access and edited)
+│   ├── controller (controller section only dealing with income, such as button, textfield,etc...)
+│       └── LoginPageControl.java
+│       └── ...Control.java
+│       └── ...Control.java
+│       └── .
+│       └── .
+├── resource
+│       ├── css
+│       ├── images
+│       └── view (FXML files)
+│           └── .
+│           └── .
+│           └── .
+│           └── .
+├── README.md
+├── UserDb.sqlite
+└── sqlite-jdbc-3.7.2.jar
+```
 
 
 
