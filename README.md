@@ -30,5 +30,35 @@
     git merge (Your name branch)   -> merge/updated your own branch
     git switch (Your name branch)  -> Now go back to your own branch, al the code should be updated
 ```
+### __JavaFx SetUp - Eclipse__
+> MacOS version recommand
+
+> javafx jar download [JavaFx.jar](https://gluonhq.com/products/javafx/)
+
+> MacOS eclipse -> Preferences -> java -> Build Path -> User Libaries: -> New -> (name a libary) -> Add External JARs
+
+> Run Configurations -> VM arguments -> --module-path (your jar local files path) --add-modules javafx.controls,javafx.fxml
+
+### __Sqlite Database SetUp__
+> Download [sqlite Database app](https://sqlitebrowser.org/) for Mac
+
+> Before access into db.splite, [sqlite-jdbc.jar](https://mvnrepository.com/artifact/org.xerial/sqlite-jdbc) need to be download
+
+> Path for sqlite-jdbc -> Right click Main.java -> Build Path -> Configure Build Path -> Libaries -> classpath -> Add External JARs (sqlite-jdbc)
+```java
+//all the files should be inside the src path or it mean same folder
+/**
+each time code access into the Database need to include this two line code
+*/
+    		Class.forName("org.sqlite.JDBC");
+			connection = DriverManager.getConnection("jdbc:sqlite:UserDb.sqlite");
+```
+### __FXML files - build by SceneBuilder__ 
+> SceneBuilder download from website https://gluonhq.com/products/scene-builder/
+
+> SetUp SceneBuilder path -> Preference -> JavaFx -> SceneBuilder executable -> Browse(your scenebuilder app)
+
+
+
 
 
