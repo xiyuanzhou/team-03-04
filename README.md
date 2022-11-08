@@ -1,6 +1,6 @@
-# ***Team4***
+# ***Index Card Manager***
 ![Bitbucket open issues](https://img.shields.io/bitbucket/issues/xiyuanzhou/fullstack_selflearning) ![GitHub repo size](https://img.shields.io/github/repo-size/xiyuanzhou/fullstack_selflearning) ![GitHub last commit](https://img.shields.io/github/last-commit/xiyuanzhou/fullstack_selflearning)
-> `Team members: XiyuanZhou, HonghaoMa, MengzhenZhao, ZachWoo`
+> `Team-03-04 members: XiyuanZhou, HonghaoMa, MengzhenZhao, ZachWoo`
  
 - Project version 0.5 completed
     - Login ✅
