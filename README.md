@@ -90,11 +90,11 @@ team-03-04
 └── sqlite-jdbc-3.7.2.jar
 ```
 ### __Project Concept n/ logic__ 🌈 
-* Main.java applicatio only the way running/debug (linked)-> view/HomePage.fxml (files) 🔹
+* Main.java applicatio only the way running/debug (linked)-> view/HomePage.fxml (files) 🔴 
 ```java
     Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("view/HomePage.fxml"));
 ``` 
-* FXML edited by (SceneBuilder) 🔹
+* FXML edited by (SceneBuilder) 🔴 
     - while editing the UI/view looks the button, textfield need to be have ${\color{red}fx:id}$ name. 
     - The ${\color{red}fx:id}$ name is the way connect to the button or textfield and doing action.
     - Also, the fxml files need to have controller class to receive the button and edited the action of the button.
@@ -120,14 +120,14 @@ team-03-04
     ```
 > FXML files -> Controller java class -> doing action
 
-* Controller doing action by generate new java class for only doing button or textfield action 🔹
-    - What the teams does was have two java class by doing control the action ${\color{lightblue}SceneChangeUtils.java}$ and ${\color{lightblue}DatabaseUtils.java}$.
-        - ${\color{lightblue}SceneChangeUtils.java}$ only control the pages that not relate to the Datebase.
-        - {\color{lightblue}DatabaseUtils.java}$ only control the pages or buttons that relate/or need access to the Database
+* Controller doing action by generate new java class for only doing button or textfield action 🔴 
+    - What the teams does was have two java class by doing control the action ${\color{blue}SceneChangeUtils.java}$ and ${\color{blue}DatabaseUtils.java}$.
+        - ${\color{blue}SceneChangeUtils.java}$ only control the pages that not relate to the Datebase.
+        - {\color{blue}DatabaseUtils.java}$ only control the pages or buttons that relate/or need access to the Database
         > Actually, using either one it doesn't matter, it just better orgization.
-    - Please check out this two Utils java class their job only do action -> jump to different window page or edit/delete/updated information from the pages shown. ${\color{lightblue}(controller.java(information/input)-> Call function -> Utils.java -> doing action/updated/delete... -> NewPageWindows)}$
+    - Please check out this two Utils java class their job only do action -> jump to different window page or edit/delete/updated information from the pages shown. ${\color{blue}(controller.java(information/input)-> Call function -> Utils.java -> doing action/updated/delete... -> NewPageWindows)}$
 
-* Getting information from User/UI pages 🔹
+* Getting information from User/UI pages 🔴 
     - Assume I have a TextField ${\color{red}fx:id=tf-coursename}$
     ```java
         /**
@@ -135,7 +135,7 @@ team-03-04
         */
         tf_coursename.getText()
     ```
-* Splite Database (simple) 🔹
+* Splite Database (simple) 🔴 
     - > How read/find data
     ```java
         //accessing into users table -> username variables 
