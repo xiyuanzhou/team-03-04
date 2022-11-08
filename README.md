@@ -1,6 +1,12 @@
 # ***Team4***
 ![Bitbucket open issues](https://img.shields.io/bitbucket/issues/xiyuanzhou/fullstack_selflearning) ![GitHub repo size](https://img.shields.io/github/repo-size/xiyuanzhou/fullstack_selflearning) ![GitHub last commit](https://img.shields.io/github/last-commit/xiyuanzhou/fullstack_selflearning)
-> `Team members: XiyuanZhou, HonghaoMa, MengzhenZhao, ZachWoo` 
+> `Team members: XiyuanZhou, HonghaoMa, MengzhenZhao, ZachWoo`
+ 
+- Project version 0.5 completed
+    - Login ✅
+    - Signup ✅
+    - Delete/Update Course ✅
+    - Reset password ✅
 ***
 > (MacOS Recommand)
 
@@ -83,7 +89,8 @@ team-03-04
 ├── UserDb.sqlite
 └── sqlite-jdbc-3.7.2.jar
 ```
-
+### __Project Concept__
+* #### Login 
 
 
 
