@@ -89,8 +89,39 @@ team-03-04
 ├── UserDb.sqlite
 └── sqlite-jdbc-3.7.2.jar
 ```
-### __Project Concept__
-* #### Login 
+### __Project Concept n/ logic__
+* Main.java applicatio only the way running/debug (linked)-> view/HomePage.fxml (files)
+```java
+    Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("view/HomePage.fxml"));
+``` 
+* FXML edited by (SceneBuilder) 
+    - while editing the UI/view looks the button, textfield need to be have ${\color{red}fx:id}$ name. 
+    - The ${\color{red}fx:id}$ name is the way connect to the button or textfield and doing action.
+    - Also, the fxml files need to have controller class to receive the button and edited the action of the button.
+    - ${\color{green}Example}$: login.fxml need to connected -> logincontroller.java -> ${\color{red}fx:id=loginbutton}$ -> below code shown: (logincontroller.java pages)
+    ```java
+        @FXML
+        private Button loginbutton;
+        @Override
+	    public void initialize(URL arg0, ResourceBundle arg1) {
+		// TODO Auto-generated method stub
+    	    loginbutton.setOnMouseClicked(e -> {
+			    try {
+				    SceneChangingUtils.changeScene(e, "Index Card Manager", "view/logincontroller.fxml");
+			    } catch (IOException e1) {
+				    e1.printStackTrace();
+			    }
+		    });
+        }
+    ```
+    - The way connect to the (FXML files) -> fxml controller
+    ```java
+        fx:controller="controller.LoginController"
+    ```
+> FXML files -> Controller java class -> doing action
+
+* 
+
 
 
 
