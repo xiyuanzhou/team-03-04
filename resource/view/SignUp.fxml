@@ -15,7 +15,7 @@
    <center>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <Text layoutX="230.0" layoutY="117.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sign Up" wrappingWidth="140.82080078125">
+            <Text layoutX="230.0" layoutY="94.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sign Up" wrappingWidth="140.82080078125">
                <font>
                   <Font size="40.0" />
                </font>
@@ -58,7 +58,7 @@
               <buttons>
                 <Button fx:id="homepage" mnemonicParsing="false" onAction="#handleBtnHomePageWindow" text="Home Page">
                      <textFill>
-                        <LinearGradient endY="1.0" startY="0.9144893111638955">
+                        <LinearGradient startY="0.9144893111638955">
                            <stops>
                               <Stop>
                                  <color>

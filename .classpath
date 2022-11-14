@@ -9,5 +9,6 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/JavaFX 19"/>
 	<classpathentry kind="lib" path="sqlite-jdbc-3.7.2.jar"/>
+	<classpathentry kind="lib" path="/Users/lucas/eclipse-workspace/team-03-04/passUtil-1.3.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

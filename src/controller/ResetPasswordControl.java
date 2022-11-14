@@ -33,6 +33,9 @@ public class ResetPasswordControl implements Initializable {
     @FXML
     private Button button_reset;
     
+    @FXML
+    private TextField tf_secretquestion;
+    
 	/**
 	 * Called to initialize a controller after its root element has been completely
 	 * processed.
@@ -59,9 +62,9 @@ public class ResetPasswordControl implements Initializable {
 			public void handle(ActionEvent event) {
 				// TODO Auto-generated method stub
 				
-				if (!tf_email.getText().trim().isEmpty() && !tf_newpassword.getText().trim().isEmpty()) {
+				if (!tf_email.getText().trim().isEmpty() && !tf_newpassword.getText().trim().isEmpty() && !tf_secretquestion.getText().trim().isEmpty()) {
 					try {
-						DatabaseUtils.resetPassword(event, tf_email.getText(),tf_newpassword.getText());
+						DatabaseUtils.resetPassword(event, tf_email.getText(),tf_newpassword.getText(),tf_secretquestion.getText());
 					} catch (ClassNotFoundException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
