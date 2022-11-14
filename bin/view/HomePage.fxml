@@ -17,39 +17,7 @@
    <top>
       <AnchorPane prefHeight="93.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
-            <Text layoutX="49.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Home Page" wrappingWidth="183.21630859375">
-               <font>
-                  <Font size="21.0" />
-               </font>
-               <fill>
-                  <LinearGradient endX="1.0" endY="1.0">
-                     <stops>
-                        <Stop>
-                           <color>
-                              <Color red="0.1458333283662796" green="0.4190789461135864" blue="0.8289473652839661" />
-                           </color>
-                        </Stop>
-                        <Stop offset="1.0">
-                           <color>
-                              <Color red="1.0" green="1.0" blue="1.0" />
-                           </color>
-                        </Stop>
-                     </stops>
-                  </LinearGradient>
-               </fill>
-            </Text>
-         </children>
-      </AnchorPane>
-   </top>
-   <bottom>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-         <children>
-            <ImageView fitHeight="307.0" fitWidth="283.0">
-               <image>
-                  <Image url="@../images/istock.jpeg" />
-               </image>
-            </ImageView>
-            <Text layoutX="355.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Personal Index Card" wrappingWidth="209.21630859375">
+            <Text layoutX="349.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Personal Index Card" wrappingWidth="209.21630859375">
                <font>
                   <Font name="System Bold Italic" size="24.0" />
                </font>
@@ -70,17 +38,49 @@
                   </RadialGradient>
                </fill>
             </Text>
-            <Button fx:id="loginButton" layoutX="390.0" layoutY="179.0" mnemonicParsing="false" onAction="#handleBtnLoginWindow" prefHeight="34.0" prefWidth="154.0" style="-fx-padding: 10 px 15px; -fx-background-color: lightblue; -fx-border-radius: 5px;" text="Log In">
+         </children>
+      </AnchorPane>
+   </top>
+   <bottom>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fitHeight="400.0" fitWidth="298.0" layoutY="-93.0">
+               <image>
+                  <Image url="@../images/istock.jpeg" />
+               </image>
+            </ImageView>
+            <Button fx:id="loginButton" layoutX="384.0" layoutY="73.0" mnemonicParsing="false" onAction="#handleBtnLoginWindow" prefHeight="34.0" prefWidth="154.0" style="-fx-padding: 10 px 15px; -fx-background-color: lightblue; -fx-border-radius: 5px;" text="Log In">
                <font>
                   <Font size="14.0" />
                </font>
             </Button>
-            <Button fx:id="signupButton" layoutX="429.0" layoutY="245.0" mnemonicParsing="false" onAction="#handleBtnSignupWindow" prefHeight="32.0" prefWidth="76.0" style="-fx-padding: 10px 15px; -fx-background-color: lightblue; -fx-border-radius: 5 px;" text="Sign up">
+            <Button fx:id="signupButton" layoutX="423.0" layoutY="137.0" mnemonicParsing="false" onAction="#handleBtnSignupWindow" prefHeight="32.0" prefWidth="76.0" style="-fx-padding: 10px 15px; -fx-background-color: lightblue; -fx-border-radius: 5 px;" text="Sign up">
                <font>
                   <Font size="14.0" />
                </font>
             </Button>
-            <Line endY="195.5" layoutX="300.0" layoutY="114.0" startY="-203.0" stroke="#abadeb" strokeWidth="3.0" />
+            <Line endY="195.5" layoutX="300.0" layoutY="114.0" startY="-203.0" stroke="#2b2c46" strokeWidth="3.0" />
+            <Text layoutX="75.0" layoutY="121.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Home Page" wrappingWidth="148.21630859375">
+               <font>
+                  <Font size="30.0" />
+               </font>
+               <fill>
+                  <LinearGradient endX="1.0" startY="1.0">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color red="0.1458333283662796" green="0.4190789461135864" blue="0.8289473652839661" />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color red="0.9300000071525574" green="0.04650000110268593" blue="0.19939185678958893" />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </LinearGradient>
+               </fill>
+            </Text>
          </children>
       </AnchorPane>
    </bottom>

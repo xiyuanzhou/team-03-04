@@ -10,19 +10,19 @@
    <center>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <Text fx:id="label_welcome" layoutX="14.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome" wrappingWidth="256.33984375">
+            <Text fx:id="label_welcome" layoutX="17.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome" wrappingWidth="209.33984375">
                <font>
                   <Font size="21.0" />
                </font>
             </Text>
-            <Button fx:id="button_logout" layoutX="506.0" layoutY="10.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="80.0" text="Log out">
+            <Button fx:id="button_logout" layoutX="520.0" layoutY="13.0" mnemonicParsing="false" prefHeight="16.0" prefWidth="66.0" text="Log out">
                <font>
-                  <Font size="17.0" />
+                  <Font size="14.0" />
                </font>
             </Button>
-            <Button fx:id="button_course" layoutX="252.0" layoutY="292.0" mnemonicParsing="false" text="Create Course" />
-            <Button fx:id="button_delete" layoutX="95.0" layoutY="292.0" mnemonicParsing="false" text="Delete Course" />
-            <Button fx:id="button_rename" layoutX="407.0" layoutY="292.0" mnemonicParsing="false" text="Rename Course " />
+            <Button fx:id="button_course" layoutX="14.0" layoutY="279.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="108.0" text="Create Course" />
+            <Button fx:id="button_delete" layoutX="15.0" layoutY="354.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="107.0" text="Delete Course" />
+            <Button fx:id="button_rename" layoutX="15.0" layoutY="316.0" mnemonicParsing="false" text="Rename Course " />
          </children>
       </AnchorPane>
    </center>

@@ -65,7 +65,7 @@ public class DatabaseUtils {
 	 * @param event, username, password, email
 	 * @return nothing
 	 */
-	public static void signUpUser(ActionEvent event, String username, String password, String email) throws ClassNotFoundException {
+	public static void signUpUser(ActionEvent event, String username, String password, String email,String secretquestion) throws ClassNotFoundException {
 		Connection connection = null;
 	    Statement stmt = null;
 
@@ -96,10 +96,11 @@ public class DatabaseUtils {
 				alert.setContentText("You cannot use this username.");
 				alert.show();
 			}else {
-				psInsert = connection.prepareStatement("INSERT INTO users (username, password, email) VALUES (?,?,?)");
+				psInsert = connection.prepareStatement("INSERT INTO users (username, password, email, secret_question) VALUES (?,?,?,?)");
 				psInsert.setString(1, username);
 				psInsert.setString(2, password);
 				psInsert.setString(3, email);
+				psInsert.setString(4, secretquestion);
 				
 				psInsert.executeUpdate();
 				
@@ -475,7 +476,7 @@ public class DatabaseUtils {
 	 * @return nothing
 	 */
 	
-	public static void resetPassword(ActionEvent event, String email, String newpassword) throws ClassNotFoundException {
+	public static void resetPassword(ActionEvent event, String email, String newpassword,String secretquestion) throws ClassNotFoundException {
 		Connection connection = null;
 	    Statement stmt = null;
 
@@ -483,6 +484,8 @@ public class DatabaseUtils {
 		PreparedStatement psCheckUserExists = null;
 		ResultSet resultSet = null;
 		
+        Alert a = new Alert(AlertType.NONE);
+
 		try {
 
 			Class.forName("org.sqlite.JDBC");
@@ -493,8 +496,9 @@ public class DatabaseUtils {
 		    
 		    //System.out.println("Table created successfully");
 			
-			psCheckUserExists = connection.prepareStatement("SELECT * FROM users WHERE email = ?");
+			psCheckUserExists = connection.prepareStatement("SELECT * FROM users WHERE email = ? AND secret_question = ?");
 			psCheckUserExists.setString(1,email);
+			psCheckUserExists.setString(2, secretquestion);
 			
 			resultSet = psCheckUserExists.executeQuery();
 			
@@ -503,7 +507,15 @@ public class DatabaseUtils {
 				psInsert = connection.prepareStatement("UPDATE users set password = '"+newpassword+"' where email = '"+email+"'");
 				psInsert.executeUpdate();
 				
-				changeScene(event,"view/UserPage.fxml","Welcome!", "Password Reset successful");
+                a.setAlertType(AlertType.INFORMATION);
+                a.getDialogPane().setHeaderText("Password have been reset!");
+                a.showAndWait();
+				try {
+					SceneChangingUtils.changeScene(event,"Welcome!","view/Login.fxml");
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 
 			}else {
 				Alert alert = new Alert(Alert.AlertType.ERROR);

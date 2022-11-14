@@ -54,6 +54,7 @@ public class UserPageControl implements Initializable{
 				// TODO Auto-generated method stub
 				//System.out.println(DatabaseUtils.Global.hold_username);
                 a.setAlertType(AlertType.CONFIRMATION);
+                a.getDialogPane().setHeaderText("Are you sure want to Log out?");
                 a.showAndWait();
                 if (a.getResult() == ButtonType.OK) {
                     //do stuff
