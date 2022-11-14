@@ -17,7 +17,10 @@ import javafx.stage.Stage;
 
 
 public class DatabaseUtils {
-	
+	public class Global{
+		public static String hold_username = "";
+		
+	}
 	/**
 	 * Chaning each the window each time click on the button
 	 * 
@@ -49,7 +52,7 @@ public class DatabaseUtils {
 		}
 		
 		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-		stage.setTitle(title);
+		stage.setTitle("Index Card");
 		stage.setScene(new Scene(root));
 		stage.show();
 		
@@ -100,7 +103,8 @@ public class DatabaseUtils {
 				
 				psInsert.executeUpdate();
 				
-				changeScene(event,"view/UserPage.fxml","Welcome!", username);
+				Global.hold_username = username;
+				changeScene(event,"view/UserPage.fxml","Welcome!", Global.hold_username);
 			}
 			
 
@@ -173,7 +177,8 @@ public class DatabaseUtils {
 				while (resultSet.next()) {
 					String retrievedPassword = resultSet.getString("password");
 					if (retrievedPassword.equals(password)) {
-						changeScene(event,"view/UserPage.fxml","Welcome!",username);
+						Global.hold_username = username;
+						changeScene(event,"view/UserPage.fxml","Welcome!",Global.hold_username);
 					}else {
 						System.out.println("Passwords did not match!");
 						Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -219,6 +224,7 @@ public class DatabaseUtils {
 	 * @return nothing
 	 */
 	public static void newCourse(ActionEvent event, String courses, String password, String email) throws ClassNotFoundException {
+		
 		Connection connection = null;
 	    Statement stmt = null;
 
@@ -339,9 +345,6 @@ public class DatabaseUtils {
 				alert.show();
 			}
 				
-			
-			
-
 		}catch(SQLException e ) {
 			e.printStackTrace();
 			

@@ -123,7 +123,7 @@ team-03-04
 * Controller doing action by generate new java class for only doing button or textfield action 🔴 
     - What the teams does was have two java class by doing control the action ${\color{blue}SceneChangeUtils.java}$ and ${\color{blue}DatabaseUtils.java}$.
         - ${\color{blue}SceneChangeUtils.java}$ only control the pages that not relate to the Datebase.
-        - {\color{blue}DatabaseUtils.java}$ only control the pages or buttons that relate/or need access to the Database
+        - ${\color{blue}DatabaseUtils.java}$ only control the pages or buttons that relate/or need access to the Database
         > Actually, using either one it doesn't matter, it just better orgization.
     - Please check out this two Utils java class their job only do action -> jump to different window page or edit/delete/updated information from the pages shown. ${\color{blue}(controller.java(information/input)-> Call function -> Utils.java -> doing action/updated/delete... -> NewPageWindows)}$
 

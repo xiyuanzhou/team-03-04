@@ -44,16 +44,26 @@ public class RenameDeleteCourseControl implements Initializable {
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// TODO Auto-generated method stub
 		
-		button_back.setOnMouseClicked(e -> {
-			try {
-				SceneChangingUtils.changeScene(e, "Welcome", "view/UserPage.fxml");
-			} catch (IOException e1) {
-				e1.printStackTrace();
+//		button_back.setOnMouseClicked(e -> {
+//
+//			try {
+//				SceneChangingUtils.changeScene(e, "Index Card", "view/UserPage.fxml");
+//			} catch (IOException e1) {
+//				e1.printStackTrace();
+//			}
+//		});
+		
+		button_back.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override
+			public void handle(ActionEvent event) {
+				DatabaseUtils.changeScene(event, "view/UserPage.fxml","Index Card",DatabaseUtils.Global.hold_username);
 			}
+			
 		});
 		
 		button_delete.setOnAction(new EventHandler<ActionEvent>() {
-
+			
 			@Override
 			public void handle(ActionEvent event) {
 				// TODO Auto-generated method stub

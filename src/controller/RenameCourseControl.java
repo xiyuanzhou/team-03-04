@@ -2,7 +2,7 @@ package controller;
 
 import application.DatabaseUtils;
 import application.SceneChangingUtils;
-
+import application.DatabaseUtils.Global;
 import javafx.fxml.Initializable;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -47,21 +47,28 @@ public class RenameCourseControl implements Initializable{
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// TODO Auto-generated method stub
 		
-		button_back.setOnMouseClicked(e -> {
-			try {
-				SceneChangingUtils.changeScene(e, "Sign Up", "view/UserPage.fxml");
-			} catch (IOException e1) {
-				e1.printStackTrace();
+//		button_back.setOnMouseClicked(e -> {
+//			try {
+//				SceneChangingUtils.changeScene(e, "Index Card", "view/UserPage.fxml");
+//			} catch (IOException e1) {
+//				e1.printStackTrace();
+//			}
+//		});
+		
+		button_back.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override
+			public void handle(ActionEvent event) {
+				DatabaseUtils.changeScene(event, "view/UserPage.fxml","Index Card",DatabaseUtils.Global.hold_username);
 			}
+			
 		});
 		
-		
 		button_rename.setOnAction(new EventHandler<ActionEvent>() {
-
 			@Override
 			public void handle(ActionEvent event) {
 				// TODO Auto-generated method stub
-				
+
 				if (!tf_rename.getText().trim().isEmpty() ) {
 					try {
 						DatabaseUtils.renameCourse(event, tf_rename.getText(),tf_changename.getText(),null);

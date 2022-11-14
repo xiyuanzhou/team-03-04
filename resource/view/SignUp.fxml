@@ -36,24 +36,24 @@
                   </LinearGradient>
                </fill>
             </Text>
-            <Text layoutX="149.0" layoutY="184.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username">
+            <Text layoutX="148.0" layoutY="165.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username">
                <font>
                   <Font size="16.0" />
                </font>
             </Text>
-            <Text layoutX="165.0" layoutY="221.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email" wrappingWidth="36.28125">
+            <Text layoutX="164.0" layoutY="200.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email" wrappingWidth="36.28125">
                <font>
                   <Font size="16.0" />
                </font>
             </Text>
-            <Text layoutX="150.0" layoutY="259.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password">
+            <Text layoutX="150.0" layoutY="236.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password">
                <font>
                   <Font size="16.0" />
                </font>
             </Text>
-            <TextField fx:id="tf_username" layoutX="230.0" layoutY="165.0" />
-            <TextField fx:id="tf_email" layoutX="230.0" layoutY="203.0" />
-            <TextField fx:id="tf_password" layoutX="230.0" layoutY="241.0" />
+            <TextField fx:id="tf_username" layoutX="230.0" layoutY="147.0" />
+            <TextField fx:id="tf_email" layoutX="230.0" layoutY="182.0" />
+            <TextField fx:id="tf_password" layoutX="230.0" layoutY="218.0" />
             <ButtonBar layoutX="357.0" layoutY="335.0" prefHeight="40.0" prefWidth="200.0">
               <buttons>
                 <Button fx:id="homepage" mnemonicParsing="false" onAction="#handleBtnHomePageWindow" text="Home Page">
@@ -76,8 +76,19 @@
                   </Button>
               </buttons>
             </ButtonBar>
-            <Button fx:id="button_signup" layoutX="272.0" layoutY="287.0" mnemonicParsing="false" text="Submit" />
+            <Button fx:id="button_signup" layoutX="272.0" layoutY="322.0" mnemonicParsing="false" text="Submit" />
             <Button fx:id="button_login" layoutX="22.0" layoutY="343.0" mnemonicParsing="false" text="Log in" />
+            <Text layoutX="104.0" layoutY="266.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Secret Question:">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Text>
+            <Text layoutX="220.0" layoutY="267.0" strokeType="OUTSIDE" strokeWidth="0.0" text="What is your birth date?(day/month/year)">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Text>
+            <TextField fx:id="tf_secretquestion" layoutX="230.0" layoutY="283.0" />
          </children>
       </AnchorPane>
    </center>
