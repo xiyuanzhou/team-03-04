@@ -6,11 +6,15 @@ import java.util.ResourceBundle;
 
 import application.DatabaseUtils;
 import application.SceneChangingUtils;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.text.Text;
 
 public class UserPageControl implements Initializable{
@@ -46,8 +50,19 @@ public class UserPageControl implements Initializable{
 
 			@Override
 			public void handle(ActionEvent event) {
+		        Alert a = new Alert(AlertType.NONE);
 				// TODO Auto-generated method stub
-				DatabaseUtils.changeScene(event, "view/HomePage.fxml", "Index Manager card", null);
+				//System.out.println(DatabaseUtils.Global.hold_username);
+                a.setAlertType(AlertType.CONFIRMATION);
+                a.showAndWait();
+                if (a.getResult() == ButtonType.OK) {
+                    //do stuff
+    				DatabaseUtils.Global.hold_username = "";
+    				DatabaseUtils.changeScene(event, "view/HomePage.fxml", "Index Manager card", null);
+                }
+				//user have been logout 
+//				DatabaseUtils.Global.hold_username = "";
+//				DatabaseUtils.changeScene(event, "view/HomePage.fxml", "Index Manager card", null);
 			}
 			
 			

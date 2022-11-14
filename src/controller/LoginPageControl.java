@@ -95,14 +95,6 @@ public class LoginPageControl implements Initializable {
     		
     	});
     	
-    	button_welcome.setOnMouseClicked(e -> {
-			try {
-				SceneChangingUtils.changeScene(e, "Welcome", "view/UserPage.fxml");
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
-		});
-    	
     	button_forgetpassword.setOnMouseClicked(e -> {
 			try {
 				SceneChangingUtils.changeScene(e, "Rset Password", "view/ResetPassword.fxml");

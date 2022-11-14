@@ -47,7 +47,7 @@ public class ResetPasswordControl implements Initializable {
 		// TODO Auto-generated method stub
 		button_back.setOnMouseClicked(e -> {
 			try {
-				SceneChangingUtils.changeScene(e, "Welcome", "view/Login.fxml");
+				SceneChangingUtils.changeScene(e, "Index Card", "view/Login.fxml");
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}

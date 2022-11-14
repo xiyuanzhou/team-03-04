@@ -6,6 +6,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import application.SceneChangingUtils;
+import application.DatabaseUtils;
+
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -42,7 +44,7 @@ public class homePageControl implements Initializable{
 	
     @FXML
     public void handleBtnLoginWindow(ActionEvent event) {
-    	
+    	System.out.println(DatabaseUtils.Global.hold_username);
     	loginButton.setOnMouseClicked(e -> {
 			try {
 				SceneChangingUtils.changeScene(e, "Log In", "view/Login.fxml");
