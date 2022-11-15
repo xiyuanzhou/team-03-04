@@ -528,7 +528,11 @@ public class DatabaseUtils {
 			
 			if (resultSet.isBeforeFirst()) {
 				System.out.println("email found");
-				psInsert = connection.prepareStatement("UPDATE users set password = '"+newpassword+"' where email = '"+email+"'");
+				
+				PassUtil passUtil = new PassUtil();
+				String encryptedPass = passUtil.encrypt(newpassword);
+				
+				psInsert = connection.prepareStatement("UPDATE users set password = '"+encryptedPass+"' where email = '"+email+"'");
 				psInsert.executeUpdate();
 				
                 a.setAlertType(AlertType.INFORMATION);
