@@ -145,7 +145,40 @@ team-03-04
         psInsert = connection.prepareStatement("INSERT INTO users (username, password, email) VALUES (?,?,?)");
     ```
 >*Version 0.5 stopping here* ⛽
+***
+- Project version 0.9 completed
+    - Sign up encryption/decryption ✅
+    - Delete account after successful login  
+    - Modify account after successful login 
+    - Create new index card under the chosen course 
+    - Modify an index card
+    - Delete an index card
+    - Reviewing index cards + Checking/Uncheck "Learned" checkbox
+        - All index cards of a course 
+        - Learned index cards of a course
+        - Not Learned index cards of a course
+### __PassUtils guideline__ 😵
+> Notes for encryption/decryption
+```java
+    import edu.sjsu.yazdankhah.crypto.util.PassUtil;
 
+    PassUtil passUtil = new PassUtil();
+    String retrievedPassword = resultSet.getString("password");
+	passwordDecrypted = passUtil.decrypt(retrievedPassword);//---> take the hash crypted convert into normal string
+    String encryptedPass = passUtil.encrypt(newpassword);//---> take the normal string convert into hash
+```
+### __fxml Dropdown menubutton/item guidline__ 😲
+> need to passing menubutton but NOT ActionEvent 
+```java
+    @FXML
+    private MenuButton menubutton_account;
+    @FXML
+    private MenuItem item_logout;
+    SceneChangingUtils.changeScene(menubutton_account, "view/HomePage.fxml", "Index Manager card");
+    //below it's the implement function
+    public static void changeScene(MenuButton e, String file, String title) throws IOException{}
+```
+> Next
 
 
 
