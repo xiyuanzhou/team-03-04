@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.*;
 
 import controller.UserPageControl;
+
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
@@ -14,6 +15,9 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+
+import edu.sjsu.yazdankhah.crypto.util.PassUtil;
+
 
 
 public class DatabaseUtils {
@@ -105,6 +109,13 @@ public class DatabaseUtils {
 				psInsert.executeUpdate();
 				
 				Global.hold_username = username;
+		        Alert a = new Alert(AlertType.NONE);
+				// TODO Auto-generated method stub
+				//System.out.println(DatabaseUtils.Global.hold_username);
+                a.setAlertType(AlertType.INFORMATION);
+                a.getDialogPane().setHeaderText("Account created success!");
+                a.showAndWait();
+                
 				changeScene(event,"view/UserPage.fxml","Welcome!", Global.hold_username);
 			}
 			
@@ -162,6 +173,10 @@ public class DatabaseUtils {
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet =null;
 		
+		String dBPassword = "";
+		String passwordDecrypted = "";
+		PassUtil passUtil = new PassUtil();
+		
 		try {
 			Class.forName("org.sqlite.JDBC");
 			connection = DriverManager.getConnection("jdbc:sqlite:UserDb.sqlite");
@@ -176,9 +191,18 @@ public class DatabaseUtils {
 				alert.show();
 			}else {
 				while (resultSet.next()) {
+
 					String retrievedPassword = resultSet.getString("password");
-					if (retrievedPassword.equals(password)) {
+					passwordDecrypted = passUtil.decrypt(retrievedPassword);
+
+					if (passwordDecrypted.equals(password)) {
 						Global.hold_username = username;
+				        Alert a = new Alert(AlertType.NONE);
+						// TODO Auto-generated method stub
+						//System.out.println(DatabaseUtils.Global.hold_username);
+		                a.setAlertType(AlertType.INFORMATION);
+		                a.getDialogPane().setHeaderText("Log in success!");
+		                a.showAndWait();
 						changeScene(event,"view/UserPage.fxml","Welcome!",Global.hold_username);
 					}else {
 						System.out.println("Passwords did not match!");
