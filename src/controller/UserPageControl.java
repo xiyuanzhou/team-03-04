@@ -15,6 +15,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.MenuButton;
+import javafx.scene.control.MenuItem;
 import javafx.scene.text.Text;
 
 public class UserPageControl implements Initializable{
@@ -32,6 +34,13 @@ public class UserPageControl implements Initializable{
     
     @FXML
     private Button button_rename;
+    
+    @FXML
+    private MenuButton menubutton_account;
+    
+    @FXML
+    private MenuItem item_profiles;
+    
     
     
 	/**
@@ -93,6 +102,17 @@ public class UserPageControl implements Initializable{
 			}
 		});
 		
+		item_profiles.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				System.out.println("hello hello hello");
+			}
+			
+		});
+		
+
 		
 	}
     

@@ -15,6 +15,9 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
+import edu.sjsu.yazdankhah.crypto.util.PassUtil;
+
+
 public class SignupPageControl implements Initializable {
 	
     @FXML
@@ -71,7 +74,10 @@ public class SignupPageControl implements Initializable {
 				
 				if (!tf_username.getText().trim().isEmpty() && !tf_password.getText().trim().isEmpty() && !tf_email.getText().trim().isEmpty()) {
 					try {
-						DatabaseUtils.signUpUser(event, tf_username.getText(), tf_password.getText(), tf_email.getText(), tf_secretquestion.getText());
+						PassUtil passUtil = new PassUtil();
+						String passwordEncrypted = passUtil.encrypt(tf_password.getText());
+						//DatabaseUtils.signUpUser(event, tf_username.getText(), tf_password.getText(), tf_email.getText(), tf_secretquestion.getText());
+						DatabaseUtils.signUpUser(event, tf_username.getText(), passwordEncrypted, tf_email.getText(), tf_secretquestion.getText());
 					} catch (ClassNotFoundException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
