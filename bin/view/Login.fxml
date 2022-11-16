@@ -41,28 +41,70 @@
                <font>
                   <Font size="19.0" />
                </font>
+               <fill>
+                  <LinearGradient endX="0.9714964370546318" endY="1.0">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color />
+                           </color>
+                        </Stop>
+                        <Stop offset="0.006711409395973154">
+                           <color>
+                              <Color red="0.47247806191444397" green="0.05287524312734604" blue="0.8157894611358643" />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color red="0.17807017266750336" green="0.11598440259695053" blue="0.7368420958518982" />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </LinearGradient>
+               </fill>
             </Text>
             <TextField fx:id="usernameTextField" layoutX="243.0" layoutY="174.0" />
-            <Text layoutX="163.0" layoutY="246.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password">
+            <Text layoutX="158.0" layoutY="246.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password">
                <font>
                   <Font size="19.0" />
                </font>
+               <fill>
+                  <LinearGradient endX="1.0" endY="1.0">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color red="0.4822327792644501" green="0.09381091594696045" blue="0.7236841917037964" />
+                           </color>
+                        </Stop>
+                        <Stop offset="0.006711409395973154">
+                           <color>
+                              <Color red="0.4822327792644501" green="0.09381091594696045" blue="0.7236841917037964" />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color red="0.33424708247184753" green="0.12938596308231354" blue="0.7763158082962036" />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </LinearGradient>
+               </fill>
             </Text>
             <TextField fx:id="passwordTextField" layoutX="243.0" layoutY="227.0" />
             <ButtonBar layoutX="363.0" layoutY="332.0" prefHeight="40.0" prefWidth="200.0">
               <buttons>
-                <Button fx:id="homepage" mnemonicParsing="false" onAction="#handleBtnHomePageWindow" text="Home Page">
+                <Button fx:id="homepage" mnemonicParsing="false" onAction="#handleBtnHomePageWindow" style="-fx-background-color: lightgreen; -fx-background-radius: 16px;" text="Home Page">
                      <textFill>
-                        <LinearGradient endY="1.0" startX="0.7220902612826603" startY="0.10451306413301663">
+                        <LinearGradient endX="1.0" endY="1.0" startX="0.7220902612826603" startY="0.10451306413301663">
                            <stops>
                               <Stop>
                                  <color>
-                                    <Color red="0.25243663787841797" green="0.47041910886764526" blue="0.7368420958518982" />
+                                    <Color red="0.530091404914856" green="0.2554999887943268" blue="0.7300000190734863" />
                                  </color>
                               </Stop>
                               <Stop offset="1.0">
                                  <color>
-                                    <Color red="1.0" green="1.0" blue="1.0" />
+                                    <Color red="0.2448018193244934" green="0.12329434603452682" blue="0.5789473652839661" />
                                  </color>
                               </Stop>
                            </stops>
@@ -71,10 +113,13 @@
                   </Button>
               </buttons>
             </ButtonBar>
-            <Button fx:id="loginBtn" layoutX="273.0" layoutY="273.0" mnemonicParsing="false" text="Submit" />
+            <Button fx:id="loginBtn" layoutX="276.0" layoutY="274.0" mnemonicParsing="false" style="-fx-background-color: #44008b; -fx-background-radius: 16px; -fx-text-fill: white; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );" text="LOG IN">
+               <font>
+                  <Font size="16.0" />
+               </font></Button>
             <Label fx:id="isConnected" layoutX="53.0" layoutY="42.0" prefHeight="17.0" prefWidth="76.0" text="Status" />
-            <Button fx:id="button_signup" layoutX="36.0" layoutY="340.0" mnemonicParsing="false" text="Sign up" />
-            <Button fx:id="button_forgetpassword" layoutX="340.0" layoutY="273.0" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-cursor: hand;" text="forget_password" textFill="#0a0dff" underline="true" />
+            <Button fx:id="button_signup" contentDisplay="CENTER" layoutX="36.0" layoutY="340.0" mnemonicParsing="false" style="-fx-border-color: #2196F3; -fx-text-fill: dodgerblue; -fx-background-color: white;" text="Sign up" />
+            <Button fx:id="button_forgetpassword" layoutX="363.0" layoutY="277.0" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-cursor: hand;" text="forget_password" textFill="#0a0dff" underline="true" />
          </children>
       </AnchorPane>
    </center>

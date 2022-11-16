@@ -3,8 +3,9 @@ package application;
 import java.io.IOException;
 import java.sql.*;
 
+import controller.ModifyAccountControl;
 import controller.UserPageControl;
-
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
@@ -13,6 +14,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.MenuButton;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
@@ -25,6 +27,23 @@ public class DatabaseUtils {
 		public static String hold_username = "";
 		
 	}
+	
+	/**
+	 * Handles all SQLite connections
+	 * 
+	 * @return connection object
+	 */
+	public static Connection dbConnection() {
+		try {
+			Class.forName("org.sqlite.JDBC");
+			Connection conn = DriverManager.getConnection("jdbc:sqlite:UserDb.sqlite");
+			return conn;
+		} catch (Exception e) {
+			System.out.println(e);
+			return null;
+		}
+	}
+	
 	/**
 	 * Chaning each the window each time click on the button
 	 * 
@@ -62,6 +81,43 @@ public class DatabaseUtils {
 		
 	}
 	
+	/**
+	 * Chaning each the window each time click on the button
+	 * 
+	 * @param event, fxmlFile, window title, username
+	 * @return nothing
+	 */
+	public static void changeScene(MenuButton event, String fxmlFile, String title,  String username) {
+		Parent root = null;
+		
+		if (username != null) {
+			
+			try {
+				FXMLLoader loader = new FXMLLoader(DatabaseUtils.class.getClassLoader().getResource(fxmlFile));
+				root = loader.load();
+				ModifyAccountControl modifyAccountControl = loader.getController();
+				modifyAccountControl.setUserInformation(username);
+				
+			}catch (IOException e){
+				e.printStackTrace();
+			}
+		}else {
+			try {
+				root = FXMLLoader.load(DatabaseUtils.class.getClassLoader().getResource(fxmlFile));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+		
+		Stage stage = (Stage) event.getScene().getWindow();
+		stage.setTitle(title);
+		stage.setScene(new Scene(root));
+		stage.show();
+		
+	}
+	
 	
 	/**
 	 * By signing up for user, passing value to funtion and access into database sqlite
@@ -69,7 +125,7 @@ public class DatabaseUtils {
 	 * @param event, username, password, email
 	 * @return nothing
 	 */
-	public static void signUpUser(ActionEvent event, String username, String password, String email,String secretquestion) throws ClassNotFoundException {
+	public static void signUpUser(ActionEvent event, String username, String password, String email,String secretquestion,String secretquestion_ans) throws ClassNotFoundException {
 		Connection connection = null;
 	    Statement stmt = null;
 
@@ -79,10 +135,12 @@ public class DatabaseUtils {
 		
 		try {
 			
-			Class.forName("org.sqlite.JDBC");
+			//Class.forName("org.sqlite.JDBC");
 			
 			//database inside the build path (jar)
-		    connection = DriverManager.getConnection("jdbc:sqlite:UserDb.sqlite");
+		    //connection = DriverManager.getConnection("jdbc:sqlite:UserDb.sqlite");
+			connection = dbConnection();
+			
 		    System.out.println("Opened database successfully");
 		    //connection.close();
 		    
@@ -100,11 +158,12 @@ public class DatabaseUtils {
 				alert.setContentText("You cannot use this username.");
 				alert.show();
 			}else {
-				psInsert = connection.prepareStatement("INSERT INTO users (username, password, email, secret_question) VALUES (?,?,?,?)");
+				psInsert = connection.prepareStatement("INSERT INTO users (username, password, email, secret_question, secret_question_ans) VALUES (?,?,?,?,?)");
 				psInsert.setString(1, username);
 				psInsert.setString(2, password);
 				psInsert.setString(3, email);
 				psInsert.setString(4, secretquestion);
+				psInsert.setString(5, secretquestion_ans);
 				
 				psInsert.executeUpdate();
 				
@@ -178,8 +237,10 @@ public class DatabaseUtils {
 		PassUtil passUtil = new PassUtil();
 		
 		try {
-			Class.forName("org.sqlite.JDBC");
-			connection = DriverManager.getConnection("jdbc:sqlite:UserDb.sqlite");
+//			Class.forName("org.sqlite.JDBC");
+//			connection = DriverManager.getConnection("jdbc:sqlite:UserDb.sqlite");
+			connection = dbConnection();
+
 			preparedStatement = connection.prepareStatement("SELECT password FROM users WHERE username =?");
 			preparedStatement.setString(1, username);
 			resultSet = preparedStatement.executeQuery();
@@ -259,8 +320,10 @@ public class DatabaseUtils {
 		
 		try {
 
-			Class.forName("org.sqlite.JDBC");
-		    connection = DriverManager.getConnection("jdbc:sqlite:UserDb.sqlite");
+//			Class.forName("org.sqlite.JDBC");
+//		    connection = DriverManager.getConnection("jdbc:sqlite:UserDb.sqlite");
+			connection = dbConnection();
+
 		    System.out.println("Opened database successfully");
 		    //connection.close();
 		    
@@ -344,8 +407,10 @@ public class DatabaseUtils {
 		
 		try {
 
-			Class.forName("org.sqlite.JDBC");
-		    connection = DriverManager.getConnection("jdbc:sqlite:UserDb.sqlite");
+//			Class.forName("org.sqlite.JDBC");
+//		    connection = DriverManager.getConnection("jdbc:sqlite:UserDb.sqlite");
+			connection = dbConnection();
+
 		    System.out.println("Opened database successfully");
 		    //connection.close();
 		    
@@ -425,8 +490,10 @@ public class DatabaseUtils {
 		
 		try {
 
-			Class.forName("org.sqlite.JDBC");
-		    connection = DriverManager.getConnection("jdbc:sqlite:UserDb.sqlite");
+//			Class.forName("org.sqlite.JDBC");
+//		    connection = DriverManager.getConnection("jdbc:sqlite:UserDb.sqlite");
+			connection = dbConnection();
+
 		    System.out.println("Opened database successfully");
 		    //connection.close();
 		    
@@ -500,10 +567,10 @@ public class DatabaseUtils {
 	 * @return nothing
 	 */
 	
-	public static void resetPassword(ActionEvent event, String email, String newpassword,String secretquestion) throws ClassNotFoundException {
+	public static void resetPassword(ActionEvent event, String email, String newpassword,String secretquestion_ans) throws ClassNotFoundException {
 		Connection connection = null;
 	    Statement stmt = null;
-
+	    
 		PreparedStatement psInsert = null;
 		PreparedStatement psCheckUserExists = null;
 		ResultSet resultSet = null;
@@ -512,17 +579,19 @@ public class DatabaseUtils {
 
 		try {
 
-			Class.forName("org.sqlite.JDBC");
-		    connection = DriverManager.getConnection("jdbc:sqlite:UserDb.sqlite");
+//			Class.forName("org.sqlite.JDBC");
+//		    connection = DriverManager.getConnection("jdbc:sqlite:UserDb.sqlite");
+			connection = dbConnection();
+
 		    System.out.println("Opened database successfully");
 		    //connection.close();
 		    
 		    
 		    //System.out.println("Table created successfully");
 			
-			psCheckUserExists = connection.prepareStatement("SELECT * FROM users WHERE email = ? AND secret_question = ?");
+			psCheckUserExists = connection.prepareStatement("SELECT * FROM users WHERE email = ? AND secret_question_ans = ?");
 			psCheckUserExists.setString(1,email);
-			psCheckUserExists.setString(2, secretquestion);
+			psCheckUserExists.setString(2, secretquestion_ans);
 			
 			resultSet = psCheckUserExists.executeQuery();
 			
@@ -592,5 +661,74 @@ public class DatabaseUtils {
 		}
 	}
 	
+	
+	public static void test(String user) {
+		Connection connection = null;
+		
+		PreparedStatement preparedStatement = null;
+		ResultSet result = null;
+		Statement create = null;
+		String username = null;
+		String email = null;
+		String questions = null;
+		
+		try {
 
+			connection = dbConnection();
+
+		    System.out.println("Opened database successfully");
+		    //connection.close();
+			preparedStatement = connection.prepareStatement("SELECT * FROM users WHERE username = ?");
+			preparedStatement.setString(1, user);
+			result = preparedStatement.executeQuery();
+			
+			while (result.next()) {
+				username = result.getString("username");
+				email = result.getString("email");
+				questions = result.getString("secret_question");
+			}
+			
+			System.out.println("Account information " + username + " and " + email);
+			System.out.println("Your questions " + questions);
+
+		}catch(SQLException e ) {
+			e.printStackTrace();
+			
+		}finally {
+			if(result != null) {
+				try {
+					result.close();
+					
+				}catch(SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (create != null) {
+				try {
+					create.close();
+				} catch ( SQLException e) {
+					e.printStackTrace();
+				}
+				
+			}
+			if (preparedStatement != null) {
+				try {
+					preparedStatement.close();
+					
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (connection != null) {
+				try { 
+					connection.close();
+				} catch(SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		
+	}
+	
 }

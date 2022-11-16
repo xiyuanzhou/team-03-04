@@ -74,6 +74,7 @@ public class SceneChangingUtils {
 	}
 
 	public static void changeScene(MenuButton e, String file, String title) throws IOException {
+
 		// TODO Auto-generated method stub
 		Parent root = null;
 		FXMLLoader loader = new FXMLLoader(SceneChangingUtils.class.getClassLoader().getResource(file));
@@ -88,5 +89,6 @@ public class SceneChangingUtils {
 		stage.centerOnScreen();
 	}
 	
-
+	
+	
 }

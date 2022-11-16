@@ -109,11 +109,12 @@ public class UserPageControl implements Initializable{
 		});
 		
 		item_profiles.setOnAction(new EventHandler<ActionEvent>() {
-
+			
 			@Override
-			public void handle(ActionEvent arg0) {
-				// TODO Auto-generated method stub
-				System.out.println("hello hello hello");
+			public void handle(ActionEvent event) {
+				DatabaseUtils.changeScene(menubutton_account, "view/ModifyAccount.fxml","User Profiles",DatabaseUtils.Global.hold_username);
+				
+				DatabaseUtils.test(DatabaseUtils.Global.hold_username);
 			}
 			
 		});

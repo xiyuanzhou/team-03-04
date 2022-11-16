@@ -42,6 +42,9 @@ public class SignupPageControl implements Initializable {
     private TextField tf_secretquestion;
     
     @FXML
+    private TextField tf_ans;
+    
+    @FXML
     public void handleBtnHomePageWindow(ActionEvent event) {
        	homepage.setOnMouseClicked(e -> {
     			try {
@@ -72,12 +75,12 @@ public class SignupPageControl implements Initializable {
 			public void handle(ActionEvent event) {
 				// TODO Auto-generated method stub
 				
-				if (!tf_username.getText().trim().isEmpty() && !tf_password.getText().trim().isEmpty() && !tf_email.getText().trim().isEmpty()) {
+				if (!tf_username.getText().trim().isEmpty() && !tf_password.getText().trim().isEmpty() && !tf_email.getText().trim().isEmpty() && !tf_ans.getText().trim().isEmpty()) {
 					try {
 						PassUtil passUtil = new PassUtil();
 						String passwordEncrypted = passUtil.encrypt(tf_password.getText());
 						//DatabaseUtils.signUpUser(event, tf_username.getText(), tf_password.getText(), tf_email.getText(), tf_secretquestion.getText());
-						DatabaseUtils.signUpUser(event, tf_username.getText(), passwordEncrypted, tf_email.getText(), tf_secretquestion.getText());
+						DatabaseUtils.signUpUser(event, tf_username.getText(), passwordEncrypted, tf_email.getText(), tf_secretquestion.getText(),tf_ans.getText());
 					} catch (ClassNotFoundException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
