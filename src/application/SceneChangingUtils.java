@@ -5,6 +5,7 @@ import java.util.EventObject;
 
 import controller.homePageControl;
 import controller.LoginPageControl;
+import controller.ResetPasswordControl2;
 import controller.SignupPageControl;
 import controller.UserPageControl;
 import javafx.event.ActionEvent;
@@ -89,6 +90,24 @@ public class SceneChangingUtils {
 		stage.centerOnScreen();
 	}
 	
+	public static void resetpasswordScene(ActionEvent e, String title, String file, String questions) throws IOException{
+		
+		// TODO Auto-generated method stub
+		Parent root = null;
+		FXMLLoader loader = new FXMLLoader(SceneChangingUtils.class.getClassLoader().getResource(file));
+		root = loader.load();
+		
+		ResetPasswordControl2 questionpage = loader.getController();
+		questionpage.setQuestionInformation(questions);
+		
+
+		Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
+		Scene scene = new Scene(root);
+		stage.setTitle(title);
+		stage.setScene(scene);
+		stage.show();
+		stage.centerOnScreen();
+	}
 	
 	
 }

@@ -232,7 +232,7 @@ public class DatabaseUtils {
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet =null;
 		
-		String dBPassword = "";
+		//String dBPassword = "";
 		String passwordDecrypted = "";
 		PassUtil passUtil = new PassUtil();
 		
@@ -567,7 +567,97 @@ public class DatabaseUtils {
 	 * @return nothing
 	 */
 	
-	public static void resetPassword(ActionEvent event, String email, String newpassword,String secretquestion_ans) throws ClassNotFoundException {
+	public static void resetPassword(ActionEvent event, String email, String username) throws ClassNotFoundException {
+		Connection connection = null;
+	    
+		PreparedStatement psCheckUserExists = null;
+		ResultSet resultSet = null;
+		String email1 = null;
+		String username1 = null;
+		String questions = null;
+		
+        Alert a = new Alert(AlertType.NONE);
+
+		try {
+
+//			Class.forName("org.sqlite.JDBC");
+//		    connection = DriverManager.getConnection("jdbc:sqlite:UserDb.sqlite");
+			connection = dbConnection();
+
+		    System.out.println("Opened database successfully");
+		    //connection.close();
+		    
+		    
+		    //System.out.println("Table created successfully");
+			
+			psCheckUserExists = connection.prepareStatement("SELECT * FROM users WHERE email = ? AND username = ?");
+			psCheckUserExists.setString(1,email);
+			psCheckUserExists.setString(2, username);
+			
+			resultSet = psCheckUserExists.executeQuery();
+			
+			if (resultSet.isBeforeFirst()) {
+				System.out.println("email found");
+				System.out.println("user found");
+				//email1 = resultSet.getString("email");
+				//username1 = resultSet.getString("username");
+				questions = resultSet.getString("secret_question");
+				
+				//System.out.println(email1 + "  " + username1);
+				//System.out.println(questions);
+
+                a.setAlertType(AlertType.INFORMATION);
+                a.getDialogPane().setHeaderText("User have been found! Jump to the Secret Questions");
+                a.showAndWait();
+				try {
+					Global.hold_username = resultSet.getString("username");
+					SceneChangingUtils.resetpasswordScene(event,"secret question","view/ResetPassword2.fxml",questions);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+			}else {
+				Alert alert = new Alert(Alert.AlertType.ERROR);
+				alert.setContentText("can't find email or user name");
+				alert.show();
+			}
+				
+			
+			
+
+		}catch(SQLException e ) {
+			e.printStackTrace();
+			
+		}finally {
+			if(resultSet != null) {
+				try {
+					resultSet.close();
+					
+				}catch(SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (psCheckUserExists != null) {
+				try {
+					psCheckUserExists.close();
+				} catch ( SQLException e) {
+					e.printStackTrace();
+				}
+				
+			}
+			if (connection != null) {
+				try { 
+					connection.close();
+				} catch(SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+	
+	
+	public static void resetPassword2(ActionEvent event, String answer,String newpassword) throws ClassNotFoundException {
 		Connection connection = null;
 	    Statement stmt = null;
 	    
@@ -589,19 +679,19 @@ public class DatabaseUtils {
 		    
 		    //System.out.println("Table created successfully");
 			
-			psCheckUserExists = connection.prepareStatement("SELECT * FROM users WHERE email = ? AND secret_question_ans = ?");
-			psCheckUserExists.setString(1,email);
-			psCheckUserExists.setString(2, secretquestion_ans);
+			psCheckUserExists = connection.prepareStatement("SELECT * FROM users WHERE username = ? AND secret_question_ans = ?");
+			psCheckUserExists.setString(1,Global.hold_username);
+			psCheckUserExists.setString(2, answer);
 			
 			resultSet = psCheckUserExists.executeQuery();
 			
 			if (resultSet.isBeforeFirst()) {
-				System.out.println("email found");
+				System.out.println("answer is correct found");
 				
 				PassUtil passUtil = new PassUtil();
 				String encryptedPass = passUtil.encrypt(newpassword);
 				
-				psInsert = connection.prepareStatement("UPDATE users set password = '"+encryptedPass+"' where email = '"+email+"'");
+				psInsert = connection.prepareStatement("UPDATE users set password = '"+encryptedPass+"' where username = '"+Global.hold_username+"'");
 				psInsert.executeUpdate();
 				
                 a.setAlertType(AlertType.INFORMATION);
@@ -616,7 +706,7 @@ public class DatabaseUtils {
 
 			}else {
 				Alert alert = new Alert(Alert.AlertType.ERROR);
-				alert.setContentText("can't find email");
+				alert.setContentText("Answer is wrong");
 				alert.show();
 			}
 				
@@ -660,6 +750,103 @@ public class DatabaseUtils {
 			}
 		}
 	}
+
+	public static void deleteAccount(ActionEvent event, String username, String password,String email) throws ClassNotFoundException {
+		Connection connection = null;
+
+		PreparedStatement psInsert = null;
+		PreparedStatement psCheckUserExists = null;
+		ResultSet resultSet = null;
+		
+		String passwordDecrypted = "";
+		PassUtil passUtil = new PassUtil();
+		
+		try {
+			connection = dbConnection();
+
+		    System.out.println("Opened database successfully");
+		    //connection.close();
+		    
+		    //System.out.println("Table created successfully");
+			
+			psCheckUserExists = connection.prepareStatement("SELECT * FROM users WHERE username = ? AND email = ?");
+			psCheckUserExists.setString(1,username);
+			psCheckUserExists.setString(2,email);
+
+			resultSet = psCheckUserExists.executeQuery();
+			
+			if (resultSet.isBeforeFirst()) {
+				System.out.println("User found");
+				
+				String retrievedPassword = resultSet.getString("password");
+				passwordDecrypted = passUtil.decrypt(retrievedPassword);
+				
+				if (passwordDecrypted.equals(password)) {
+					Global.hold_username = username;
+					psInsert = connection.prepareStatement("DELETE FROM users WHERE username = '"+username+"'");
+					psInsert.executeUpdate();
+					
+			        Alert a = new Alert(AlertType.NONE);
+					// TODO Auto-generated method stub
+			        
+	                a.setAlertType(AlertType.INFORMATION);
+	                a.getDialogPane().setHeaderText("Delete success!");
+	                a.showAndWait();
+					
+					changeScene(event,"view/HomePage.fxml","Welcome!", null);	
+					
+					}else {
+					System.out.println("Passwords did not match!");
+					Alert alert = new Alert(Alert.AlertType.ERROR);
+					alert.setContentText("The provided credentials are incorrect!");
+					alert.show();
+				}
+
+			}else {
+				Alert alert = new Alert(Alert.AlertType.ERROR);
+				alert.setContentText("Won't match");
+				alert.show();
+			}
+				
+		}catch(SQLException e ) {
+			e.printStackTrace();
+			
+		}finally {
+			if(resultSet != null) {
+				try {
+					resultSet.close();
+					
+				}catch(SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (psCheckUserExists != null) {
+				try {
+					psCheckUserExists.close();
+				} catch ( SQLException e) {
+					e.printStackTrace();
+				}
+				
+			}
+			if (psInsert != null) {
+				try {
+					psInsert.close();
+					
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (connection != null) {
+				try { 
+					connection.close();
+				} catch(SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+	
+	
 	
 	
 	public static void test(String user) {

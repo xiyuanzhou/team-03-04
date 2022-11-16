@@ -10,7 +10,10 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.text.Text;
 
 public class ModifyAccountControl implements Initializable{
@@ -39,12 +42,21 @@ public class ModifyAccountControl implements Initializable{
 			
 			@Override
 			public void handle(ActionEvent event) {
-				try {
-					SceneChangingUtils.changeScene(event, "Delete Account", "view/DeleteAccount.fxml");
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+		        Alert a = new Alert(AlertType.NONE);
+				// TODO Auto-generated method stub
+		        
+                a.setAlertType(AlertType.CONFIRMATION);
+                a.getDialogPane().setHeaderText("Are you sure want to delete?");
+                a.showAndWait();
+				
+                if (a.getResult() == ButtonType.OK) {
+    				try {
+    					SceneChangingUtils.changeScene(event, "Delete Account", "view/DeleteAccount.fxml");
+    				} catch (IOException e) {
+    					// TODO Auto-generated catch block
+    					e.printStackTrace();
+    				}
+                }
 			}
 			
 		});
