@@ -80,7 +80,7 @@ public class LoginPageControl implements Initializable {
 		});
     	
     	loginBtn.setOnAction(new EventHandler<ActionEvent>() {
-
+    		
 			@Override
 			public void handle(ActionEvent event) {
 				// TODO Auto-generated method stub
@@ -97,13 +97,16 @@ public class LoginPageControl implements Initializable {
     	
     	button_forgetpassword.setOnMouseClicked(e -> {
 			try {
+				
 				SceneChangingUtils.changeScene(e, "Rset Password", "view/ResetPassword.fxml");
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
 		});
     	
+    	
 	}
+	
    
 	
 }

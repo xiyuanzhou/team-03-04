@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
@@ -40,55 +39,132 @@
                <font>
                   <Font size="16.0" />
                </font>
+               <fill>
+                  <LinearGradient endX="1.0" endY="1.0">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color red="0.4629020392894745" green="0.03837719187140465" blue="0.5921052694320679" />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color red="0.20492202043533325" green="0.2607456147670746" blue="0.7631579041481018" />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </LinearGradient>
+               </fill>
             </Text>
             <Text layoutX="164.0" layoutY="200.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email" wrappingWidth="36.28125">
                <font>
                   <Font size="16.0" />
                </font>
+               <fill>
+                  <LinearGradient endX="1.0" endY="1.0">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color red="0.4629020392894745" green="0.03837719187140465" blue="0.5921052694320679" />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color red="0.35575050115585327" green="0.1388888955116272" blue="0.7894737124443054" />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </LinearGradient>
+               </fill>
             </Text>
             <Text layoutX="150.0" layoutY="236.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password">
                <font>
                   <Font size="16.0" />
                </font>
+               <fill>
+                  <LinearGradient endX="1.0" endY="1.0">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color red="0.4629020392894745" green="0.03837719187140465" blue="0.5921052694320679" />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color red="0.1758396327495575" green="0.11738547682762146" blue="0.6184210777282715" />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </LinearGradient>
+               </fill>
             </Text>
             <TextField fx:id="tf_username" layoutX="230.0" layoutY="147.0" />
             <TextField fx:id="tf_email" layoutX="230.0" layoutY="182.0" />
             <TextField fx:id="tf_password" layoutX="230.0" layoutY="218.0" />
-            <ButtonBar layoutX="357.0" layoutY="335.0" prefHeight="40.0" prefWidth="200.0">
-              <buttons>
-                <Button fx:id="homepage" mnemonicParsing="false" onAction="#handleBtnHomePageWindow" text="Home Page">
-                     <textFill>
-                        <LinearGradient startY="0.9144893111638955">
-                           <stops>
-                              <Stop>
-                                 <color>
-                                    <Color red="0.21856725215911865" green="0.5367568135261536" blue="0.6842105388641357" />
-                                 </color>
-                              </Stop>
-                              <Stop offset="1.0">
-                                 <color>
-                                    <Color red="1.0" green="1.0" blue="1.0" />
-                                 </color>
-                              </Stop>
-                           </stops>
-                        </LinearGradient>
-                     </textFill>
-                  </Button>
-              </buttons>
-            </ButtonBar>
-            <Button fx:id="button_signup" layoutX="272.0" layoutY="322.0" mnemonicParsing="false" text="Submit" />
-            <Button fx:id="button_login" layoutX="22.0" layoutY="343.0" mnemonicParsing="false" text="Log in" />
-            <Text layoutX="104.0" layoutY="266.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Secret Question:">
+            <Button fx:id="button_signup" layoutX="281.0" layoutY="342.0" mnemonicParsing="false" text="Sign Up" />
+            <Button fx:id="button_login" layoutX="36.0" layoutY="29.0" mnemonicParsing="false" text="Log in" />
+            <Text layoutX="36.0" layoutY="280.0" strokeType="OUTSIDE" strokeWidth="0.0" text="(Make your own)Secret Question:" wrappingWidth="227.34375">
                <font>
                   <Font size="16.0" />
                </font>
+               <fill>
+                  <LinearGradient endX="1.0" endY="1.0">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color red="0.18640351295471191" green="0.4736842215061188" blue="0.2438596487045288" />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color red="0.7105262875556946" green="0.055921051651239395" blue="0.3068530559539795" />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </LinearGradient>
+               </fill>
             </Text>
-            <Text layoutX="220.0" layoutY="267.0" strokeType="OUTSIDE" strokeWidth="0.0" text="What is your birth date?(day/month/year)">
+            <TextField fx:id="tf_secretquestion" layoutX="272.0" layoutY="261.0" prefHeight="26.0" prefWidth="226.0" />
+            <TextField fx:id="tf_ans" layoutX="272.0" layoutY="298.0" prefHeight="26.0" prefWidth="227.0" />
+            <Text layoutX="208.0" layoutY="316.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Answer:">
                <font>
                   <Font size="16.0" />
                </font>
+               <fill>
+                  <LinearGradient endX="1.0" endY="1.0">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color red="0.18640351295471191" green="0.4736842215061188" blue="0.2438596487045288" />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color red="0.6399999856948853" green="0.08320000022649765" blue="0.20535962283611298" />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </LinearGradient>
+               </fill>
             </Text>
-            <TextField fx:id="tf_secretquestion" layoutX="230.0" layoutY="283.0" />
+          <Button fx:id="homepage" layoutX="498.0" layoutY="29.0" mnemonicParsing="false" onAction="#handleBtnHomePageWindow" text="Home Page">
+               <textFill>
+                  <LinearGradient startY="0.9144893111638955">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color red="0.21856725215911865" green="0.5367568135261536" blue="0.6842105388641357" />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color red="1.0" green="1.0" blue="1.0" />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </LinearGradient>
+               </textFill>
+            </Button>
          </children>
       </AnchorPane>
    </center>

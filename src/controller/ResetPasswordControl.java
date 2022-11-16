@@ -14,6 +14,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
+import javafx.scene.text.Text;
 
 import java.io.IOException;
 import java.net.URL;
@@ -33,8 +34,14 @@ public class ResetPasswordControl implements Initializable {
     @FXML
     private Button button_reset;
     
+//    @FXML
+//    private TextField tf_secretquestion;
+    
     @FXML
-    private TextField tf_secretquestion;
+    private Text label_question;
+    
+    @FXML
+    private TextField tf_ans;
     
 	/**
 	 * Called to initialize a controller after its root element has been completely
@@ -62,9 +69,9 @@ public class ResetPasswordControl implements Initializable {
 			public void handle(ActionEvent event) {
 				// TODO Auto-generated method stub
 				
-				if (!tf_email.getText().trim().isEmpty() && !tf_newpassword.getText().trim().isEmpty() && !tf_secretquestion.getText().trim().isEmpty()) {
+				if (!tf_email.getText().trim().isEmpty() && !tf_newpassword.getText().trim().isEmpty() && !tf_ans.getText().trim().isEmpty()) {
 					try {
-						DatabaseUtils.resetPassword(event, tf_email.getText(),tf_newpassword.getText(),tf_secretquestion.getText());
+						DatabaseUtils.resetPassword(event, tf_email.getText(),tf_newpassword.getText(),tf_ans.getText());
 					} catch (ClassNotFoundException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -79,9 +86,12 @@ public class ResetPasswordControl implements Initializable {
 	   		
 	   	});
 		
-		
-		
 	}
+	
+	public void setUserInformation(String question) {
+		label_question.setText(" "+ question + "!");
+	}
+	
 	
 }
 

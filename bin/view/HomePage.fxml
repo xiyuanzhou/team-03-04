@@ -15,31 +15,7 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.homePageControl">
    <top>
-      <AnchorPane prefHeight="93.0" prefWidth="600.0" BorderPane.alignment="CENTER">
-         <children>
-            <Text layoutX="349.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Personal Index Card" wrappingWidth="209.21630859375">
-               <font>
-                  <Font name="System Bold Italic" size="24.0" />
-               </font>
-               <fill>
-                  <RadialGradient centerX="0.45567867036011084" centerY="0.5" radius="0.6271676300578035">
-                     <stops>
-                        <Stop>
-                           <color>
-                              <Color red="0.061403509229421616" green="0.35672515630722046" blue="0.9473684430122375" />
-                           </color>
-                        </Stop>
-                        <Stop offset="1.0">
-                           <color>
-                              <Color red="0.10185185074806213" green="0.7754629850387573" blue="1.0" />
-                           </color>
-                        </Stop>
-                     </stops>
-                  </RadialGradient>
-               </fill>
-            </Text>
-         </children>
-      </AnchorPane>
+      <AnchorPane prefHeight="93.0" prefWidth="600.0" BorderPane.alignment="CENTER" />
    </top>
    <bottom>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
@@ -49,18 +25,18 @@
                   <Image url="@../images/istock.jpeg" />
                </image>
             </ImageView>
-            <Button fx:id="loginButton" layoutX="384.0" layoutY="73.0" mnemonicParsing="false" onAction="#handleBtnLoginWindow" prefHeight="34.0" prefWidth="154.0" style="-fx-padding: 10 px 15px; -fx-background-color: lightblue; -fx-border-radius: 5px;" text="Log In">
+            <Button fx:id="loginButton" layoutX="390.0" layoutY="75.0" mnemonicParsing="false" onAction="#handleBtnLoginWindow" prefHeight="34.0" prefWidth="154.0" style="-fx-padding: 10 px 15px; -fx-background-color: lightblue; -fx-border-radius: 5px;" text="Log In">
                <font>
                   <Font size="14.0" />
                </font>
             </Button>
-            <Button fx:id="signupButton" layoutX="423.0" layoutY="137.0" mnemonicParsing="false" onAction="#handleBtnSignupWindow" prefHeight="32.0" prefWidth="76.0" style="-fx-padding: 10px 15px; -fx-background-color: lightblue; -fx-border-radius: 5 px;" text="Sign up">
+            <Button fx:id="signupButton" layoutX="429.0" layoutY="137.0" mnemonicParsing="false" onAction="#handleBtnSignupWindow" prefHeight="32.0" prefWidth="76.0" style="-fx-padding: 10px 15px; -fx-background-color: lightblue; -fx-border-radius: 5 px;" text="Sign up">
                <font>
                   <Font size="14.0" />
                </font>
             </Button>
             <Line endY="195.5" layoutX="300.0" layoutY="114.0" startY="-203.0" stroke="#2b2c46" strokeWidth="3.0" />
-            <Text layoutX="75.0" layoutY="121.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Home Page" wrappingWidth="148.21630859375">
+            <Text layoutX="75.0" layoutY="67.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Home Page" wrappingWidth="148.21630859375">
                <font>
                   <Font size="30.0" />
                </font>
@@ -79,6 +55,27 @@
                         </Stop>
                      </stops>
                   </LinearGradient>
+               </fill>
+            </Text>
+            <Text layoutX="362.0" layoutY="28.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Personal Index Card" wrappingWidth="209.21630859375">
+               <font>
+                  <Font name="System Bold Italic" size="24.0" />
+               </font>
+               <fill>
+                  <RadialGradient centerX="0.45567867036011084" centerY="0.5" radius="0.6271676300578035">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color red="0.061403509229421616" green="0.35672515630722046" blue="0.9473684430122375" />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color red="0.10185185074806213" green="0.7754629850387573" blue="1.0" />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </RadialGradient>
                </fill>
             </Text>
          </children>
