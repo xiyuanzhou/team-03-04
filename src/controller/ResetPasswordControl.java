@@ -28,8 +28,6 @@ public class ResetPasswordControl implements Initializable {
     @FXML
     private TextField tf_email;
 
-    @FXML
-    private TextField tf_newpassword;
     
     @FXML
     private Button button_reset;
@@ -37,11 +35,9 @@ public class ResetPasswordControl implements Initializable {
 //    @FXML
 //    private TextField tf_secretquestion;
     
-    @FXML
-    private Text label_question;
     
     @FXML
-    private TextField tf_ans;
+    private TextField tf_username;
     
 	/**
 	 * Called to initialize a controller after its root element has been completely
@@ -69,9 +65,9 @@ public class ResetPasswordControl implements Initializable {
 			public void handle(ActionEvent event) {
 				// TODO Auto-generated method stub
 				
-				if (!tf_email.getText().trim().isEmpty() && !tf_newpassword.getText().trim().isEmpty() && !tf_ans.getText().trim().isEmpty()) {
+				if (!tf_email.getText().trim().isEmpty() && !tf_username.getText().trim().isEmpty()) {
 					try {
-						DatabaseUtils.resetPassword(event, tf_email.getText(),tf_newpassword.getText(),tf_ans.getText());
+						DatabaseUtils.resetPassword(event, tf_email.getText(),tf_username.getText());
 					} catch (ClassNotFoundException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -88,9 +84,6 @@ public class ResetPasswordControl implements Initializable {
 		
 	}
 	
-	public void setUserInformation(String question) {
-		label_question.setText(" "+ question + "!");
-	}
 	
 	
 }

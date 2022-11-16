@@ -84,11 +84,18 @@ public class LoginPageControl implements Initializable {
 			@Override
 			public void handle(ActionEvent event) {
 				// TODO Auto-generated method stub
-				try {
-					DatabaseUtils.logInUser(event,usernameTextField.getText(),passwordTextField.getText());
-				} catch (ClassNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+				if (!usernameTextField.getText().trim().isEmpty() && !passwordTextField.getText().trim().isEmpty()) {
+					try {
+						DatabaseUtils.logInUser(event,usernameTextField.getText(),passwordTextField.getText());
+					} catch (ClassNotFoundException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}else {
+					System.out.println("Please fill in all information");
+					Alert alert = new Alert(Alert.AlertType.ERROR);
+					alert.setContentText("Please fill in all information!");
+					alert.show();
 				}
 				
 			}

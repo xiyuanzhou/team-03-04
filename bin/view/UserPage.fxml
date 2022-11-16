@@ -15,38 +15,64 @@
    <center>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <Text fx:id="label_welcome" layoutX="17.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome" wrappingWidth="209.33984375">
+            <Text fx:id="label_welcome" layoutX="14.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome" wrappingWidth="272.33984375">
                <font>
-                  <Font size="21.0" />
+                  <Font size="30.0" />
                </font>
+               <fill>
+                  <LinearGradient endX="1.0" endY="1.0">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color red="0.3839181363582611" green="0.18372319638729095" blue="0.6842105388641357" />
+                           </color>
+                        </Stop>
+                        <Stop offset="0.006711409395973154">
+                           <color>
+                              <Color red="0.3839181363582611" green="0.18372319638729095" blue="0.6842105388641357" />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color red="0.09137427061796188" green="0.13858430087566376" blue="0.6578947305679321" />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </LinearGradient>
+               </fill>
             </Text>
-            <Button fx:id="button_course" layoutX="14.0" layoutY="279.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="108.0" text="Create Course" />
-            <Button fx:id="button_delete" layoutX="15.0" layoutY="354.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="107.0" text="Delete Course" />
-            <Button fx:id="button_rename" layoutX="15.0" layoutY="316.0" mnemonicParsing="false" text="Rename Course " />
-            <MenuButton fx:id="menubutton_account" layoutX="486.0" layoutY="11.0" mnemonicParsing="false" text="Account">
+            <Button fx:id="button_course" layoutX="14.0" layoutY="360.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="108.0" text="Create Course" />
+            <Button fx:id="button_delete" layoutX="479.0" layoutY="360.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="107.0" text="Delete Course" />
+            <Button fx:id="button_rename" layoutX="247.0" layoutY="360.0" mnemonicParsing="false" text="Rename Course " />
+            <MenuButton fx:id="menubutton_account" layoutX="484.0" layoutY="24.0" mnemonicParsing="false" style="-fx-background-color: white; -fx-border-color: blue;" text="Account">
                <items>
                   <MenuItem id="item_profiles" fx:id="item_profiles" mnemonicParsing="false" style="-fx-font-size: 19px;" text="Profiles" />
                   <MenuItem id="item_logout" fx:id="item_logout" mnemonicParsing="false" style="-fx-font-size: 19px;" text="Log out" />
                </items>
+               <font>
+                  <Font size="16.0" />
+               </font>
                <textFill>
                   <LinearGradient endX="0.8717339667458432" endY="0.13539192399049882" startX="0.8503562945368172">
                      <stops>
                         <Stop>
                            <color>
-                              <Color red="0.011874593794345856" green="0.00828460045158863" blue="0.22368420660495758" />
+                              <Color red="0.5789473652839661" green="0.28679338097572327" blue="0.520516574382782" />
+                           </color>
+                        </Stop>
+                        <Stop offset="0.07198395809461451">
+                           <color>
+                              <Color red="0.1586257368326187" green="0.2900584936141968" blue="0.8157894611358643" />
                            </color>
                         </Stop>
                         <Stop offset="1.0">
                            <color>
-                              <Color red="0.2240000069141388" green="0.5600000023841858" blue="0.3853227198123932" />
+                              <Color red="0.42701834440231323" green="0.09917154163122177" blue="0.5789473652839661" />
                            </color>
                         </Stop>
                      </stops>
                   </LinearGradient>
                </textFill>
-               <font>
-                  <Font size="16.0" />
-               </font>
             </MenuButton>
          </children>
       </AnchorPane>

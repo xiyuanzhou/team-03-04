@@ -101,8 +101,24 @@
             <TextField fx:id="tf_username" layoutX="230.0" layoutY="147.0" />
             <TextField fx:id="tf_email" layoutX="230.0" layoutY="182.0" />
             <TextField fx:id="tf_password" layoutX="230.0" layoutY="218.0" />
-            <Button fx:id="button_signup" layoutX="281.0" layoutY="342.0" mnemonicParsing="false" text="Sign Up" />
-            <Button fx:id="button_login" layoutX="36.0" layoutY="29.0" mnemonicParsing="false" text="Log in" />
+            <Button fx:id="button_signup" layoutX="278.0" layoutY="344.0" mnemonicParsing="false" style="-fx-background-color: white; -fx-border-color: blue;" text="Sign Up">
+               <textFill>
+                  <LinearGradient endX="1.0" endY="1.0">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color red="0.030701754614710808" green="0.2967836260795593" blue="0.8289473652839661" />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color red="0.45382553339004517" green="0.4878370761871338" blue="0.6578947305679321" />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </LinearGradient>
+               </textFill></Button>
+            <Button fx:id="button_login" layoutX="36.0" layoutY="29.0" mnemonicParsing="false" style="-fx-background-color: #44008b; -fx-text-fill: white; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 ); -fx-background-radius: 16px;" text="Log in" />
             <Text layoutX="36.0" layoutY="280.0" strokeType="OUTSIDE" strokeWidth="0.0" text="(Make your own)Secret Question:" wrappingWidth="227.34375">
                <font>
                   <Font size="16.0" />
@@ -147,18 +163,18 @@
                   </LinearGradient>
                </fill>
             </Text>
-          <Button fx:id="homepage" layoutX="498.0" layoutY="29.0" mnemonicParsing="false" onAction="#handleBtnHomePageWindow" text="Home Page">
+          <Button fx:id="homepage" layoutX="498.0" layoutY="29.0" mnemonicParsing="false" onAction="#handleBtnHomePageWindow" style="-fx-background-color: lightgreen; -fx-background-radius: 11px;" text="Home Page">
                <textFill>
-                  <LinearGradient startY="0.9144893111638955">
+                  <LinearGradient endX="1.0" endY="1.0" startY="0.9144893111638955">
                      <stops>
                         <Stop>
                            <color>
-                              <Color red="0.21856725215911865" green="0.5367568135261536" blue="0.6842105388641357" />
+                              <Color red="0.028813352808356285" green="0.39574703574180603" blue="0.5657894611358643" />
                            </color>
                         </Stop>
                         <Stop offset="1.0">
                            <color>
-                              <Color red="1.0" green="1.0" blue="1.0" />
+                              <Color red="0.3948018252849579" green="0.15107212960720062" blue="0.8157894611358643" />
                            </color>
                         </Stop>
                      </stops>

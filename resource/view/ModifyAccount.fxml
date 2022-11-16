@@ -19,12 +19,25 @@
    <top>
       <AnchorPane prefHeight="67.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="button_main" layoutX="494.0" layoutY="18.0" mnemonicParsing="false" style="-fx-background-color: lightblue; -fx-text-fill: white; -fx-background-radius: 16px;" stylesheets="@../css/application.css" text="Main Page">
-               <font>
-                  <Font size="16.0" />
-               </font>
+            <Button fx:id="button_main" layoutX="511.0" layoutY="23.0" mnemonicParsing="false" style="-fx-background-color: lightgreen;" stylesheets="@../css/application.css" text="Main Page">
+               <textFill>
+                  <LinearGradient endX="1.0" endY="1.0">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color red="0.4896929860115051" green="0.09210526198148727" blue="0.7368420958518982" />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color red="0.24457846581935883" green="0.23757310211658478" blue="0.6578947305679321" />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </LinearGradient>
+               </textFill>
             </Button>
-            <Text fx:id="label_hello" layoutX="14.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Account, " wrappingWidth="160.6875">
+            <Text fx:id="label_hello" layoutX="14.0" layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Account, " wrappingWidth="160.6875">
                <font>
                   <Font size="30.0" />
                </font>
