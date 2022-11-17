@@ -149,7 +149,7 @@ team-03-04
 - Project version 0.9 completed
     - Sign up encryption/decryption ✅
     - Delete account after successful login ✅
-    - Modify account after successful login 
+    - Modify account after successful login ✅
     - Create new index card under the chosen course 
     - Modify an index card
     - Delete an index card

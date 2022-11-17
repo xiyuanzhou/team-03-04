@@ -5,6 +5,7 @@ import java.util.EventObject;
 
 import controller.homePageControl;
 import controller.LoginPageControl;
+import controller.ModifyAccountControl;
 import controller.ResetPasswordControl2;
 import controller.SignupPageControl;
 import controller.UserPageControl;
@@ -109,5 +110,22 @@ public class SceneChangingUtils {
 		stage.centerOnScreen();
 	}
 	
+	public static void updatedprofileScene(ActionEvent e, String title, String file, String username) throws IOException{
+		
+		// TODO Auto-generated method stub
+		Parent root = null;
+		FXMLLoader loader = new FXMLLoader(SceneChangingUtils.class.getClassLoader().getResource(file));
+		root = loader.load();
+		
+		ModifyAccountControl modifyAccountcontrol = loader.getController();
+		modifyAccountcontrol.setUserInformation(username,null,null);
+		
+		Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
+		Scene scene = new Scene(root);
+		stage.setTitle(title);
+		stage.setScene(scene);
+		stage.show();
+		stage.centerOnScreen();
+	}
 	
 }

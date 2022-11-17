@@ -15,7 +15,7 @@
    <center>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <Text fx:id="label_welcome" layoutX="14.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome" wrappingWidth="272.33984375">
+            <Text fx:id="label_welcome" layoutX="14.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome" wrappingWidth="450.33984375">
                <font>
                   <Font size="30.0" />
                </font>

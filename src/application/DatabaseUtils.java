@@ -90,16 +90,70 @@ public class DatabaseUtils {
 	public static void changeScene(MenuButton event, String fxmlFile, String title,  String username) {
 		Parent root = null;
 		
-		if (username != null) {
+		Connection connection = null;
+
+		PreparedStatement psInsert = null;
+
+		PreparedStatement psCheckUserExists = null;
+		ResultSet resultSet = null;
+		
+		String temp_email = null;
+		String temp_question =null;
+		
+		if (username != null) {	
 			
 			try {
+				connection = dbConnection();
+			    System.out.println("Opened database successfully");
+				psCheckUserExists = connection.prepareStatement("SELECT * FROM users WHERE username = ?");
+				psCheckUserExists.setString(1,username);
+				resultSet = psCheckUserExists.executeQuery();
+				
+				if (resultSet.isBeforeFirst()) {
+					temp_email = resultSet.getString("email");
+					temp_question = resultSet.getString("secret_question");
+				}
 				FXMLLoader loader = new FXMLLoader(DatabaseUtils.class.getClassLoader().getResource(fxmlFile));
 				root = loader.load();
 				ModifyAccountControl modifyAccountControl = loader.getController();
-				modifyAccountControl.setUserInformation(username);
+				modifyAccountControl.setUserInformation(username,temp_email,temp_question);
 				
 			}catch (IOException e){
 				e.printStackTrace();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}finally {
+				if(resultSet != null) {
+					try {
+						resultSet.close();
+						
+					}catch(SQLException e) {
+						e.printStackTrace();
+					}
+				}
+				if (psCheckUserExists != null) {
+					try {
+						psCheckUserExists.close();
+					} catch ( SQLException e) {
+						e.printStackTrace();
+					}
+				}
+				if (psInsert != null) {
+					try {
+						psInsert.close();
+						
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+				}
+				if (connection != null) {
+					try { 
+						connection.close();
+					} catch(SQLException e) {
+						e.printStackTrace();
+					}
+				}
 			}
 		}else {
 			try {
@@ -127,7 +181,6 @@ public class DatabaseUtils {
 	 */
 	public static void signUpUser(ActionEvent event, String username, String password, String email,String secretquestion,String secretquestion_ans) throws ClassNotFoundException {
 		Connection connection = null;
-	    Statement stmt = null;
 
 		PreparedStatement psInsert = null;
 		PreparedStatement psCheckUserExists = null;
@@ -292,7 +345,6 @@ public class DatabaseUtils {
 				}
 				
 			}
-
 			if (connection != null) {
 				try { 
 					connection.close();
@@ -482,7 +534,6 @@ public class DatabaseUtils {
 	 */
 	public static void renameCourse(ActionEvent event, String coursename, String rename,String email) throws ClassNotFoundException {
 		Connection connection = null;
-	    Statement stmt = null;
 
 		PreparedStatement psInsert = null;
 		PreparedStatement psCheckUserExists = null;
@@ -517,10 +568,6 @@ public class DatabaseUtils {
 				alert.setContentText("can't find course");
 				alert.show();
 			}
-				
-			
-			
-
 		}catch(SQLException e ) {
 			e.printStackTrace();
 			
@@ -566,7 +613,6 @@ public class DatabaseUtils {
 	 * @param  event, password, email
 	 * @return nothing
 	 */
-	
 	public static void resetPassword(ActionEvent event, String email, String username) throws ClassNotFoundException {
 		Connection connection = null;
 	    
@@ -846,6 +892,125 @@ public class DatabaseUtils {
 		}
 	}
 	
+	
+	public static void updateProfiles(ActionEvent event, String username, String new_updated, int options,String sqa) throws ClassNotFoundException {
+		Connection connection = null;
+
+		PreparedStatement psInsert = null;
+		PreparedStatement psInsert1 = null;
+
+		PreparedStatement psCheckUserExists = null;
+		ResultSet resultSet = null;
+		
+		try {
+			connection = dbConnection();
+
+		    System.out.println("Opened database successfully");
+		    
+		    if (options == 1) {
+				psCheckUserExists = connection.prepareStatement("SELECT * FROM users WHERE username = ?");
+				psCheckUserExists.setString(1,new_updated);
+				resultSet = psCheckUserExists.executeQuery();
+				
+				if (resultSet.isBeforeFirst()) {
+					System.out.println("User already exists");
+					Alert alert = new Alert(Alert.AlertType.ERROR);
+					alert.setContentText("You cannot use this username.");
+					alert.showAndWait();
+				}
+				else {
+					psInsert = connection.prepareStatement("UPDATE users set username = '"+new_updated+"' where username = '"+username+"'");
+					psInsert.executeUpdate();
+					
+					Global.hold_username = new_updated;
+					
+					System.out.println(Global.hold_username + " is the name");
+					
+					changeScene(event,"view/UserPage.fxml","Welcome!", "Updated successful");
+				}
+		    }else if (options == 2) {
+				psCheckUserExists = connection.prepareStatement("SELECT * FROM users WHERE username = ?");
+				psCheckUserExists.setString(1,username);
+				resultSet = psCheckUserExists.executeQuery();
+				
+				if (resultSet.isBeforeFirst()) {
+					String temp = resultSet.getString("email");
+					
+					psInsert = connection.prepareStatement("UPDATE users set email = '"+new_updated+"' where email = '"+temp+"'");
+					psInsert.executeUpdate();					
+					
+					changeScene(event,"view/UserPage.fxml","Welcome!", "Updated successful");
+				}
+		    }else if (options == 3) {
+				psCheckUserExists = connection.prepareStatement("SELECT * FROM users WHERE username = ?");
+				psCheckUserExists.setString(1,username);
+				resultSet = psCheckUserExists.executeQuery();
+				
+				if (resultSet.isBeforeFirst()) {
+					
+					psInsert = connection.prepareStatement("UPDATE users set secret_question = '"+new_updated+"',secret_question_ans = '"+sqa+"' where username = '"+username+"'");
+
+					psInsert.executeUpdate();
+					
+					changeScene(event,"view/UserPage.fxml","Welcome!", "Updated successful");
+				}
+		    }else if (options == 4) {
+				psCheckUserExists = connection.prepareStatement("SELECT * FROM users WHERE username = ?");
+				psCheckUserExists.setString(1,username);
+				resultSet = psCheckUserExists.executeQuery();
+				
+				if (resultSet.isBeforeFirst()) {
+					
+					PassUtil passUtil = new PassUtil();
+					String passwordEncrypted = passUtil.encrypt(new_updated);
+					
+					psInsert = connection.prepareStatement("UPDATE users set password = '"+passwordEncrypted+"' where username = '"+username+"'");
+
+					psInsert.executeUpdate();
+					
+					changeScene(event,"view/UserPage.fxml","Welcome!", "Updated successful");
+				}
+		    }
+			
+		}catch(SQLException e ) {
+			e.printStackTrace();
+			
+		}finally {
+			if(resultSet != null) {
+				try {
+					resultSet.close();
+					
+				}catch(SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (psCheckUserExists != null) {
+				try {
+					psCheckUserExists.close();
+				} catch ( SQLException e) {
+					e.printStackTrace();
+				}
+				
+			}
+			if (psInsert != null) {
+				try {
+					psInsert.close();
+					
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (connection != null) {
+				try { 
+					connection.close();
+				} catch(SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		
+	}
 	
 	
 	
