@@ -26,6 +26,24 @@ public class ModifyAccountControl implements Initializable{
     @FXML
     private Button button_delete;
     
+    @FXML
+    private Button button_updateEmail;
+
+    @FXML
+    private Button button_updatePassword;
+
+    @FXML
+    private Button button_updateQuestion;
+    
+    @FXML
+    private Button button_updateUsername;
+    
+    @FXML
+    private Text label_email;
+    
+    @FXML
+    private Text label_question;
+
     
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		
@@ -60,10 +78,107 @@ public class ModifyAccountControl implements Initializable{
 			}
 			
 		});
+		
+		button_updateUsername.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override
+			public void handle(ActionEvent event) {
+		        Alert a = new Alert(AlertType.NONE);
+				// TODO Auto-generated method stub
+		        
+                a.setAlertType(AlertType.CONFIRMATION);
+                a.getDialogPane().setHeaderText("Are you sure want to update username?");
+                a.showAndWait();
+                if (a.getResult() == ButtonType.OK) {
+                    //do stuff
+    				try {
+						SceneChangingUtils.changeScene(event,"updated username", "view/UpdateUsername.fxml");
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+                }
+			}
+			
+		});
+		
+		button_updatePassword.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override
+			public void handle(ActionEvent event) {
+		        Alert a = new Alert(AlertType.NONE);
+				// TODO Auto-generated method stub
+		        
+                a.setAlertType(AlertType.CONFIRMATION);
+                a.getDialogPane().setHeaderText("Are you sure want to update password?");
+                a.showAndWait();
+                if (a.getResult() == ButtonType.OK) {
+                    //do stuff
+    				try {
+						SceneChangingUtils.changeScene(event,"updated password", "view/UpdatePassword.fxml");
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+                }
+			}
+			
+		});
+		
+		button_updateEmail.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override
+			public void handle(ActionEvent event) {
+		        Alert a = new Alert(AlertType.NONE);
+				// TODO Auto-generated method stub
+		        
+                a.setAlertType(AlertType.CONFIRMATION);
+                a.getDialogPane().setHeaderText("Are you sure want to update email?");
+                a.showAndWait();
+                if (a.getResult() == ButtonType.OK) {
+                    //do stuff
+    				try {
+						SceneChangingUtils.changeScene(event,"updated email", "view/UpdateEmail.fxml");
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+                }
+			}
+			
+		});
+		
+		button_updateQuestion.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override
+			public void handle(ActionEvent event) {
+		        Alert a = new Alert(AlertType.NONE);
+				// TODO Auto-generated method stub
+		        
+                a.setAlertType(AlertType.CONFIRMATION);
+                a.getDialogPane().setHeaderText("Are you sure want to update secret question?");
+                a.showAndWait();
+                if (a.getResult() == ButtonType.OK) {
+                    //do stuff
+    				try {
+						SceneChangingUtils.changeScene(event,"updated secret question", "view/UpdateSecretQuestion.fxml");
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+                }
+			}
+			
+		});
+		
 	}
 	
-	public void setUserInformation(String username) {
-		label_hello.setText(username + ", account");
+	
+	
+	public void setUserInformation(String username,String email, String question) {
+		label_hello.setText(username + ",account");
+		label_email.setText(email);
+		label_question.setText(question);
 	}
 
 }
