@@ -2,6 +2,7 @@ package application;
 
 import java.io.IOException;
 import java.sql.*;
+import java.util.ArrayList;
 
 import controller.ModifyAccountControl;
 import controller.UserPageControl;
@@ -25,7 +26,7 @@ import edu.sjsu.yazdankhah.crypto.util.PassUtil;
 public class DatabaseUtils {
 	public class Global{
 		public static String hold_username = "";
-		
+		public static ArrayList<String> hold_courses = new ArrayList<String>();
 	}
 	
 	/**
@@ -43,7 +44,37 @@ public class DatabaseUtils {
 			return null;
 		}
 	}
-	
+	public static void loginchangeScene(ActionEvent event, String fxmlFile, String title,  String username, ArrayList<String> courses) {
+		Parent root = null;
+		
+		if (username != null) {
+			
+			try {
+				FXMLLoader loader = new FXMLLoader(DatabaseUtils.class.getClassLoader().getResource(fxmlFile));
+				root = loader.load();
+				UserPageControl userPageControl = loader.getController();
+				userPageControl.setUserInformation(username);
+				userPageControl.loadData(courses);
+				
+			}catch (IOException e){
+				e.printStackTrace();
+			}
+		}else {
+			try {
+				root = FXMLLoader.load(DatabaseUtils.class.getClassLoader().getResource(fxmlFile));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+		
+		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		stage.setTitle("Index Card");
+		stage.setScene(new Scene(root));
+		stage.show();
+		
+	}
 	/**
 	 * Chaning each the window each time click on the button
 	 * 
@@ -283,21 +314,34 @@ public class DatabaseUtils {
 	public static void logInUser(ActionEvent event, String username, String password) throws ClassNotFoundException {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
+		PreparedStatement preparedStatement1 = null;
+
 		ResultSet resultSet =null;
+		ResultSet resultSet1 =null;
 		
-		//String dBPassword = "";
 		String passwordDecrypted = "";
 		PassUtil passUtil = new PassUtil();
 		
+	    ArrayList<String> arrays = new ArrayList<String>();
+
 		try {
 //			Class.forName("org.sqlite.JDBC");
 //			connection = DriverManager.getConnection("jdbc:sqlite:UserDb.sqlite");
 			connection = dbConnection();
 
 			preparedStatement = connection.prepareStatement("SELECT password FROM users WHERE username =?");
+			preparedStatement1 = connection.prepareStatement("SELECT * FROM courses ");
 			preparedStatement.setString(1, username);
+			
 			resultSet = preparedStatement.executeQuery();
 			
+			resultSet1 = preparedStatement1.executeQuery();
+			while (resultSet1.next()) {
+				arrays.add(resultSet1.getString(1));
+			}
+			Global.hold_courses = arrays;
+			System.out.println(arrays);
+
 			if (!resultSet.isBeforeFirst()) {
 				System.out.println("User not found in the database!");
 				Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -317,7 +361,7 @@ public class DatabaseUtils {
 		                a.setAlertType(AlertType.INFORMATION);
 		                a.getDialogPane().setHeaderText("Log in success!");
 		                a.showAndWait();
-						changeScene(event,"view/UserPage.fxml","Welcome!",Global.hold_username);
+		                loginchangeScene(event,"view/UserPage.fxml","Welcome!",Global.hold_username,arrays);
 					}else {
 						System.out.println("Passwords did not match!");
 						Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -370,17 +414,13 @@ public class DatabaseUtils {
 		PreparedStatement psCheckUserExists = null;
 		ResultSet resultSet = null;
 		
+		PreparedStatement whole_list = null;
+		ResultSet resultList = null;
 		try {
 
-//			Class.forName("org.sqlite.JDBC");
-//		    connection = DriverManager.getConnection("jdbc:sqlite:UserDb.sqlite");
 			connection = dbConnection();
 
 		    System.out.println("Opened database successfully");
-		    //connection.close();
-		    
-		    
-		    //System.out.println("Table created successfully");
 			
 			psCheckUserExists = connection.prepareStatement("SELECT * FROM courses WHERE coursename = ?");
 			psCheckUserExists.setString(1,courses);
@@ -398,7 +438,13 @@ public class DatabaseUtils {
 				
 				psInsert.executeUpdate();
 				
-				changeScene(event,"view/UserPage.fxml","Add successful!", null);
+				whole_list = connection.prepareStatement("SELECT * FROM courses");//
+				resultList = whole_list.executeQuery();//
+				Global.hold_courses = new ArrayList<String>();
+				while (resultList.next()) {
+					Global.hold_courses.add(resultList.getString(1));
+				}
+				loginchangeScene(event,"view/UserPage.fxml","Welcome!", "Rename successful",Global.hold_courses);
 			}
 			
 
@@ -457,17 +503,14 @@ public class DatabaseUtils {
 		PreparedStatement psCheckUserExists = null;
 		ResultSet resultSet = null;
 		
+		PreparedStatement whole_list = null;
+		ResultSet resultList = null;
+		
 		try {
-
-//			Class.forName("org.sqlite.JDBC");
-//		    connection = DriverManager.getConnection("jdbc:sqlite:UserDb.sqlite");
 			connection = dbConnection();
 
 		    System.out.println("Opened database successfully");
-		    //connection.close();
-		    
-		    
-		    //System.out.println("Table created successfully");
+
 			
 			psCheckUserExists = connection.prepareStatement("SELECT * FROM courses WHERE coursename = ?");
 			psCheckUserExists.setString(1,coursename);
@@ -479,7 +522,13 @@ public class DatabaseUtils {
 				psInsert = connection.prepareStatement("DELETE FROM courses WHERE coursename = '"+coursename+"'");
 				psInsert.executeUpdate();
 				
-				changeScene(event,"view/UserPage.fxml","Welcome!", "delete successful");
+				whole_list = connection.prepareStatement("SELECT * FROM courses");//
+				resultList = whole_list.executeQuery();//
+				Global.hold_courses = new ArrayList<String>();
+				while (resultList.next()) {
+					Global.hold_courses.add(resultList.getString(1));
+				}
+				loginchangeScene(event,"view/UserPage.fxml","Welcome!", "Rename successful",Global.hold_courses);
 
 			}else {
 				Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -536,32 +585,37 @@ public class DatabaseUtils {
 		Connection connection = null;
 
 		PreparedStatement psInsert = null;
+		PreparedStatement whole_list = null;//
+
 		PreparedStatement psCheckUserExists = null;
 		ResultSet resultSet = null;
+		ResultSet resultList = null;//
+
 		
 		try {
-
-//			Class.forName("org.sqlite.JDBC");
-//		    connection = DriverManager.getConnection("jdbc:sqlite:UserDb.sqlite");
 			connection = dbConnection();
 
 		    System.out.println("Opened database successfully");
-		    //connection.close();
-		    
-		    
-		    //System.out.println("Table created successfully");
 			
 			psCheckUserExists = connection.prepareStatement("SELECT * FROM courses WHERE coursename = ?");
+						
 			psCheckUserExists.setString(1,coursename);
 			
 			resultSet = psCheckUserExists.executeQuery();
 			
+
 			if (resultSet.isBeforeFirst()) {
 				System.out.println("courses found");
 				psInsert = connection.prepareStatement("UPDATE courses set coursename = '"+rename+"' where coursename = '"+coursename+"'");
 				psInsert.executeUpdate();
 				
-				changeScene(event,"view/UserPage.fxml","Welcome!", "Rename successful");
+				whole_list = connection.prepareStatement("SELECT * FROM courses");//
+				resultList = whole_list.executeQuery();//
+				Global.hold_courses = new ArrayList<String>();
+				while (resultList.next()) {
+					Global.hold_courses.add(resultList.getString(1));
+				}
+				loginchangeScene(event,"view/UserPage.fxml","Welcome!", "Rename successful",Global.hold_courses);
 
 			}else {
 				Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -607,10 +661,10 @@ public class DatabaseUtils {
 	}
 	
 	/**
-	 * reset password function, it allow user to passing email by verfiy and enter new password
+	 * reset password function, it allow user to passing email and username by verfiy account exist
 	 * only email for checking user exist
 	 * 
-	 * @param  event, password, email
+	 * @param  event, username, email
 	 * @return nothing
 	 */
 	public static void resetPassword(ActionEvent event, String email, String username) throws ClassNotFoundException {
@@ -625,17 +679,11 @@ public class DatabaseUtils {
         Alert a = new Alert(AlertType.NONE);
 
 		try {
-
-//			Class.forName("org.sqlite.JDBC");
-//		    connection = DriverManager.getConnection("jdbc:sqlite:UserDb.sqlite");
 			connection = dbConnection();
 
 		    System.out.println("Opened database successfully");
 		    //connection.close();
-		    
-		    
-		    //System.out.println("Table created successfully");
-			
+		    			
 			psCheckUserExists = connection.prepareStatement("SELECT * FROM users WHERE email = ? AND username = ?");
 			psCheckUserExists.setString(1,email);
 			psCheckUserExists.setString(2, username);
@@ -702,10 +750,15 @@ public class DatabaseUtils {
 		}
 	}
 	
-	
+	/**
+	 * reset password2 function, it allow user to new password and reset it
+	 * This is after account been logged in
+	 * 
+	 * @param  event, ans, newpassword 
+	 * @return nothing
+	 */
 	public static void resetPassword2(ActionEvent event, String answer,String newpassword) throws ClassNotFoundException {
 		Connection connection = null;
-	    Statement stmt = null;
 	    
 		PreparedStatement psInsert = null;
 		PreparedStatement psCheckUserExists = null;
@@ -797,6 +850,13 @@ public class DatabaseUtils {
 		}
 	}
 
+	/**
+	 * delete account function allow user delete the account
+	 * need username and user password and email to verify to delete
+	 * 
+	 * @param  event, username, email,password
+	 * @return nothing
+	 */
 	public static void deleteAccount(ActionEvent event, String username, String password,String email) throws ClassNotFoundException {
 		Connection connection = null;
 
@@ -892,12 +952,17 @@ public class DatabaseUtils {
 		}
 	}
 	
-	
+	/**
+	 * update function allow user choose to which information wants to updated
+	 * user could choose to which options to updated
+	 * 
+	 * @param  event, username, new updated information, options
+	 * @return nothing
+	 */
 	public static void updateProfiles(ActionEvent event, String username, String new_updated, int options,String sqa) throws ClassNotFoundException {
 		Connection connection = null;
 
 		PreparedStatement psInsert = null;
-		PreparedStatement psInsert1 = null;
 
 		PreparedStatement psCheckUserExists = null;
 		ResultSet resultSet = null;
@@ -1016,56 +1081,44 @@ public class DatabaseUtils {
 	
 	public static void test(String user) {
 		Connection connection = null;
-		
-		PreparedStatement preparedStatement = null;
-		ResultSet result = null;
-		Statement create = null;
-		String username = null;
-		String email = null;
-		String questions = null;
+
+		PreparedStatement psInsert = null;
+
+		PreparedStatement psCheckUserExists = null;
+		ResultSet resultSet = null;
 		
 		try {
-
 			connection = dbConnection();
-
-		    System.out.println("Opened database successfully");
-		    //connection.close();
-			preparedStatement = connection.prepareStatement("SELECT * FROM users WHERE username = ?");
-			preparedStatement.setString(1, user);
-			result = preparedStatement.executeQuery();
+			psCheckUserExists = connection.prepareStatement("SELECT * FROM courses");
+			resultSet = psCheckUserExists.executeQuery();
 			
-			while (result.next()) {
-				username = result.getString("username");
-				email = result.getString("email");
-				questions = result.getString("secret_question");
+			while(resultSet.next()) {
+				//System.out.println(resultSet.getString(1));
 			}
 			
-			System.out.println("Account information " + username + " and " + email);
-			System.out.println("Your questions " + questions);
-
 		}catch(SQLException e ) {
 			e.printStackTrace();
 			
 		}finally {
-			if(result != null) {
+			if(resultSet != null) {
 				try {
-					result.close();
+					resultSet.close();
 					
 				}catch(SQLException e) {
 					e.printStackTrace();
 				}
 			}
-			if (create != null) {
+			if (psCheckUserExists != null) {
 				try {
-					create.close();
+					psCheckUserExists.close();
 				} catch ( SQLException e) {
 					e.printStackTrace();
 				}
 				
 			}
-			if (preparedStatement != null) {
+			if (psInsert != null) {
 				try {
-					preparedStatement.close();
+					psInsert.close();
 					
 				} catch (SQLException e) {
 					e.printStackTrace();
@@ -1079,8 +1132,5 @@ public class DatabaseUtils {
 				}
 			}
 		}
-		
-		
 	}
-	
 }

@@ -51,7 +51,7 @@ public class ModifyAccountControl implements Initializable{
 			
 			@Override
 			public void handle(ActionEvent event) {
-				DatabaseUtils.changeScene(event, "view/UserPage.fxml","Index Card",DatabaseUtils.Global.hold_username);
+				DatabaseUtils.loginchangeScene(event, "view/UserPage.fxml","Index Card",DatabaseUtils.Global.hold_username,DatabaseUtils.Global.hold_courses);
 			}
 			
 		});

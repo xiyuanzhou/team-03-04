@@ -2,11 +2,13 @@ package controller;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import application.DatabaseUtils;
 import application.SceneChangingUtils;
-
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -19,6 +21,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ListView;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.text.Text;
@@ -48,6 +51,11 @@ public class UserPageControl implements Initializable{
     
     @FXML
     private MenuItem item_logout;
+    
+    @FXML
+    private ListView<String> list_items;
+    
+    ObservableList list = FXCollections.observableArrayList();
     
 	/**
 	 * Called to initialize a controller after its root element has been completely
@@ -154,4 +162,16 @@ public class UserPageControl implements Initializable{
 		label_welcome.setText("Welcome "+ username + "!");
 	}
     
+	public void loadData(ArrayList<String> courses) {
+		String[] list2 = {"cmpe1","cmpe2","cmpe3","cmpe4"};
+		list.removeAll(list);
+		
+		for (int i = 0; i < courses.size(); i++) {
+			list.addAll(courses.get(i));
+		}
+		
+		list_items.getItems().addAll(list);
+		
+	}
+	
 }
