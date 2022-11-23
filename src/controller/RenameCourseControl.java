@@ -69,9 +69,9 @@ public class RenameCourseControl implements Initializable{
 			public void handle(ActionEvent event) {
 				// TODO Auto-generated method stub
 
-				if (!tf_rename.getText().trim().isEmpty() ) {
+				if (!tf_rename.getText().trim().isEmpty() && !tf_changename.getText().trim().isEmpty()) {
 					try {
-						DatabaseUtils.renameCourse(event, tf_rename.getText(),tf_changename.getText(),null);
+						DatabaseUtils.renameCourse(event, tf_rename.getText().trim(),tf_changename.getText().trim(),null);
 					} catch (ClassNotFoundException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();

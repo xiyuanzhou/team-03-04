@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ModifyAccountControl">
+   <center>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="button_delete" layoutX="150.0" layoutY="295.0" mnemonicParsing="false" style="-fx-background-color: red; -fx-text-fill: white;" text="Delete Account" />
+            <Button fx:id="button_updatePassword" layoutX="190.0" layoutY="168.0" mnemonicParsing="false" style="-fx-background-color: white; -fx-background-radius: 16px; -fx-border-radius: 16px; -fx-border-color: blue;" text="Update" />
+            <Button fx:id="button_updateQuestion" layoutX="190.0" layoutY="119.0" mnemonicParsing="false" style="-fx-background-color: white; -fx-background-radius: 16px; -fx-border-color: blue; -fx-border-radius: 16px;" text="Update" />
+            <Button fx:id="button_updateEmail" layoutX="190.0" layoutY="71.0" mnemonicParsing="false" style="-fx-background-color: white; -fx-border-color: blue; -fx-background-radius: 16px; -fx-border-radius: 16px;" text="Update" />
+            <Text layoutX="9.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Your email">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Text>
+            <Text layoutX="10.0" layoutY="114.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Secret Question">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Text>
+            <Text layoutX="12.0" layoutY="163.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Text>
+            <Line endX="32.5" endY="72.0" layoutX="226.0" layoutY="262.0" startX="32.5" startY="-261.0" strokeWidth="2.0" />
+            <Text fill="#ee1616" layoutX="14.0" layoutY="187.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*******" />
+            <Text fx:id="label_question" fill="#e82424" layoutX="12.0" layoutY="138.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Questions" wrappingWidth="175.45947265625" />
+            <Text fx:id="label_email" fill="#eb3131" layoutX="12.0" layoutY="90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email" wrappingWidth="175.478515625" />
+            <Button fx:id="button_updateUsername" layoutX="132.0" layoutY="14.0" mnemonicParsing="false" style="-fx-background-color: white; -fx-background-radius: 16px; -fx-border-radius: 16px; -fx-border-color: red;" text="Update username" />
+         </children></AnchorPane>
+   </center>
+   <top>
+      <AnchorPane prefHeight="67.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="button_main" layoutX="511.0" layoutY="23.0" mnemonicParsing="false" style="-fx-background-color: lightgreen;" stylesheets="@../css/application.css" text="Main Page">
+               <textFill>
+                  <LinearGradient endX="1.0" endY="1.0">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color red="0.4896929860115051" green="0.09210526198148727" blue="0.7368420958518982" />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color red="0.24457846581935883" green="0.23757310211658478" blue="0.6578947305679321" />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </LinearGradient>
+               </textFill>
+            </Button>
+            <Text fx:id="label_hello" layoutX="14.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Account, " wrappingWidth="475.6875">
+               <font>
+                  <Font size="30.0" />
+               </font>
+               <fill>
+                  <LinearGradient endX="1.0" endY="1.0">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color red="0.13005603849887848" green="0.4439246356487274" blue="0.8026315569877625" />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color red="0.566500186920166" green="0.14010721445083618" blue="0.6052631735801697" />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </LinearGradient>
+               </fill>
+            </Text>
+            <Line endX="290.5" endY="0.5" layoutX="310.0" layoutY="67.0" startX="-309.5" startY="0.5" strokeWidth="2.0" />
+         </children>
+      </AnchorPane>
+   </top>
+</BorderPane>

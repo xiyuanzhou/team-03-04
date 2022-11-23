@@ -37,7 +37,7 @@ public class UpdateSecretQuestionControl implements Initializable{
 			@Override
 			public void handle(ActionEvent event) {
 				try {
-					SceneChangingUtils.updatedprofileScene(event, "user profile","view/ModifyAccount.fxml",DatabaseUtils.Global.hold_username);
+					SceneChangingUtils.updatedprofileScene(event, "view/ModifyAccount.fxml","user profile",DatabaseUtils.Global.hold_username);
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
