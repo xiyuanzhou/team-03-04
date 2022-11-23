@@ -1,54 +1,51 @@
 package controller;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 import application.DatabaseUtils;
-import application.SceneChangingUtils;
+import controller.ModifyIndexCardControl.Global;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
+import javafx.scene.control.TextArea;
+import javafx.scene.text.Text;
 
-public class UpdateEmailControl implements Initializable{
-	
-	@FXML
-	private Button button_goback;
-	
-    @FXML
-    private Button button_updated;
+public class CreateIndexCardControl implements Initializable{
 
     @FXML
-    private TextField tf_newemail;
-	
+    private Button button_mainpage;
+
+    @FXML
+    private Button button_submit;
+
+    @FXML
+    private Text label_courses;
+
+    @FXML
+    private TextArea ta_newindexcard;
+
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// TODO Auto-generated method stub
-		button_goback.setOnAction(new EventHandler<ActionEvent>() {
+		button_mainpage.setOnAction(new EventHandler<ActionEvent>() {
 			
 			@Override
 			public void handle(ActionEvent event) {
-				try {
-					SceneChangingUtils.updatedprofileScene(event, "view/ModifyAccount.fxml","user profile",DatabaseUtils.Global.hold_username);
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				DatabaseUtils.loginchangeScene(event, "view/UserPage.fxml","Index Card",DatabaseUtils.Global.hold_username,DatabaseUtils.Global.hold_courses);
 			}
-			
 		});
 		
-		button_updated.setOnAction(new EventHandler<ActionEvent>() {
+		button_submit.setOnAction(new EventHandler<ActionEvent>() {
 			
 			@Override
 			public void handle(ActionEvent event) {
-				if (!tf_newemail.getText().trim().isEmpty()) {
+				if (!ta_newindexcard.getPromptText().trim().isEmpty()) {
 					try {
-						DatabaseUtils.updateProfiles(event,DatabaseUtils.Global.hold_username, tf_newemail.getText(),2,null);
+						DatabaseUtils.newIndexCard(event,Global.temp_course,ta_newindexcard.getText());
 					} catch (ClassNotFoundException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -59,10 +56,18 @@ public class UpdateEmailControl implements Initializable{
 					alert.setContentText("Please fill in all information!");
 					alert.show();
 				}
-				
 			}
 			
 		});
+		
 	}
 	
+	public void setcourseInformation(String courses) {
+		label_courses.setText(courses);
+		
+		ModifyIndexCardControl.Global.temp_course = courses;
+	}
+    
+    
+
 }

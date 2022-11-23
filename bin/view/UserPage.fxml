@@ -4,6 +4,10 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.effect.ColorAdjust?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.paint.Color?>
@@ -12,11 +16,11 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.UserPageControl">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.UserPageControl">
    <center>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="200.0" prefWidth="616.0" BorderPane.alignment="CENTER">
          <children>
-            <Text fx:id="label_welcome" layoutX="14.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome" wrappingWidth="450.33984375">
+            <Text fx:id="label_welcome" layoutX="13.0" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome" wrappingWidth="640.33984375">
                <font>
                   <Font size="30.0" />
                </font>
@@ -42,10 +46,10 @@
                   </LinearGradient>
                </fill>
             </Text>
-            <Button fx:id="button_course" layoutX="14.0" layoutY="360.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="108.0" text="Create Course" />
-            <Button fx:id="button_delete" layoutX="479.0" layoutY="360.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="107.0" text="Delete Course" />
-            <Button fx:id="button_rename" layoutX="247.0" layoutY="360.0" mnemonicParsing="false" text="Rename Course " />
-            <MenuButton fx:id="menubutton_account" layoutX="484.0" layoutY="24.0" mnemonicParsing="false" style="-fx-background-color: white; -fx-border-color: blue;" text="Account">
+            <Button fx:id="button_course" layoutX="22.0" layoutY="395.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="107.0" text="Create Course" />
+            <Button fx:id="button_delete" layoutX="22.0" layoutY="460.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="107.0" text="Delete Course" />
+            <Button fx:id="button_rename" layoutX="22.0" layoutY="428.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="107.0" text="Rename Course " />
+            <MenuButton fx:id="menubutton_account" layoutX="684.0" layoutY="23.0" mnemonicParsing="false" style="-fx-background-color: white; -fx-border-color: blue;" text="Account">
                <items>
                   <MenuItem id="item_profiles" fx:id="item_profiles" mnemonicParsing="false" style="-fx-font-size: 19px;" text="Profiles" />
                   <MenuItem id="item_logout" fx:id="item_logout" mnemonicParsing="false" style="-fx-font-size: 19px;" text="Log out" />
@@ -75,12 +79,32 @@
                   </LinearGradient>
                </textFill>
             </MenuButton>
-            <ListView fx:id="list_items" layoutX="22.0" layoutY="129.0" prefHeight="200.0" prefWidth="200.0" />
-            <Text layoutX="94.0" layoutY="114.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Courses">
+            <ListView fx:id="list_items" layoutX="22.0" layoutY="129.0" prefHeight="240.0" prefWidth="105.0" />
+            <Text layoutX="47.0" layoutY="119.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Courses">
                <font>
                   <Font size="16.0" />
                </font>
             </Text>
+            <Button fx:id="button_courses" layoutX="142.0" layoutY="236.0" mnemonicParsing="false" text="Generate">
+               <font>
+                  <Font size="14.0" />
+               </font></Button>
+            <Button fx:id="button_modify" layoutX="320.0" layoutY="428.0" mnemonicParsing="false" text="Modify Cards" />
+            <Button fx:id="button_deleteindexcard" layoutX="306.0" layoutY="460.0" mnemonicParsing="false" text="Delete Index Cards" />
+            <Text fill="#d73f21" layoutX="185.0" layoutY="413.0" strokeType="OUTSIDE" strokeWidth="0.0" text="(Select courses and index cards before click the BUTTOM buttons)" />
+            <TableView fx:id="my_tableview" layoutX="231.0" layoutY="129.0" prefHeight="240.0" prefWidth="270.0">
+              <columns>
+                <TableColumn fx:id="col_indexcard" minWidth="100.0" prefWidth="219.0" text="Indexcard" />
+                <TableColumn fx:id="col_checkbox" prefWidth="50.0" text="Learned" />
+              </columns>
+            </TableView>
+            <Button fx:id="button_newindexcard" layoutX="308.0" layoutY="370.0" mnemonicParsing="false" text="Create Index Card" />
+            <TextArea fx:id="show_content" editable="false" layoutX="518.0" layoutY="129.0" prefHeight="240.0" prefWidth="270.0" style="-fx-prompt-text-fill: red; -fx-background-color: black; -fx-border-color: black;" wrapText="true">
+               <effect>
+                  <ColorAdjust />
+               </effect></TextArea>
+            <Text fill="#f21515" layoutX="142.0" layoutY="155.0" strokeType="OUTSIDE" strokeWidth="0.0" text="(Choose course and click Generate button)" wrappingWidth="73.44482421875" />
+            <Text fill="#da2121" layoutX="267.0" layoutY="118.0" strokeType="OUTSIDE" strokeWidth="0.0" text="(Click Indexcard show more content)" />
          </children>
       </AnchorPane>
    </center>

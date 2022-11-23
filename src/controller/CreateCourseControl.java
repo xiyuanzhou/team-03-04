@@ -69,7 +69,7 @@ public class CreateCourseControl implements Initializable{
 				
 				if (!tf_course.getText().trim().isEmpty() ) {
 					try {
-						DatabaseUtils.newCourse(event, tf_course.getText(),null,null);
+						DatabaseUtils.newCourse(event, tf_course.getText().toLowerCase().trim(),null,null);
 					} catch (ClassNotFoundException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();

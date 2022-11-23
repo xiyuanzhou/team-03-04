@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.DeleteAccountControl">
+   <center>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <Text layoutX="154.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="(Delete) Account Verify">
+               <font>
+                  <Font name="System Italic" size="30.0" />
+               </font>
+               <fill>
+                  <LinearGradient endX="1.0" endY="1.0">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color red="0.3621213138103485" green="0.13736598193645477" blue="0.7236841917037964" />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color red="0.34259259700775146" green="0.38641974329948425" blue="1.0" />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </LinearGradient>
+               </fill>
+            </Text>
+            <Button fx:id="button_goback" layoutX="517.0" layoutY="360.0" mnemonicParsing="false" text="Go Back">
+               <textFill>
+                  <LinearGradient endX="1.0" endY="1.0">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color red="0.41844847798347473" green="0.09594298154115677" blue="0.5921052694320679" />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color red="0.18579435348510742" green="0.3297230303287506" blue="0.8026315569877625" />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </LinearGradient>
+               </textFill></Button>
+            <Button fx:id="button_submit" layoutX="271.0" layoutY="315.0" mnemonicParsing="false" style="-fx-background-color: white; -fx-border-color: red; -fx-text-fill: blue;" text="Submit" />
+            <Text layoutX="160.0" layoutY="157.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username">
+               <font>
+                  <Font size="16.0" />
+               </font>
+               <fill>
+                  <LinearGradient endX="1.0" endY="1.0">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color red="0.6447368264198303" green="0.09850145876407623" blue="0.6356329321861267" />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color red="0.16614583134651184" green="0.15625" blue="0.75" />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </LinearGradient>
+               </fill>
+            </Text>
+            <Text layoutX="162.0" layoutY="203.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password">
+               <font>
+                  <Font size="16.0" />
+               </font>
+               <fill>
+                  <LinearGradient endX="1.0" endY="1.0">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color red="0.6447368264198303" green="0.09850145876407623" blue="0.6356329321861267" />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color red="0.16614583134651184" green="0.15625" blue="0.75" />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </LinearGradient>
+               </fill>
+            </Text>
+            <Text layoutX="174.0" layoutY="247.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email" wrappingWidth="40.28125">
+               <font>
+                  <Font size="16.0" />
+               </font>
+               <fill>
+                  <LinearGradient endX="1.0" endY="1.0">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color red="0.6447368264198303" green="0.09850145876407623" blue="0.6356329321861267" />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color red="0.16614583134651184" green="0.15625" blue="0.75" />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </LinearGradient>
+               </fill>
+            </Text>
+            <TextField fx:id="tf_username" layoutX="249.0" layoutY="139.0" />
+            <TextField fx:id="tf_password" layoutX="249.0" layoutY="184.0" />
+            <TextField fx:id="tf_email" layoutX="249.0" layoutY="228.0" />
+            <Text fill="#dd9797" layoutX="189.0" layoutY="299.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Are you sure want to delete the Account?" />
+         </children>
+      </AnchorPane>
+   </center>
+</BorderPane>

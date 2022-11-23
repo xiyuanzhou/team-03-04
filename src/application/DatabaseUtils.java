@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import controller.ModifyAccountControl;
 import controller.UserPageControl;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -24,7 +25,7 @@ import edu.sjsu.yazdankhah.crypto.util.PassUtil;
 
 
 public class DatabaseUtils {
-	public class Global{
+	public static class Global{
 		public static String hold_username = "";
 		public static ArrayList<String> hold_courses = new ArrayList<String>();
 	}
@@ -204,6 +205,93 @@ public class DatabaseUtils {
 	}
 	
 	
+	//---------------------------
+	public static void changeScene2(ActionEvent event, String fxmlFile, String title,  String username) {
+		Parent root = null;
+		
+		Connection connection = null;
+
+		PreparedStatement psInsert = null;
+
+		PreparedStatement psCheckUserExists = null;
+		ResultSet resultSet = null;
+		
+		String temp_email = null;
+		String temp_question =null;
+		
+		if (username != null) {	
+			
+			try {
+				connection = dbConnection();
+			    System.out.println("Opened database successfully");
+				psCheckUserExists = connection.prepareStatement("SELECT * FROM users WHERE username = ?");
+				psCheckUserExists.setString(1,username);
+				resultSet = psCheckUserExists.executeQuery();
+				
+				if (resultSet.isBeforeFirst()) {
+					temp_email = resultSet.getString("email");
+					temp_question = resultSet.getString("secret_question");
+				}
+				FXMLLoader loader = new FXMLLoader(DatabaseUtils.class.getClassLoader().getResource(fxmlFile));
+				root = loader.load();
+				ModifyAccountControl modifyAccountControl = loader.getController();
+				modifyAccountControl.setUserInformation(username,temp_email,temp_question);
+				
+			}catch (IOException e){
+				e.printStackTrace();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}finally {
+				if(resultSet != null) {
+					try {
+						resultSet.close();
+						
+					}catch(SQLException e) {
+						e.printStackTrace();
+					}
+				}
+				if (psCheckUserExists != null) {
+					try {
+						psCheckUserExists.close();
+					} catch ( SQLException e) {
+						e.printStackTrace();
+					}
+				}
+				if (psInsert != null) {
+					try {
+						psInsert.close();
+						
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+				}
+				if (connection != null) {
+					try { 
+						connection.close();
+					} catch(SQLException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		}else {
+			try {
+				root = FXMLLoader.load(DatabaseUtils.class.getClassLoader().getResource(fxmlFile));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+		
+		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		stage.setTitle(title);
+		stage.setScene(new Scene(root));
+		stage.show();
+		
+	}
+
+	
 	/**
 	 * By signing up for user, passing value to funtion and access into database sqlite
 	 * 
@@ -218,11 +306,7 @@ public class DatabaseUtils {
 		ResultSet resultSet = null;
 		
 		try {
-			
-			//Class.forName("org.sqlite.JDBC");
-			
-			//database inside the build path (jar)
-		    //connection = DriverManager.getConnection("jdbc:sqlite:UserDb.sqlite");
+
 			connection = dbConnection();
 			
 		    System.out.println("Opened database successfully");
@@ -316,8 +400,11 @@ public class DatabaseUtils {
 		PreparedStatement preparedStatement = null;
 		PreparedStatement preparedStatement1 = null;
 
+		
 		ResultSet resultSet =null;
 		ResultSet resultSet1 =null;
+		
+		ResultSet r3 = null;
 		
 		String passwordDecrypted = "";
 		PassUtil passUtil = new PassUtil();
@@ -325,12 +412,39 @@ public class DatabaseUtils {
 	    ArrayList<String> arrays = new ArrayList<String>();
 
 		try {
-//			Class.forName("org.sqlite.JDBC");
-//			connection = DriverManager.getConnection("jdbc:sqlite:UserDb.sqlite");
 			connection = dbConnection();
 
 			preparedStatement = connection.prepareStatement("SELECT password FROM users WHERE username =?");
 			preparedStatement1 = connection.prepareStatement("SELECT * FROM courses ");
+			
+			//delete table
+//			String test1 = "cs151";
+			PreparedStatement psInsert = null;
+//			psInsert = connection.prepareStatement("DROP TABLE IF EXISTS '"+test1+"' ");
+//			psInsert = connection.prepareStatement("CREATE TABLE IF NOT EXISTS warehouses (\n"
+//	                + "	id integer PRIMARY KEY,\n"
+//	                + "	name text NOT NULL,\n"
+//	                + "	capacity text NOT NULL\n"
+//	                + ");");
+//			psInsert = connection.prepareStatement("ALTER TABLE warehouses RENAME TO warehouses1");
+//			psInsert = connection.prepareStatement("SELECT * FROM indexcard WHERE coursesname = 'cs151' ");
+//			r3 = psInsert.executeQuery();
+//			while (r3.next()) {
+//				System.out.println(r3.getString(1));
+//				System.out.println(r3.getString(2));
+//			}
+//			psInsert.executeUpdate();
+//			System.out.println("here");
+			
+//	        String sql = "CREATE TABLE IF NOT EXISTS warehouses (\n"
+//	                + "	id integer PRIMARY KEY,\n"
+//	                + "	name text NOT NULL,\n"
+//	                + "	capacity real\n"
+//	                + ");";
+	        
+			
+			//end
+			
 			preparedStatement.setString(1, username);
 			
 			resultSet = preparedStatement.executeQuery();
@@ -338,6 +452,7 @@ public class DatabaseUtils {
 			resultSet1 = preparedStatement1.executeQuery();
 			while (resultSet1.next()) {
 				arrays.add(resultSet1.getString(1));
+				//System.out.println(resultSet1.getString(2));
 			}
 			Global.hold_courses = arrays;
 			System.out.println(arrays);
@@ -408,9 +523,10 @@ public class DatabaseUtils {
 	public static void newCourse(ActionEvent event, String courses, String password, String email) throws ClassNotFoundException {
 		
 		Connection connection = null;
-	    Statement stmt = null;
 
 		PreparedStatement psInsert = null;
+		PreparedStatement tableInsert = null;
+		Statement create = null;
 		PreparedStatement psCheckUserExists = null;
 		ResultSet resultSet = null;
 		
@@ -437,14 +553,30 @@ public class DatabaseUtils {
 				psInsert.setString(1, courses);
 				
 				psInsert.executeUpdate();
+				connection.close();
 				
+				connection = dbConnection();
+//				tableInsert = connection.prepareStatement("CREATE TABLE IF NOT EXISTS "+courses+" (\n"
+//                + "id integer PRIMARY KEY,\n"
+//                + "indexcard VARCHAR(20000) NOT NULL\n"
+//                + ");");
+								
+				String sql = "CREATE TABLE "+courses+" (" + "ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE, "
+						+ "indexcard VARCHAR(200000) NOT NULL)";
+				create = connection.createStatement();
+				create.executeUpdate(sql);
+//				tableInsert.executeUpdate();
+				
+				connection.close();
+	
+				connection = dbConnection();
 				whole_list = connection.prepareStatement("SELECT * FROM courses");//
 				resultList = whole_list.executeQuery();//
 				Global.hold_courses = new ArrayList<String>();
 				while (resultList.next()) {
 					Global.hold_courses.add(resultList.getString(1));
 				}
-				loginchangeScene(event,"view/UserPage.fxml","Welcome!", "Rename successful",Global.hold_courses);
+				loginchangeScene(event,"view/UserPage.fxml","Welcome!", "Add NewCourse successful",Global.hold_courses);
 			}
 			
 
@@ -497,9 +629,9 @@ public class DatabaseUtils {
 	 */
 	public static void deleteCourse(ActionEvent event, String coursename, String password,String email) throws ClassNotFoundException {
 		Connection connection = null;
-	    Statement stmt = null;
 
 		PreparedStatement psInsert = null;
+		PreparedStatement del_coursetable = null;
 		PreparedStatement psCheckUserExists = null;
 		ResultSet resultSet = null;
 		
@@ -522,13 +654,21 @@ public class DatabaseUtils {
 				psInsert = connection.prepareStatement("DELETE FROM courses WHERE coursename = '"+coursename+"'");
 				psInsert.executeUpdate();
 				
+				
 				whole_list = connection.prepareStatement("SELECT * FROM courses");//
 				resultList = whole_list.executeQuery();//
+				
 				Global.hold_courses = new ArrayList<String>();
 				while (resultList.next()) {
 					Global.hold_courses.add(resultList.getString(1));
 				}
-				loginchangeScene(event,"view/UserPage.fxml","Welcome!", "Rename successful",Global.hold_courses);
+				connection.close();
+				connection = dbConnection();
+				
+				del_coursetable = connection.prepareStatement("DROP TABLE IF EXISTS '"+coursename+"' ");
+				del_coursetable.executeUpdate();
+				
+				loginchangeScene(event,"view/UserPage.fxml","Welcome!", "Delete successful",Global.hold_courses);
 
 			}else {
 				Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -548,6 +688,22 @@ public class DatabaseUtils {
 					e.printStackTrace();
 				}
 			}
+			if (whole_list != null) {
+				try {
+					whole_list.close();
+					
+				}catch(SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (resultList != null) {
+				try {
+					resultList.close();
+					
+				}catch(SQLException e) {
+					e.printStackTrace();
+				}
+			}
 			if (psCheckUserExists != null) {
 				try {
 					psCheckUserExists.close();
@@ -561,6 +717,13 @@ public class DatabaseUtils {
 					psInsert.close();
 					
 				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (del_coursetable != null) {
+				try {
+					del_coursetable.close();
+				}catch (SQLException e) {
 					e.printStackTrace();
 				}
 			}
@@ -586,7 +749,8 @@ public class DatabaseUtils {
 
 		PreparedStatement psInsert = null;
 		PreparedStatement whole_list = null;//
-
+		PreparedStatement rename_table = null;
+		
 		PreparedStatement psCheckUserExists = null;
 		ResultSet resultSet = null;
 		ResultSet resultList = null;//
@@ -615,6 +779,12 @@ public class DatabaseUtils {
 				while (resultList.next()) {
 					Global.hold_courses.add(resultList.getString(1));
 				}
+				connection.close();
+				
+				connection = dbConnection();
+				rename_table = connection.prepareStatement("ALTER TABLE "+coursename+" RENAME TO "+rename+" ");
+				rename_table.executeUpdate();
+				connection.close();
 				loginchangeScene(event,"view/UserPage.fxml","Welcome!", "Rename successful",Global.hold_courses);
 
 			}else {
@@ -637,6 +807,22 @@ public class DatabaseUtils {
 			if (psCheckUserExists != null) {
 				try {
 					psCheckUserExists.close();
+				} catch ( SQLException e) {
+					e.printStackTrace();
+				}
+				
+			}
+			if (whole_list != null) {
+				try {
+					whole_list.close();
+				} catch ( SQLException e) {
+					e.printStackTrace();
+				}
+				
+			}
+			if (resultList != null) {
+				try {
+					resultList.close();
 				} catch ( SQLException e) {
 					e.printStackTrace();
 				}
@@ -1078,6 +1264,285 @@ public class DatabaseUtils {
 	}
 	
 	
+	public static void updateIndexCard(ActionEvent event, String courses, String modify_index, String old_index) throws ClassNotFoundException {
+		Connection connection = null;
+
+		PreparedStatement psInsert = null;
+		
+		PreparedStatement psCheckUserExists = null;
+		ResultSet resultSet = null;
+
+		
+		try {
+			connection = dbConnection();
+
+		    System.out.println("Opened database successfully");
+			
+			psCheckUserExists = connection.prepareStatement("SELECT * FROM courses WHERE coursename = ?");
+						
+			psCheckUserExists.setString(1,courses);
+			
+			resultSet = psCheckUserExists.executeQuery();
+			
+
+			if (resultSet.isBeforeFirst()) {
+				System.out.println("courses found");
+				
+				psInsert = connection.prepareStatement("UPDATE "+courses+" set indexcard = '"+modify_index+"' where indexcard = '"+old_index+"'");
+				psInsert.executeUpdate();
+				
+				loginchangeScene(event,"view/UserPage.fxml","Welcome!", "Updated cards successful",Global.hold_courses);
+
+			}else {
+				Alert alert = new Alert(Alert.AlertType.ERROR);
+				alert.setContentText("can't find course");
+				alert.show();
+			}
+		}catch(SQLException e ) {
+			e.printStackTrace();
+			
+		}finally {
+			if(resultSet != null) {
+				try {
+					resultSet.close();
+					
+				}catch(SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (psCheckUserExists != null) {
+				try {
+					psCheckUserExists.close();
+				} catch ( SQLException e) {
+					e.printStackTrace();
+				}
+				
+			}
+			if (psInsert != null) {
+				try {
+					psInsert.close();
+					
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (connection != null) {
+				try { 
+					connection.close();
+				} catch(SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		
+	}
+
+	public static void newIndexCard(ActionEvent event, String courses, String new_index) throws ClassNotFoundException {
+		Connection connection = null;
+
+		PreparedStatement psInsert = null;
+		
+		PreparedStatement psCheckUserExists = null;
+		ResultSet resultSet = null;
+
+		
+		try {
+			connection = dbConnection();
+
+		    System.out.println("Opened database successfully");
+			
+			psCheckUserExists = connection.prepareStatement("SELECT * FROM courses WHERE coursename = ?");
+						
+			psCheckUserExists.setString(1,courses);
+			
+			resultSet = psCheckUserExists.executeQuery();
+			
+
+			if (resultSet.isBeforeFirst()) {
+				System.out.println("courses found");
+				
+				psInsert = connection.prepareStatement("INSERT INTO "+courses+" (indexcard) VALUES (?)");
+				psInsert.setString(1, new_index);
+				
+				psInsert.executeUpdate();
+				
+				loginchangeScene(event,"view/UserPage.fxml","Welcome!", "Add new index cards successful",Global.hold_courses);
+
+			}else {
+				Alert alert = new Alert(Alert.AlertType.ERROR);
+				alert.setContentText("can't find course");
+				alert.show();
+			}
+		}catch(SQLException e ) {
+			e.printStackTrace();
+			
+		}finally {
+			if(resultSet != null) {
+				try {
+					resultSet.close();
+					
+				}catch(SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (psCheckUserExists != null) {
+				try {
+					psCheckUserExists.close();
+				} catch ( SQLException e) {
+					e.printStackTrace();
+				}
+				
+			}
+			if (psInsert != null) {
+				try {
+					psInsert.close();
+					
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (connection != null) {
+				try { 
+					connection.close();
+				} catch(SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		
+	}
+
+	public static void deleteIndexCard(ActionEvent event, String courses, String delete_index) throws ClassNotFoundException {
+		Connection connection = null;
+
+		PreparedStatement psInsert = null;
+		
+		PreparedStatement psCheckUserExists = null;
+		ResultSet resultSet = null;
+
+		
+		try {
+			connection = dbConnection();
+
+		    System.out.println("Opened database successfully");
+			
+			psCheckUserExists = connection.prepareStatement("SELECT * FROM courses WHERE coursename = ?");
+						
+			psCheckUserExists.setString(1,courses);
+			
+			resultSet = psCheckUserExists.executeQuery();
+			
+
+			if (resultSet.isBeforeFirst()) {
+				System.out.println("courses found");
+				
+				psInsert = connection.prepareStatement("DELETE FROM "+courses+" WHERE indexcard = '"+delete_index+"'");
+				
+				psInsert.executeUpdate();
+				
+				loginchangeScene(event,"view/UserPage.fxml","Welcome!", "Delete index card successful",Global.hold_courses);
+
+			}else {
+				Alert alert = new Alert(Alert.AlertType.ERROR);
+				alert.setContentText("can't find course");
+				alert.show();
+			}
+		}catch(SQLException e ) {
+			e.printStackTrace();
+			
+		}finally {
+			if(resultSet != null) {
+				try {
+					resultSet.close();
+					
+				}catch(SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (psCheckUserExists != null) {
+				try {
+					psCheckUserExists.close();
+				} catch ( SQLException e) {
+					e.printStackTrace();
+				}
+				
+			}
+			if (psInsert != null) {
+				try {
+					psInsert.close();
+					
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (connection != null) {
+				try { 
+					connection.close();
+				} catch(SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		
+	}
+
+	
+	public static ObservableList getIndexCard(String course_name) {
+		//System.out.println(course_name);
+		ObservableList index_cardlist = FXCollections.observableArrayList();
+
+		Connection connection = dbConnection();
+		PreparedStatement psInsert = null;
+
+		ResultSet resultSet = null;
+		
+		ResultSet tables = null;
+		
+		try {
+		    DatabaseMetaData databaseMetaData = connection.getMetaData();
+		    tables = databaseMetaData.getTables(null, null, course_name, null);
+
+		    if (tables.next()) {
+		    	System.out.println("Tables found");
+		    	psInsert = connection.prepareStatement("SELECT * FROM "+course_name+" ");
+				resultSet = psInsert.executeQuery();
+				while (resultSet.next()) {
+					index_cardlist.add(resultSet.getString(2));
+				}
+
+		    }else {
+		    	System.out.println("we can't find tables");
+		    }
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			if(connection != null) {
+				try {
+					connection.close();
+					
+				}catch(SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if(tables != null) {
+				try {
+					tables.close();
+					
+				}catch(SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			
+		}
+
+		//System.out.println(index_cardlist);
+		
+		
+		return index_cardlist;
+	}
 	
 	public static void test(String user) {
 		Connection connection = null;
