@@ -2,12 +2,16 @@ package controller;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import application.DatabaseUtils;
 import application.IndexCard;
 import application.SceneChangingUtils;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -89,6 +93,12 @@ public class UserPageControl implements Initializable{
     
     @FXML
     private Button button_deleteindexcard;
+    
+    @FXML
+    private TableColumn<IndexCard, String> col_status;
+    
+    @FXML
+    private Button button_learned;
     
     
     ObservableList list = FXCollections.observableArrayList();
@@ -176,6 +186,25 @@ public class UserPageControl implements Initializable{
                 if (a.getResult() == ButtonType.OK) {
                     //do stuff
     				DatabaseUtils.Global.hold_username = "";
+    				DatabaseUtils.Global.hold_courses = new ArrayList<String>();
+    				DatabaseUtils.temp_learned.learned_courses = new ArrayList<String>();
+    				ModifyIndexCardControl.Global.temp_course = "";
+    				ModifyIndexCardControl.Global.temp_old_index = "";
+    				
+    				Connection connection = null;
+    				
+    				try {
+    					connection = DatabaseUtils.dbConnection();
+    					Statement stmt = connection.createStatement();
+    					String sql = "DELETE FROM learnedcourses";
+    					stmt.executeUpdate(sql);
+    					
+    					
+    				} catch (SQLException e) {
+    					// TODO Auto-generated catch block
+    					e.printStackTrace();
+    				}
+    				
     				try {
 						SceneChangingUtils.changeScene(menubutton_account, "view/HomePage.fxml", "Index Manager card");
 					} catch (IOException e) {
@@ -211,11 +240,12 @@ public class UserPageControl implements Initializable{
 
 				for (Object item : list_result) {
 					//System.out.println((String) item);
-					data.add(new IndexCard((String) item,new CheckBox()));
+					data.add(new IndexCard((String) item,new CheckBox(),"**"));
 				}
 				
 				col_indexcard.setCellValueFactory(new PropertyValueFactory<IndexCard,String>("index_notes"));
 				col_checkbox.setCellValueFactory(new PropertyValueFactory<IndexCard,CheckBox>("checkbox"));
+				col_status.setCellValueFactory(new PropertyValueFactory<IndexCard,String>("status"));
 				
 				my_tableview.setItems(data);
 				
@@ -224,12 +254,40 @@ public class UserPageControl implements Initializable{
 				my_tableview.setOnMousePressed(e ->{
 					ObservableList<IndexCard> temp = my_tableview.getSelectionModel().getSelectedItems();
 					
-					System.out.println(temp.get(0).getIndex_notes());
-					System.out.println("clikc again");
+					//System.out.println(temp.get(0).getIndex_notes());
+					//System.out.println("clikc again");
 					show_content.setPromptText(temp.get(0).getIndex_notes());
+					
+//					temp.get(0).getCheckbox().setOnAction(action->{
+//						System.out.println("checkbox click");
+//						
+//					});
+					
+					temp.get(0).getCheckbox().selectedProperty().addListener((ObservableValue<? extends Boolean>ov, Boolean old_val, Boolean new_val)->{
+						//System.out.println(temp.get(0).getCheckbox().getText() + " changed from " + old_val + " to " + new_val);
+						//System .out.println(old_val);
+						if (new_val == true) {
+							//System.out.println("1");
+							//System.out.println(temp.get(0).getIndex_notes());
+		    				ObservableList<IndexCard> learned_data = my_tableview.getSelectionModel().getSelectedItems();
+		    				String index_cards = learned_data.get(0).getIndex_notes();
+		    				String courses = list_items.getSelectionModel().getSelectedItems().get(0);
+		    				
+		    				DatabaseUtils.saveLearnedIndexCard(courses,index_cards);
+		    				
+						}else {
+							System.out.println("checkbox off");
+
+						}
+					});
+					
 		        });
-				//
-//				for (Object item : list_result) {
+
+				
+				//System.out.println(data.get(0).getCheckbox());
+
+
+				//				for (Object item : list_result) {
 //					textarea += String.format("%s%n", (String) item);
 //				}
 //				list_indexcard.getItems().addAll(list_result);
@@ -319,8 +377,13 @@ public class UserPageControl implements Initializable{
     				ObservableList<IndexCard> data = my_tableview.getSelectionModel().getSelectedItems();
     				String index_cards = data.get(0).getIndex_notes();
     				String courses = list_items.getSelectionModel().getSelectedItems().get(0);
-    				//System.out.println(data.get(0).getIndex_notes());
+    				
+    				//System.out.println(data.get(1).getCheckbox().selectedProperty());
     				//System.out.print(list_items.getSelectionModel().getSelectedItems().get(0));
+    				//System.out.println(data.get(0).getCheckbox());
+    				
+    				//System.out.println(data);
+
 					try {
 						DatabaseUtils.deleteIndexCard(arg0, courses, index_cards);
 					} catch (ClassNotFoundException e) {
@@ -329,6 +392,24 @@ public class UserPageControl implements Initializable{
 					}
                 }
 
+			}
+			
+		});
+		
+		button_learned.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				DatabaseUtils.load_learned_index_cards();
+				
+
+				try {
+					SceneChangingUtils.learnedindexcardScene(arg0,"Learned Index Cards", "view/LearnedIndexCard.fxml",DatabaseUtils.temp_learned.learned_courses);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 			
 		});

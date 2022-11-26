@@ -5,10 +5,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.EventObject;
 
 import controller.homePageControl;
 import controller.CreateIndexCardControl;
+import controller.LearnedIndexCardControl;
 import controller.LoginPageControl;
 import controller.ModifyAccountControl;
 import controller.ModifyIndexCardControl;
@@ -143,6 +145,7 @@ public class SceneChangingUtils {
 		
 		String temp_email = null;
 		String temp_question =null;
+		String temp_password =null;
 		
 		if (username != null) {	
 			
@@ -156,11 +159,12 @@ public class SceneChangingUtils {
 				if (resultSet.isBeforeFirst()) {
 					temp_email = resultSet.getString("email");
 					temp_question = resultSet.getString("secret_question");
+					temp_password = resultSet.getString("password");
 				}
 				FXMLLoader loader = new FXMLLoader(DatabaseUtils.class.getClassLoader().getResource(fxmlFile));
 				root = loader.load();
 				ModifyAccountControl modifyAccountControl = loader.getController();
-				modifyAccountControl.setUserInformation(username,temp_email,temp_question);
+				modifyAccountControl.setUserInformation(username,temp_email,temp_question,temp_password);
 				
 			}catch (IOException e){
 				e.printStackTrace();
@@ -242,6 +246,24 @@ public class SceneChangingUtils {
 		
 		CreateIndexCardControl createindexcardcontrol = loader.getController();
 		createindexcardcontrol.setcourseInformation(courses);
+		
+		Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
+		Scene scene = new Scene(root);
+		stage.setTitle(title);
+		stage.setScene(scene);
+		stage.show();
+		stage.centerOnScreen();
+	}
+	
+	public static void learnedindexcardScene(ActionEvent e, String title, String file,ArrayList<String> courses) throws IOException{
+		
+		// TODO Auto-generated method stub
+		Parent root = null;
+		FXMLLoader loader = new FXMLLoader(SceneChangingUtils.class.getClassLoader().getResource(file));
+		root = loader.load();
+		
+		LearnedIndexCardControl learnedindexcardcontrol = loader.getController();
+		learnedindexcardcontrol.learned_data(courses);
 		
 		Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
 		Scene scene = new Scene(root);

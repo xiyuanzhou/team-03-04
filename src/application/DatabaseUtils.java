@@ -25,9 +25,25 @@ import edu.sjsu.yazdankhah.crypto.util.PassUtil;
 
 
 public class DatabaseUtils {
+	
+	/**
+	 * Setting a global username and course list for passing the variables
+	 * 
+	 * @return connection object
+	 */
 	public static class Global{
 		public static String hold_username = "";
 		public static ArrayList<String> hold_courses = new ArrayList<String>();
+	}
+	
+	/**
+	 * Setting a global learned course and learned index list for passing the variables
+	 * 
+	 * @return connection object
+	 */
+	public static class temp_learned{
+		public static ArrayList<String> learned_courses = new ArrayList<String>();
+		//public static ArrayList<String> learned_indexs = new ArrayList<String>();
 	}
 	
 	/**
@@ -36,6 +52,7 @@ public class DatabaseUtils {
 	 * @return connection object
 	 */
 	public static Connection dbConnection() {
+
 		try {
 			Class.forName("org.sqlite.JDBC");
 			Connection conn = DriverManager.getConnection("jdbc:sqlite:UserDb.sqlite");
@@ -45,6 +62,13 @@ public class DatabaseUtils {
 			return null;
 		}
 	}
+
+	/**
+	 * The function only changing the secene to userpage fxml
+	 * 
+	 * @param event, fxmlFile, window title, username, the list of courses 
+	 * @return nothing
+	 */
 	public static void loginchangeScene(ActionEvent event, String fxmlFile, String title,  String username, ArrayList<String> courses) {
 		Parent root = null;
 		
@@ -76,6 +100,7 @@ public class DatabaseUtils {
 		stage.show();
 		
 	}
+	
 	/**
 	 * Chaning each the window each time click on the button
 	 * 
@@ -131,6 +156,7 @@ public class DatabaseUtils {
 		
 		String temp_email = null;
 		String temp_question =null;
+		String temp_password = null;
 		
 		if (username != null) {	
 			
@@ -144,11 +170,12 @@ public class DatabaseUtils {
 				if (resultSet.isBeforeFirst()) {
 					temp_email = resultSet.getString("email");
 					temp_question = resultSet.getString("secret_question");
+					temp_password = resultSet.getString("password");
 				}
 				FXMLLoader loader = new FXMLLoader(DatabaseUtils.class.getClassLoader().getResource(fxmlFile));
 				root = loader.load();
 				ModifyAccountControl modifyAccountControl = loader.getController();
-				modifyAccountControl.setUserInformation(username,temp_email,temp_question);
+				modifyAccountControl.setUserInformation(username,temp_email,temp_question,temp_password);
 				
 			}catch (IOException e){
 				e.printStackTrace();
@@ -205,7 +232,12 @@ public class DatabaseUtils {
 	}
 	
 	
-	//---------------------------
+	/**
+	 * The function allow changing to account modify fxml and shown all the user information
+	 * 
+	 * @param event, fxmlFile, window title, username
+	 * @return nothing
+	 */
 	public static void changeScene2(ActionEvent event, String fxmlFile, String title,  String username) {
 		Parent root = null;
 		
@@ -218,6 +250,7 @@ public class DatabaseUtils {
 		
 		String temp_email = null;
 		String temp_question =null;
+		String temp_password = null;
 		
 		if (username != null) {	
 			
@@ -231,11 +264,12 @@ public class DatabaseUtils {
 				if (resultSet.isBeforeFirst()) {
 					temp_email = resultSet.getString("email");
 					temp_question = resultSet.getString("secret_question");
+					temp_password = resultSet.getString("password");
 				}
 				FXMLLoader loader = new FXMLLoader(DatabaseUtils.class.getClassLoader().getResource(fxmlFile));
 				root = loader.load();
 				ModifyAccountControl modifyAccountControl = loader.getController();
-				modifyAccountControl.setUserInformation(username,temp_email,temp_question);
+				modifyAccountControl.setUserInformation(username,temp_email,temp_question,temp_password);
 				
 			}catch (IOException e){
 				e.printStackTrace();
@@ -303,8 +337,13 @@ public class DatabaseUtils {
 
 		PreparedStatement psInsert = null;
 		PreparedStatement psCheckUserExists = null;
+		PreparedStatement preparedStatement1 = null;
+
 		ResultSet resultSet = null;
-		
+		ResultSet resultSet1 =null;
+	    ArrayList<String> arrays = new ArrayList<String>();
+
+
 		try {
 
 			connection = dbConnection();
@@ -316,9 +355,18 @@ public class DatabaseUtils {
 		    //System.out.println("Table created successfully");
 			
 			psCheckUserExists = connection.prepareStatement("SELECT * FROM users WHERE username = ?");
+			preparedStatement1 = connection.prepareStatement("SELECT * FROM courses ");
+
 			psCheckUserExists.setString(1,username);
 			
 			resultSet = psCheckUserExists.executeQuery();
+			resultSet1 = preparedStatement1.executeQuery();
+			while (resultSet1.next()) {
+				arrays.add(resultSet1.getString(1));
+				//System.out.println(resultSet1.getString(2));
+			}
+			Global.hold_courses = arrays;
+			System.out.println(arrays);
 			
 			if (resultSet.isBeforeFirst()) {
 				System.out.println("User already exists");
@@ -343,7 +391,9 @@ public class DatabaseUtils {
                 a.getDialogPane().setHeaderText("Account created success!");
                 a.showAndWait();
                 
-				changeScene(event,"view/UserPage.fxml","Welcome!", Global.hold_username);
+				//changeScene(event,"view/UserPage.fxml","Welcome!", Global.hold_username);
+				DatabaseUtils.loginchangeScene(event, "view/UserPage.fxml","Index Card",DatabaseUtils.Global.hold_username,DatabaseUtils.Global.hold_courses);
+
 			}
 			
 
@@ -1177,7 +1227,9 @@ public class DatabaseUtils {
 					
 					System.out.println(Global.hold_username + " is the name");
 					
-					changeScene(event,"view/UserPage.fxml","Welcome!", "Updated successful");
+					//changeScene(event,"view/UserPage.fxml","Welcome!", "Updated successful");
+					DatabaseUtils.loginchangeScene(event, "view/UserPage.fxml","Index Card",DatabaseUtils.Global.hold_username,DatabaseUtils.Global.hold_courses);
+
 				}
 		    }else if (options == 2) {
 				psCheckUserExists = connection.prepareStatement("SELECT * FROM users WHERE username = ?");
@@ -1190,7 +1242,9 @@ public class DatabaseUtils {
 					psInsert = connection.prepareStatement("UPDATE users set email = '"+new_updated+"' where email = '"+temp+"'");
 					psInsert.executeUpdate();					
 					
-					changeScene(event,"view/UserPage.fxml","Welcome!", "Updated successful");
+					//changeScene(event,"view/UserPage.fxml","Welcome!", "Updated successful");
+					DatabaseUtils.loginchangeScene(event, "view/UserPage.fxml","Index Card",DatabaseUtils.Global.hold_username,DatabaseUtils.Global.hold_courses);
+
 				}
 		    }else if (options == 3) {
 				psCheckUserExists = connection.prepareStatement("SELECT * FROM users WHERE username = ?");
@@ -1203,7 +1257,9 @@ public class DatabaseUtils {
 
 					psInsert.executeUpdate();
 					
-					changeScene(event,"view/UserPage.fxml","Welcome!", "Updated successful");
+					//changeScene(event,"view/UserPage.fxml","Welcome!", "Updated successful");
+					DatabaseUtils.loginchangeScene(event, "view/UserPage.fxml","Index Card",DatabaseUtils.Global.hold_username,DatabaseUtils.Global.hold_courses);
+
 				}
 		    }else if (options == 4) {
 				psCheckUserExists = connection.prepareStatement("SELECT * FROM users WHERE username = ?");
@@ -1219,7 +1275,9 @@ public class DatabaseUtils {
 
 					psInsert.executeUpdate();
 					
-					changeScene(event,"view/UserPage.fxml","Welcome!", "Updated successful");
+					//changeScene(event,"view/UserPage.fxml","Welcome!", "Updated successful");
+					DatabaseUtils.loginchangeScene(event, "view/UserPage.fxml","Index Card",DatabaseUtils.Global.hold_username,DatabaseUtils.Global.hold_courses);
+
 				}
 		    }
 			
@@ -1263,7 +1321,13 @@ public class DatabaseUtils {
 		
 	}
 	
-	
+	/**
+	 * Function allow user passing a old index cards and replace to the 
+	 * new index card
+	 * 
+	 * @param  event, course, new_index, old_index
+	 * @return nothing
+	 */
 	public static void updateIndexCard(ActionEvent event, String courses, String modify_index, String old_index) throws ClassNotFoundException {
 		Connection connection = null;
 
@@ -1338,6 +1402,14 @@ public class DatabaseUtils {
 		
 	}
 
+	
+	/**
+	 * Function allow user passing new index card and add into database
+	 * function taking the variables
+	 * 
+	 * @param  event, course, new_index
+	 * @return nothing
+	 */
 	public static void newIndexCard(ActionEvent event, String courses, String new_index) throws ClassNotFoundException {
 		Connection connection = null;
 
@@ -1414,6 +1486,13 @@ public class DatabaseUtils {
 		
 	}
 
+	/**
+	 * function allow user put the index card that wants to delete
+	 * inside the job it's to open database and modify
+	 * 
+	 * @param  event, course, index card
+	 * @return nothing
+	 */
 	public static void deleteIndexCard(ActionEvent event, String courses, String delete_index) throws ClassNotFoundException {
 		Connection connection = null;
 
@@ -1490,6 +1569,13 @@ public class DatabaseUtils {
 	}
 
 	
+	/**
+	 * The function took the course name and find in the database
+	 * and return the ObservableList
+	 * 
+	 * @param  event, course, index card
+	 * @return index cards as ObservableList type
+	 */
 	public static ObservableList getIndexCard(String course_name) {
 		//System.out.println(course_name);
 		ObservableList index_cardlist = FXCollections.observableArrayList();
@@ -1543,6 +1629,199 @@ public class DatabaseUtils {
 		
 		return index_cardlist;
 	}
+	
+	
+	/**
+	 * The function took the course name and find in the database
+	 * and return the ObservableList
+	 * 
+	 * @param  course, index card
+	 * @return index cards as ObservableList type
+	 */
+	public static ObservableList getLearnedIndexCard(String course_name) {
+		//System.out.println(course_name);
+		ObservableList index_cardlist = FXCollections.observableArrayList();
+
+		Connection connection = dbConnection();
+		PreparedStatement psInsert = null;
+
+		ResultSet resultSet = null;
+				
+		try {
+			connection = dbConnection();
+			//preparedStatement = connection.prepareStatement("SELECT * FROM learnedcourses WHERE courses = ?");
+			psInsert = connection.prepareStatement("SELECT DISTINCT indexcards FROM learnedcourses WHERE courses = '"+course_name+"' ");
+			resultSet = psInsert.executeQuery();
+			while(resultSet.next()) {
+				//temp_learned.learned_indexs.add(resultSet.getString(1));
+				index_cardlist.add(resultSet.getString(1));
+			}
+			
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			if(connection != null) {
+				try {
+					connection.close();
+					
+				}catch(SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if(resultSet != null) {
+				try {
+					resultSet.close();
+					
+				}catch(SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if(psInsert != null) {
+				try {
+					psInsert.close();
+					
+				}catch(SQLException e) {
+					e.printStackTrace();
+				}
+			}
+
+			
+		}
+
+		//System.out.println(index_cardlist);
+		
+		
+		return index_cardlist;
+	}
+	
+	/**
+	 * The function recvied coursename and index cards
+	 * and return the ObservableList
+	 * 
+	 * @param  course, index card
+	 * @return None, nothing
+	 */
+	public static void saveLearnedIndexCard(String courses, String index_cards){
+		Connection connection = null;
+
+		PreparedStatement psInsert = null;
+		PreparedStatement psCheckUserExists = null;
+		ResultSet resultSet = null;	
+		
+		try {
+			connection = dbConnection();
+			System.out.println("open learned index card database!");
+			psCheckUserExists = connection.prepareStatement("SELECT * FROM learnedcourses WHERE courses = ? AND indexcards = ?");
+			psCheckUserExists.setString(1,courses);
+			psCheckUserExists.setString(2,index_cards);
+			
+			resultSet = psCheckUserExists.executeQuery();
+			
+			if (resultSet.isBeforeFirst()) {
+				System.out.println("It already save in database");
+			}else {
+				psInsert = connection.prepareStatement("INSERT INTO learnedcourses (courses,indexcards) VALUES (?,?)");
+				psInsert.setString(1, courses);
+				psInsert.setString(2, index_cards);
+
+				psInsert.executeUpdate();
+				
+				connection.close();
+				
+			}
+		}catch(SQLException e) {
+			
+		}finally {
+			if (connection != null) {
+				try {
+					connection.close();
+				} catch ( SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (psInsert != null) {
+				try {
+					psInsert.close();
+				} catch ( SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (psCheckUserExists != null) {
+				try {
+					psCheckUserExists.close();
+				} catch ( SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (resultSet != null) {
+				try {
+					resultSet.close();
+				} catch ( SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		
+	}
+	
+	/**
+	 * The function no paramenter receviced 
+	 * no return, the function purpose open the
+	 * database, and stored the learned index cards
+	 * 
+	 * @param  course, index card
+	 * @return None, nothing
+	 */
+	public static void load_learned_index_cards() {
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet =null;
+		int i = 0;
+		try {
+			connection = dbConnection();
+			//preparedStatement = connection.prepareStatement("SELECT * FROM learnedcourses WHERE courses = ?");
+			preparedStatement = connection.prepareStatement("SELECT courses FROM learnedcourses");
+
+			resultSet = preparedStatement.executeQuery();
+			
+			while(resultSet.next()) {
+				//temp_learned.learned_courses.add(resultSet.getString(1));
+				if (!temp_learned.learned_courses.contains(resultSet.getString(1))) {
+					temp_learned.learned_courses.add(resultSet.getString(1));
+
+				}
+			}
+			
+			System.out.println(temp_learned.learned_courses);
+			System.out.println("zhe li");
+		}catch(SQLException e) {
+			
+		}finally {
+			if(resultSet != null) {
+				try {
+					resultSet.close();
+					
+				}catch(SQLException e) {
+					e.printStackTrace();
+				}
+			}
+
+			if (connection != null) {
+				try { 
+					connection.close();
+				} catch(SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			
+		}
+		
+	}
+	
+
+	
+	
 	
 	public static void test(String user) {
 		Connection connection = null;
