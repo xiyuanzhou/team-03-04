@@ -43,6 +43,9 @@ public class ModifyAccountControl implements Initializable{
     
     @FXML
     private Text label_question;
+    
+    @FXML
+    private Text label_password;
 
     
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -93,6 +96,7 @@ public class ModifyAccountControl implements Initializable{
                     //do stuff
     				try {
 						SceneChangingUtils.changeScene(event,"updated username", "view/UpdateUsername.fxml");
+						
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -175,10 +179,11 @@ public class ModifyAccountControl implements Initializable{
 	
 	
 	
-	public void setUserInformation(String username,String email, String question) {
+	public void setUserInformation(String username,String email, String question,String password) {
 		label_hello.setText(username + ",account");
 		label_email.setText(email);
 		label_question.setText(question);
+		label_password.setText(password);
 	}
 
 }

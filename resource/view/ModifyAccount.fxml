@@ -15,29 +15,29 @@
       <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
             <Button fx:id="button_delete" layoutX="150.0" layoutY="295.0" mnemonicParsing="false" style="-fx-background-color: red; -fx-text-fill: white;" text="Delete Account" />
-            <Button fx:id="button_updatePassword" layoutX="190.0" layoutY="168.0" mnemonicParsing="false" style="-fx-background-color: white; -fx-background-radius: 16px; -fx-border-radius: 16px; -fx-border-color: blue;" text="Update" />
-            <Button fx:id="button_updateQuestion" layoutX="190.0" layoutY="119.0" mnemonicParsing="false" style="-fx-background-color: white; -fx-background-radius: 16px; -fx-border-color: blue; -fx-border-radius: 16px;" text="Update" />
-            <Button fx:id="button_updateEmail" layoutX="190.0" layoutY="71.0" mnemonicParsing="false" style="-fx-background-color: white; -fx-border-color: blue; -fx-background-radius: 16px; -fx-border-radius: 16px;" text="Update" />
-            <Text layoutX="9.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Your email">
+            <Button fx:id="button_updatePassword" layoutX="323.0" layoutY="207.0" mnemonicParsing="false" style="-fx-background-color: white; -fx-background-radius: 16px; -fx-border-radius: 16px; -fx-border-color: blue;" text="Update" />
+            <Button fx:id="button_updateQuestion" layoutX="323.0" layoutY="151.0" mnemonicParsing="false" style="-fx-background-color: white; -fx-background-radius: 16px; -fx-border-color: blue; -fx-border-radius: 16px;" text="Update" />
+            <Button fx:id="button_updateEmail" layoutX="323.0" layoutY="93.0" mnemonicParsing="false" style="-fx-background-color: white; -fx-border-color: blue; -fx-background-radius: 16px; -fx-border-radius: 16px;" text="Update" />
+            <Text layoutX="151.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Your email">
                <font>
                   <Font size="16.0" />
                </font>
             </Text>
-            <Text layoutX="10.0" layoutY="114.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Secret Question">
+            <Text layoutX="133.0" layoutY="146.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Secret Question">
                <font>
                   <Font size="16.0" />
                </font>
             </Text>
-            <Text layoutX="12.0" layoutY="163.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password">
+            <Text layoutX="154.0" layoutY="202.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password">
                <font>
                   <Font size="16.0" />
                </font>
             </Text>
-            <Line endX="32.5" endY="72.0" layoutX="226.0" layoutY="262.0" startX="32.5" startY="-261.0" strokeWidth="2.0" />
-            <Text fill="#ee1616" layoutX="14.0" layoutY="187.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*******" />
-            <Text fx:id="label_question" fill="#e82424" layoutX="12.0" layoutY="138.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Questions" wrappingWidth="175.45947265625" />
-            <Text fx:id="label_email" fill="#eb3131" layoutX="12.0" layoutY="90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email" wrappingWidth="175.478515625" />
-            <Button fx:id="button_updateUsername" layoutX="132.0" layoutY="14.0" mnemonicParsing="false" style="-fx-background-color: white; -fx-background-radius: 16px; -fx-border-radius: 16px; -fx-border-color: red;" text="Update username" />
+            <Line endX="32.5" endY="72.0" layoutX="361.0" layoutY="269.0" startX="32.5" startY="-261.0" strokeWidth="2.0" />
+            <Text fx:id="label_password" fill="#ee1616" layoutX="12.0" layoutY="226.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*******" wrappingWidth="298.435546875" />
+            <Text fx:id="label_question" fill="#e82424" layoutX="10.0" layoutY="170.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Questions" wrappingWidth="302.45947265625" />
+            <Text fx:id="label_email" fill="#eb3131" layoutX="9.0" layoutY="112.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email" wrappingWidth="303.478515625" />
+            <Button fx:id="button_updateUsername" layoutX="266.0" layoutY="14.0" mnemonicParsing="false" style="-fx-background-color: white; -fx-background-radius: 16px; -fx-border-radius: 16px; -fx-border-color: red;" text="Update username" />
          </children></AnchorPane>
    </center>
    <top>

@@ -150,10 +150,10 @@ team-03-04
     - Sign up encryption/decryption ✅
     - Delete account after successful login ✅
     - Modify account after successful login ✅
-    - Create new index card under the chosen course 
-    - Modify an index card
-    - Delete an index card
-    - Reviewing index cards + Checking/Uncheck "Learned" checkbox
+    - Create new index card under the chosen course ✅
+    - Modify an index card ✅
+    - Delete an index card ✅
+    - Reviewing index cards + Checking/Uncheck "Learned" checkbox ✅
         - All index cards of a course 
         - Learned index cards of a course
         - Not Learned index cards of a course
@@ -179,7 +179,11 @@ team-03-04
     public static void changeScene(MenuButton e, String file, String title) throws IOException{}
 ```
 > Next
+>*Version 0.9 stopping here* ⛽
 
+> (continue more notes in the next section)
+***
+### __Continue 0.9 version (Notes)__ 😉
 
 
 

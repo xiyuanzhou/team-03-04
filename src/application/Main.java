@@ -1,5 +1,9 @@
 package application;
 	
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
@@ -13,7 +17,7 @@ import javafx.scene.control.*;
 
 /**
  * Index Card Manager 
- * @Verion 0.5
+ * @Verion 0.9
  * @author Xiyuan Zhou
  * @author Honghao Ma
  * @author Mengzhen Zhao
@@ -47,6 +51,23 @@ public class Main extends Application {
 	}
 	
 	public static void main(String[] args) {
+		
+		//launch(args);
+
+		Connection connection = null;
+		
+		try {
+			connection = DatabaseUtils.dbConnection();
+			Statement stmt = connection.createStatement();
+			String sql = "DELETE FROM learnedcourses";
+			stmt.executeUpdate(sql);
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 		launch(args);
 	}
 }
