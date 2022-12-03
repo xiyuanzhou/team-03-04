@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.UnlearnedIndexCardControl">
+   <center>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <Text layoutX="176.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Un-Learned Index Cards">
+               <font>
+                  <Font size="24.0" />
+               </font>
+               <fill>
+                  <LinearGradient endX="1.0" endY="1.0">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color red="0.31085526943206787" green="0.34539473056793213" blue="0.8289473652839661" />
+                           </color>
+                        </Stop>
+                        <Stop offset="0.006711409395973154">
+                           <color>
+                              <Color red="0.31085526943206787" green="0.34539473056793213" blue="0.8289473652839661" />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color red="0.6899999976158142" green="0.15870000422000885" blue="0.5894837975502014" />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </LinearGradient>
+               </fill>
+            </Text>
+            <ListView fx:id="list_courses" layoutX="14.0" layoutY="140.0" prefHeight="200.0" prefWidth="91.0" />
+            <ListView fx:id="list_indexs" layoutX="115.0" layoutY="140.0" prefHeight="200.0" prefWidth="144.0" />
+            <TextArea fx:id="ta_showviews" editable="false" layoutX="276.0" layoutY="140.0" prefHeight="200.0" prefWidth="316.0" style="-fx-prompt-fill: red; -fx-background-color: black; -fx-border-color: black;" wrapText="true" />
+            <Button fx:id="button_goback" layoutX="529.0" layoutY="360.0" mnemonicParsing="false" text="Go Back" />
+            <Text layoutX="32.0" layoutY="123.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Courses">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Text>
+            <Text layoutX="147.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Index Cards">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Text>
+            <Text layoutX="397.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Show View">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Text>
+         </children>
+      </AnchorPane>
+   </center>
+</BorderPane>

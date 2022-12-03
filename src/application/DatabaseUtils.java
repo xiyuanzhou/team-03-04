@@ -34,6 +34,8 @@ public class DatabaseUtils {
 	public static class Global{
 		public static String hold_username = "";
 		public static ArrayList<String> hold_courses = new ArrayList<String>();
+		public static ArrayList<String> unlearned_courses = new ArrayList<String>();
+		public static int userid = 0;
 	}
 	
 	/**
@@ -355,18 +357,18 @@ public class DatabaseUtils {
 		    //System.out.println("Table created successfully");
 			
 			psCheckUserExists = connection.prepareStatement("SELECT * FROM users WHERE username = ?");
-			preparedStatement1 = connection.prepareStatement("SELECT * FROM courses ");
+			//preparedStatement1 = connection.prepareStatement("SELECT * FROM courses ");
 
 			psCheckUserExists.setString(1,username);
 			
 			resultSet = psCheckUserExists.executeQuery();
-			resultSet1 = preparedStatement1.executeQuery();
-			while (resultSet1.next()) {
-				arrays.add(resultSet1.getString(1));
-				//System.out.println(resultSet1.getString(2));
-			}
-			Global.hold_courses = arrays;
-			System.out.println(arrays);
+			//resultSet1 = preparedStatement1.executeQuery();
+//			while (resultSet1.next()) {
+//				arrays.add(resultSet1.getString(1));
+//				//System.out.println(resultSet1.getString(2));
+//			}
+//			Global.hold_courses = arrays;
+			//System.out.println(arrays);
 			
 			if (resultSet.isBeforeFirst()) {
 				System.out.println("User already exists");
@@ -382,8 +384,17 @@ public class DatabaseUtils {
 				psInsert.setString(5, secretquestion_ans);
 				
 				psInsert.executeUpdate();
+				connection.close();
+				
+				connection = dbConnection();
+				preparedStatement1 = connection.prepareStatement("SELECT userid FROM users WHERE username = '"+username+"' ");
+				resultSet1 = preparedStatement1.executeQuery();
+				
+				Global.userid = resultSet1.getInt(1);
 				
 				Global.hold_username = username;
+				
+				System.out.println("new user id : " + Global.userid + " name: " +  Global.hold_username);
 		        Alert a = new Alert(AlertType.NONE);
 				// TODO Auto-generated method stub
 				//System.out.println(DatabaseUtils.Global.hold_username);
@@ -449,6 +460,7 @@ public class DatabaseUtils {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		PreparedStatement preparedStatement1 = null;
+		
 
 		
 		ResultSet resultSet =null;
@@ -464,9 +476,10 @@ public class DatabaseUtils {
 		try {
 			connection = dbConnection();
 
-			preparedStatement = connection.prepareStatement("SELECT password FROM users WHERE username =?");
-			preparedStatement1 = connection.prepareStatement("SELECT * FROM courses ");
-			
+			preparedStatement = connection.prepareStatement("SELECT password,userid FROM users WHERE username =?");
+			//preparedStatement1 = connection.prepareStatement("SELECT * FROM courses ");
+			//preparedStatement1 = connection.prepareStatement("SELECT courses FROM allcourses where courses_holder = '"+Global.userid+"'");
+
 			//delete table
 //			String test1 = "cs151";
 			PreparedStatement psInsert = null;
@@ -499,13 +512,13 @@ public class DatabaseUtils {
 			
 			resultSet = preparedStatement.executeQuery();
 			
-			resultSet1 = preparedStatement1.executeQuery();
-			while (resultSet1.next()) {
-				arrays.add(resultSet1.getString(1));
-				//System.out.println(resultSet1.getString(2));
-			}
-			Global.hold_courses = arrays;
-			System.out.println(arrays);
+			//resultSet1 = preparedStatement1.executeQuery();
+//			while (resultSet1.next()) {
+//				arrays.add(resultSet1.getString(1));
+//				//System.out.println(resultSet1.getString(2));
+//			}
+//			Global.hold_courses = arrays;
+//			System.out.println(arrays);
 
 			if (!resultSet.isBeforeFirst()) {
 				System.out.println("User not found in the database!");
@@ -516,16 +529,24 @@ public class DatabaseUtils {
 				while (resultSet.next()) {
 
 					String retrievedPassword = resultSet.getString("password");
+					//int getId = resultSet.getInt("userid");
 					passwordDecrypted = passUtil.decrypt(retrievedPassword);
 
 					if (passwordDecrypted.equals(password)) {
 						Global.hold_username = username;
-				        Alert a = new Alert(AlertType.NONE);
-						// TODO Auto-generated method stub
-						//System.out.println(DatabaseUtils.Global.hold_username);
-		                a.setAlertType(AlertType.INFORMATION);
-		                a.getDialogPane().setHeaderText("Log in success!");
-		                a.showAndWait();
+						Global.userid = resultSet.getInt("userid");
+						System.out.println("myid is : " + Global.userid );
+
+						preparedStatement1 = connection.prepareStatement("SELECT courses FROM allcourses where courses_holder = '"+Global.userid+"'");
+						resultSet1 = preparedStatement1.executeQuery();
+
+						while (resultSet1.next()) {
+							arrays.add(resultSet1.getString(1));
+							//Global.unlearned_courses.add(resultSet1.getString(1));
+							//System.out.println(resultSet1.getString(2));
+						}
+						Global.hold_courses = arrays;
+						System.out.println(Global.unlearned_courses);
 		                loginchangeScene(event,"view/UserPage.fxml","Welcome!",Global.hold_username,arrays);
 					}else {
 						System.out.println("Passwords did not match!");
@@ -588,9 +609,9 @@ public class DatabaseUtils {
 
 		    System.out.println("Opened database successfully");
 			
-			psCheckUserExists = connection.prepareStatement("SELECT * FROM courses WHERE coursename = ?");
+			psCheckUserExists = connection.prepareStatement("SELECT * FROM allcourses WHERE courses = ? AND courses_holder = ?");
 			psCheckUserExists.setString(1,courses);
-			
+			psCheckUserExists.setInt(2, Global.userid);
 			resultSet = psCheckUserExists.executeQuery();
 			
 			if (resultSet.isBeforeFirst()) {
@@ -599,8 +620,9 @@ public class DatabaseUtils {
 				alert.setContentText("You cannot add this courses.");
 				alert.show();
 			}else {
-				psInsert = connection.prepareStatement("INSERT INTO courses (coursename) VALUES (?)");
+				psInsert = connection.prepareStatement("INSERT INTO allcourses (courses,courses_holder) VALUES (?,?)");
 				psInsert.setString(1, courses);
+				psInsert.setInt(2, Global.userid);
 				
 				psInsert.executeUpdate();
 				connection.close();
@@ -610,17 +632,37 @@ public class DatabaseUtils {
 //                + "id integer PRIMARY KEY,\n"
 //                + "indexcard VARCHAR(20000) NOT NULL\n"
 //                + ");");
-								
-				String sql = "CREATE TABLE "+courses+" (" + "ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE, "
-						+ "indexcard VARCHAR(200000) NOT NULL)";
-				create = connection.createStatement();
-				create.executeUpdate(sql);
-//				tableInsert.executeUpdate();
 				
+//				String sql = "CREATE TABLE "+courses+" (" + "ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE, "
+//						+ "indexcard VARCHAR(200000) NOT NULL)";
+//				create = connection.createStatement();
+//				create.executeUpdate(sql);
+//				tableInsert.executeUpdate();
+				DatabaseMetaData dbm = connection.getMetaData();
+				// check if "employee" table is there
+				ResultSet tables = dbm.getTables(null, null, courses, null);
+				if (tables.next()) {
+				  // Table exists
+					System.out.println("Table exists not do anything");
+				}
+				else {
+				  // Table does not exist
+					connection.close();
+					connection = dbConnection();
+					
+					System.out.println("Table not exists creating ");
+					String sql = "CREATE TABLE "+courses+" (" + "id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE, "
+					+ "indexcard TEXT,"
+					+ "holder INTEGER,"
+					+ "FOREIGN KEY(holder) REFERENCES users(userid))";
+					create = connection.createStatement();
+					create.executeUpdate(sql);
+
+				}
 				connection.close();
 	
 				connection = dbConnection();
-				whole_list = connection.prepareStatement("SELECT * FROM courses");//
+				whole_list = connection.prepareStatement("SELECT courses FROM allcourses where courses_holder = '"+Global.userid+"'");//
 				resultList = whole_list.executeQuery();//
 				Global.hold_courses = new ArrayList<String>();
 				while (resultList.next()) {
@@ -632,7 +674,7 @@ public class DatabaseUtils {
 
 		}catch(SQLException e ) {
 			e.printStackTrace();
-			
+	
 		}finally {
 			if(resultSet != null) {
 				try {
@@ -670,6 +712,7 @@ public class DatabaseUtils {
 	
 	}
 	
+	
 	/**
 	 * Delete course function by user enter course name and search database for the informatin
 	 * check if found in db
@@ -694,18 +737,19 @@ public class DatabaseUtils {
 		    System.out.println("Opened database successfully");
 
 			
-			psCheckUserExists = connection.prepareStatement("SELECT * FROM courses WHERE coursename = ?");
+			psCheckUserExists = connection.prepareStatement("SELECT * FROM allcourses WHERE courses = ? AND courses_holder = ?");
 			psCheckUserExists.setString(1,coursename);
+			psCheckUserExists.setInt(2, Global.userid);
 			
 			resultSet = psCheckUserExists.executeQuery();
 			
 			if (resultSet.isBeforeFirst()) {
 				System.out.println("courses found");
-				psInsert = connection.prepareStatement("DELETE FROM courses WHERE coursename = '"+coursename+"'");
+				psInsert = connection.prepareStatement("DELETE FROM allcourses WHERE courses = '"+coursename+"' AND courses_holder = '"+Global.userid+"' ");
 				psInsert.executeUpdate();
 				
 				
-				whole_list = connection.prepareStatement("SELECT * FROM courses");//
+				whole_list = connection.prepareStatement("SELECT courses FROM allcourses where courses_holder = '"+Global.userid+"'");//
 				resultList = whole_list.executeQuery();//
 				
 				Global.hold_courses = new ArrayList<String>();
@@ -715,7 +759,9 @@ public class DatabaseUtils {
 				connection.close();
 				connection = dbConnection();
 				
-				del_coursetable = connection.prepareStatement("DROP TABLE IF EXISTS '"+coursename+"' ");
+				//del_coursetable = connection.prepareStatement("DROP TABLE IF EXISTS '"+coursename+"' ");
+				//del_coursetable.executeUpdate();
+				del_coursetable = connection.prepareStatement("DELETE FROM '"+coursename+"' WHERE holder = '"+Global.userid+"' ");
 				del_coursetable.executeUpdate();
 				
 				loginchangeScene(event,"view/UserPage.fxml","Welcome!", "Delete successful",Global.hold_courses);
@@ -787,6 +833,7 @@ public class DatabaseUtils {
 		}
 	}
 	
+	
 	/**
 	 * rename course function by user enter course name and search database for the informatin
 	 * check if found in db, after it rename new name that user enter
@@ -811,7 +858,7 @@ public class DatabaseUtils {
 
 		    System.out.println("Opened database successfully");
 			
-			psCheckUserExists = connection.prepareStatement("SELECT * FROM courses WHERE coursename = ?");
+			psCheckUserExists = connection.prepareStatement("SELECT * FROM allcourses WHERE courses = ?");
 						
 			psCheckUserExists.setString(1,coursename);
 			
@@ -820,7 +867,7 @@ public class DatabaseUtils {
 
 			if (resultSet.isBeforeFirst()) {
 				System.out.println("courses found");
-				psInsert = connection.prepareStatement("UPDATE courses set coursename = '"+rename+"' where coursename = '"+coursename+"'");
+				psInsert = connection.prepareStatement("UPDATE allcourses set courses = '"+rename+"' where courses = '"+coursename+"'");
 				psInsert.executeUpdate();
 				
 				whole_list = connection.prepareStatement("SELECT * FROM courses");//
@@ -895,6 +942,7 @@ public class DatabaseUtils {
 			}
 		}
 	}
+	
 	
 	/**
 	 * reset password function, it allow user to passing email and username by verfiy account exist
@@ -985,6 +1033,7 @@ public class DatabaseUtils {
 			}
 		}
 	}
+	
 	
 	/**
 	 * reset password2 function, it allow user to new password and reset it
@@ -1086,6 +1135,7 @@ public class DatabaseUtils {
 		}
 	}
 
+	
 	/**
 	 * delete account function allow user delete the account
 	 * need username and user password and email to verify to delete
@@ -1187,6 +1237,7 @@ public class DatabaseUtils {
 			}
 		}
 	}
+	
 	
 	/**
 	 * update function allow user choose to which information wants to updated
@@ -1342,9 +1393,10 @@ public class DatabaseUtils {
 
 		    System.out.println("Opened database successfully");
 			
-			psCheckUserExists = connection.prepareStatement("SELECT * FROM courses WHERE coursename = ?");
+			psCheckUserExists = connection.prepareStatement("SELECT * FROM allcourses WHERE courses = ? AND courses_holder = ?");
 						
 			psCheckUserExists.setString(1,courses);
+			psCheckUserExists.setInt(2, Global.userid);
 			
 			resultSet = psCheckUserExists.executeQuery();
 			
@@ -1352,7 +1404,7 @@ public class DatabaseUtils {
 			if (resultSet.isBeforeFirst()) {
 				System.out.println("courses found");
 				
-				psInsert = connection.prepareStatement("UPDATE "+courses+" set indexcard = '"+modify_index+"' where indexcard = '"+old_index+"'");
+				psInsert = connection.prepareStatement("UPDATE "+courses+" set indexcard = '"+modify_index+"' where indexcard = '"+old_index+"' AND holder = '"+Global.userid+"'");
 				psInsert.executeUpdate();
 				
 				loginchangeScene(event,"view/UserPage.fxml","Welcome!", "Updated cards successful",Global.hold_courses);
@@ -1414,6 +1466,7 @@ public class DatabaseUtils {
 		Connection connection = null;
 
 		PreparedStatement psInsert = null;
+		PreparedStatement psInsert1 = null;
 		
 		PreparedStatement psCheckUserExists = null;
 		ResultSet resultSet = null;
@@ -1424,9 +1477,11 @@ public class DatabaseUtils {
 
 		    System.out.println("Opened database successfully");
 			
-			psCheckUserExists = connection.prepareStatement("SELECT * FROM courses WHERE coursename = ?");
+			psCheckUserExists = connection.prepareStatement("SELECT * FROM allcourses WHERE courses = ? AND courses_holder = ?");
 						
 			psCheckUserExists.setString(1,courses);
+			psCheckUserExists.setInt(2, Global.userid);
+			
 			
 			resultSet = psCheckUserExists.executeQuery();
 			
@@ -1434,10 +1489,18 @@ public class DatabaseUtils {
 			if (resultSet.isBeforeFirst()) {
 				System.out.println("courses found");
 				
-				psInsert = connection.prepareStatement("INSERT INTO "+courses+" (indexcard) VALUES (?)");
+				psInsert = connection.prepareStatement("INSERT INTO "+courses+" (indexcard,holder) VALUES (?,?)");
+				psInsert1 = connection.prepareStatement("INSERT INTO unlearnedcourses (courses,indexcards,holder) VALUES (?,?,?)");
+
 				psInsert.setString(1, new_index);
+				psInsert.setInt(2, Global.userid);
+				
+				psInsert1.setString(1, courses);
+				psInsert1.setString(2,new_index);
+				psInsert1.setInt(3, Global.userid);
 				
 				psInsert.executeUpdate();
+				psInsert1.executeUpdate();
 				
 				loginchangeScene(event,"view/UserPage.fxml","Welcome!", "Add new index cards successful",Global.hold_courses);
 
@@ -1507,17 +1570,17 @@ public class DatabaseUtils {
 
 		    System.out.println("Opened database successfully");
 			
-			psCheckUserExists = connection.prepareStatement("SELECT * FROM courses WHERE coursename = ?");
+			psCheckUserExists = connection.prepareStatement("SELECT * FROM allcourses WHERE courses = ? AND courses_holder = ?");
 						
 			psCheckUserExists.setString(1,courses);
-			
+			psCheckUserExists.setInt(2, Global.userid);
 			resultSet = psCheckUserExists.executeQuery();
 			
 
 			if (resultSet.isBeforeFirst()) {
 				System.out.println("courses found");
 				
-				psInsert = connection.prepareStatement("DELETE FROM "+courses+" WHERE indexcard = '"+delete_index+"'");
+				psInsert = connection.prepareStatement("DELETE FROM "+courses+" WHERE indexcard = '"+delete_index+"' AND holder = '"+Global.userid+"' ");
 				
 				psInsert.executeUpdate();
 				
@@ -1593,10 +1656,11 @@ public class DatabaseUtils {
 
 		    if (tables.next()) {
 		    	System.out.println("Tables found");
-		    	psInsert = connection.prepareStatement("SELECT * FROM "+course_name+" ");
+		    	//psInsert = connection.prepareStatement("SELECT * FROM "+course_name+" ");
+		    	psInsert = connection.prepareStatement("SELECT indexcard FROM '"+course_name+"' where holder = '"+Global.userid+"'");
 				resultSet = psInsert.executeQuery();
 				while (resultSet.next()) {
-					index_cardlist.add(resultSet.getString(2));
+					index_cardlist.add(resultSet.getString(1));
 				}
 
 		    }else {
@@ -1650,7 +1714,71 @@ public class DatabaseUtils {
 		try {
 			connection = dbConnection();
 			//preparedStatement = connection.prepareStatement("SELECT * FROM learnedcourses WHERE courses = ?");
-			psInsert = connection.prepareStatement("SELECT DISTINCT indexcards FROM learnedcourses WHERE courses = '"+course_name+"' ");
+			psInsert = connection.prepareStatement("SELECT DISTINCT indexcards FROM learnedcourses WHERE courses = '"+course_name+"' AND holder = '"+Global.userid+"'");
+			resultSet = psInsert.executeQuery();
+			while(resultSet.next()) {
+				//temp_learned.learned_indexs.add(resultSet.getString(1));
+				index_cardlist.add(resultSet.getString(1));
+			}
+			
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			if(connection != null) {
+				try {
+					connection.close();
+					
+				}catch(SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if(resultSet != null) {
+				try {
+					resultSet.close();
+					
+				}catch(SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if(psInsert != null) {
+				try {
+					psInsert.close();
+					
+				}catch(SQLException e) {
+					e.printStackTrace();
+				}
+			}
+
+			
+		}
+
+		//System.out.println(index_cardlist);
+		
+		
+		return index_cardlist;
+	}
+	
+	
+	/**
+	 * The function took the course name and find in the database
+	 * and return the ObservableList
+	 * 
+	 * @param  course, index card
+	 * @return index cards as ObservableList type
+	 */
+	public static ObservableList getunLearnedIndexCard(String course_name) {
+		//System.out.println(course_name);
+		ObservableList index_cardlist = FXCollections.observableArrayList();
+
+		Connection connection = dbConnection();
+		PreparedStatement psInsert = null;
+
+		ResultSet resultSet = null;
+				
+		try {
+			connection = dbConnection();
+			//preparedStatement = connection.prepareStatement("SELECT * FROM learnedcourses WHERE courses = ?");
+			psInsert = connection.prepareStatement("SELECT DISTINCT indexcards FROM unlearnedcourses WHERE courses = '"+course_name+"' AND holder = '"+Global.userid+"'");
 			resultSet = psInsert.executeQuery();
 			while(resultSet.next()) {
 				//temp_learned.learned_indexs.add(resultSet.getString(1));
@@ -1705,28 +1833,37 @@ public class DatabaseUtils {
 		Connection connection = null;
 
 		PreparedStatement psInsert = null;
+		PreparedStatement psInsert1 = null;
+
 		PreparedStatement psCheckUserExists = null;
 		ResultSet resultSet = null;	
 		
 		try {
 			connection = dbConnection();
 			System.out.println("open learned index card database!");
-			psCheckUserExists = connection.prepareStatement("SELECT * FROM learnedcourses WHERE courses = ? AND indexcards = ?");
+			psCheckUserExists = connection.prepareStatement("SELECT * FROM learnedcourses WHERE courses = ? AND indexcards = ? AND holder = ?");
 			psCheckUserExists.setString(1,courses);
 			psCheckUserExists.setString(2,index_cards);
+			psCheckUserExists.setInt(3, Global.userid);
 			
 			resultSet = psCheckUserExists.executeQuery();
 			
 			if (resultSet.isBeforeFirst()) {
 				System.out.println("It already save in database");
 			}else {
-				psInsert = connection.prepareStatement("INSERT INTO learnedcourses (courses,indexcards) VALUES (?,?)");
+				psInsert = connection.prepareStatement("INSERT INTO learnedcourses (courses,indexcards,holder) VALUES (?,?,?)");
 				psInsert.setString(1, courses);
 				psInsert.setString(2, index_cards);
+				psInsert.setInt(3, Global.userid);
 
 				psInsert.executeUpdate();
 				
 				connection.close();
+				connection = dbConnection();
+				psInsert1 = connection.prepareStatement("DELETE FROM unlearnedcourses WHERE indexcards = '"+index_cards+"' AND holder = '"+Global.userid+"' ");
+				
+				psInsert1.executeUpdate();
+				
 				
 			}
 		}catch(SQLException e) {
@@ -1765,6 +1902,7 @@ public class DatabaseUtils {
 		
 	}
 	
+	
 	/**
 	 * The function no paramenter receviced 
 	 * no return, the function purpose open the
@@ -1781,7 +1919,7 @@ public class DatabaseUtils {
 		try {
 			connection = dbConnection();
 			//preparedStatement = connection.prepareStatement("SELECT * FROM learnedcourses WHERE courses = ?");
-			preparedStatement = connection.prepareStatement("SELECT courses FROM learnedcourses");
+			preparedStatement = connection.prepareStatement("SELECT courses FROM learnedcourses WHERE holder = '"+Global.userid+"'");
 
 			resultSet = preparedStatement.executeQuery();
 			
@@ -1794,7 +1932,62 @@ public class DatabaseUtils {
 			}
 			
 			System.out.println(temp_learned.learned_courses);
-			System.out.println("zhe li");
+			//System.out.println("zhe li");
+		}catch(SQLException e) {
+			
+		}finally {
+			if(resultSet != null) {
+				try {
+					resultSet.close();
+					
+				}catch(SQLException e) {
+					e.printStackTrace();
+				}
+			}
+
+			if (connection != null) {
+				try { 
+					connection.close();
+				} catch(SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			
+		}
+		
+	}
+	
+
+	/**
+	 * The function no paramenter receviced 
+	 * no return, the function purpose open the
+	 * database, and stored the learned index cards
+	 * 
+	 * @param  course, index card
+	 * @return None, nothing
+	 */
+	public static void load_unlearned_index_cards() {
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet =null;
+		int i = 0;
+		try {
+			connection = dbConnection();
+			//preparedStatement = connection.prepareStatement("SELECT * FROM learnedcourses WHERE courses = ?");
+			preparedStatement = connection.prepareStatement("SELECT courses FROM unlearnedcourses WHERE holder = '"+Global.userid+"'");
+
+			resultSet = preparedStatement.executeQuery();
+			
+			while(resultSet.next()) {
+				//temp_learned.learned_courses.add(resultSet.getString(1));
+				if (!Global.unlearned_courses.contains(resultSet.getString(1))) {
+					Global.unlearned_courses.add(resultSet.getString(1));
+
+				}
+			}
+			
+			System.out.println(Global.unlearned_courses);
+			//System.out.println("zhe li");
 		}catch(SQLException e) {
 			
 		}finally {
@@ -1822,23 +2015,28 @@ public class DatabaseUtils {
 
 	
 	
-	
 	public static void test(String user) {
 		Connection connection = null;
 
 		PreparedStatement psInsert = null;
+		PreparedStatement create = null;
 
 		PreparedStatement psCheckUserExists = null;
 		ResultSet resultSet = null;
 		
 		try {
 			connection = dbConnection();
-			psCheckUserExists = connection.prepareStatement("SELECT * FROM courses");
+			//psCheckUserExists = connection.prepareStatement("SELECT users.username FROM users INNER JOIN coursesname2 on userid = courses_holder where courses_holder =3 ");
+			//psCheckUserExists = connection.prepareStatement("SELECT courses FROM coursesname2 where courses_holder = 5");
+			//psCheckUserExists = connection.prepareStatement("SELECT users.username FROM users INNER JOIN cs1512 on userid = holder where holder = 5 ");
+			psCheckUserExists = connection.prepareStatement("SELECT indexcard FROM cs1513 where holder = 1");
+			//psCheckUserExists = connection.prepareStatement("CREATE TABLE cs888 AS SELECT * FROM cs999");
 			resultSet = psCheckUserExists.executeQuery();
-			
-			while(resultSet.next()) {
-				//System.out.println(resultSet.getString(1));
-			}
+			//create = connection.prepareStatement("CREATE TABLE cs888 AS SELECT * FROM cs999");
+			//create.executeUpdate();
+//			while(resultSet.next()) {
+//				//System.out.println(resultSet.getString(1));
+//			}
 			
 		}catch(SQLException e ) {
 			e.printStackTrace();
@@ -1855,6 +2053,14 @@ public class DatabaseUtils {
 			if (psCheckUserExists != null) {
 				try {
 					psCheckUserExists.close();
+				} catch ( SQLException e) {
+					e.printStackTrace();
+				}
+				
+			}
+			if (create != null) {
+				try {
+					create.close();
 				} catch ( SQLException e) {
 					e.printStackTrace();
 				}

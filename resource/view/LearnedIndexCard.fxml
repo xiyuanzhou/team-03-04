@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.paint.Color?>
@@ -35,19 +36,29 @@
                   </LinearGradient>
                </fill>
             </Text>
-            <Text layoutX="64.0" layoutY="123.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Courses">
+            <Text layoutX="23.0" layoutY="121.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Courses">
                <font>
                   <Font size="16.0" />
                </font>
             </Text>
             <Button fx:id="button_back" layoutX="523.0" layoutY="360.0" mnemonicParsing="false" text="Go Back" />
-            <ListView fx:id="list_learned" layoutX="168.0" layoutY="138.0" prefHeight="200.0" prefWidth="418.0" />
-            <Text layoutX="349.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Learned">
+            <ListView fx:id="list_learned" layoutX="105.0" layoutY="138.0" prefHeight="200.0" prefWidth="170.0" />
+            <Text layoutX="162.0" layoutY="120.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Learned">
                <font>
                   <Font size="16.0" />
                </font>
             </Text>
-            <ListView fx:id="list_courses" layoutX="41.0" layoutY="138.0" prefHeight="200.0" prefWidth="101.0" />
+            <ListView fx:id="list_courses" layoutX="14.0" layoutY="138.0" prefHeight="200.0" prefWidth="74.0" />
+            <TextArea fx:id="ta_showviews" editable="false" layoutX="285.0" layoutY="138.0" prefHeight="200.0" prefWidth="301.0" style="-fx-prompt-text-fill: red; -fx-background-color: black; -fx-border-color: black;" wrapText="true" />
+            <Text fill="#36725b" focusTraversable="true" fontSmoothingType="LCD" layoutX="405.0" layoutY="119.0" stroke="#943a3a" strokeType="OUTSIDE" strokeWidth="0.0" text="Show View" underline="true">
+               <font>
+                  <Font size="16.0" />
+               </font></Text>
+            <Text fill="#f21919" layoutX="196.0" layoutY="365.0" strokeType="OUTSIDE" strokeWidth="0.0" text="(All need to do was Click the text)">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Text>
          </children>
       </AnchorPane>
    </center>

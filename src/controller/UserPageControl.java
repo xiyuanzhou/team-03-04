@@ -100,6 +100,9 @@ public class UserPageControl implements Initializable{
     @FXML
     private Button button_learned;
     
+    @FXML
+    private Button button_unlearned;
+    
     
     ObservableList list = FXCollections.observableArrayList();
     
@@ -413,6 +416,25 @@ public class UserPageControl implements Initializable{
 			}
 			
 		});
+		
+		button_unlearned.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				DatabaseUtils.load_unlearned_index_cards();
+				
+
+				try {
+					SceneChangingUtils.unlearnedindexcardScene(arg0,"Learned Index Cards", "view/UnlearnedIndexCard.fxml",DatabaseUtils.Global.unlearned_courses);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
+		});
+		
 		
 
 		

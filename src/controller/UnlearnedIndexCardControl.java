@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import application.DatabaseUtils;
-import application.IndexCard;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -16,31 +15,28 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
-import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextArea;
 
-public class LearnedIndexCardControl implements Initializable{
+public class UnlearnedIndexCardControl implements Initializable{
 
     @FXML
-    private Button button_back;
+    private Button button_goback;
 
     @FXML
     private ListView<String> list_courses;
 
     @FXML
-    private ListView<String> list_learned;
-    
+    private ListView<String> list_indexs;
+
     @FXML
     private TextArea ta_showviews;
 
-    
     ObservableList list = FXCollections.observableArrayList();
-    
-	
+
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// TODO Auto-generated method stub
-		button_back.setOnAction(new EventHandler<ActionEvent>() {
+		button_goback.setOnAction(new EventHandler<ActionEvent>() {
 			
 			@Override
 			public void handle(ActionEvent event) {
@@ -56,25 +52,23 @@ public class LearnedIndexCardControl implements Initializable{
 		        // Your action here
 		        //System.out.println("Selected item: " + newValue);
 		    	ObservableList list_result = FXCollections.observableArrayList();
-		    	list_result = DatabaseUtils.getLearnedIndexCard(newValue);
+		    	list_result = DatabaseUtils.getunLearnedIndexCard(newValue);
 		    	//list_learned.getItems().addAll(list_result);
 
-		    	list_learned.setItems(list_result);
+		    	list_indexs.setItems(list_result);
 		    	System.out.println(list_result);
 		    	
-		    	list_learned.setOnMousePressed(e ->{
-					ObservableList<String> temp = list_learned.getSelectionModel().getSelectedItems();
+		    	list_indexs.setOnMousePressed(e ->{
+					ObservableList<String> temp = list_indexs.getSelectionModel().getSelectedItems();
 					ta_showviews.setPromptText(temp.get(0).toString());
 
 		    	});
 		    	//System.out.println("learned list");
 		    }
 		});
-		
 	}
 	
-	
-	public void learned_data(ArrayList<String> courses) {
+	public void unlearned_data(ArrayList<String> courses) {
 		//String[] list2 = {"cmpe1","cmpe2","cmpe3","cmpe4"};
 		list.removeAll(list);
 		
@@ -89,4 +83,5 @@ public class LearnedIndexCardControl implements Initializable{
 		
 	}
 
+    
 }

@@ -106,7 +106,34 @@
                </effect></TextArea>
             <Text fill="#f21515" layoutX="142.0" layoutY="155.0" strokeType="OUTSIDE" strokeWidth="0.0" text="(Choose course and click Generate button)" wrappingWidth="73.44482421875" />
             <Text fill="#da2121" layoutX="267.0" layoutY="118.0" strokeType="OUTSIDE" strokeWidth="0.0" text="(Click Indexcard show more content)" />
-            <Button fx:id="button_learned" layoutX="653.0" layoutY="455.0" mnemonicParsing="false" style="-fx-background-color: WHITE; -fx-border-color: red; -fx-text-fill: red; -fx-border-radius: 5px;" text="Learned Index Cards" />
+            <Button fx:id="button_learned" layoutX="587.0" layoutY="427.0" mnemonicParsing="false" style="-fx-background-color: WHITE; -fx-border-color: red; -fx-text-fill: red; -fx-border-radius: 5px;" text="Learned Index Cards" />
+            <Button fx:id="button_unlearned" layoutX="581.0" layoutY="460.0" mnemonicParsing="false" style="-fx-background-color: white; -fx-border-color: red; -fx-border-radius: 5px; -fx-text-fill: red;" text="Unlearned Index Cards" />
+            <Text layoutX="625.0" layoutY="414.0" strokeType="OUTSIDE" strokeWidth="0.0" text="(Review)">
+               <fill>
+                  <LinearGradient endX="1.0" endY="1.0">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color red="0.75" green="0.0625" blue="0.0625" />
+                           </color>
+                        </Stop>
+                        <Stop offset="0.006711409395973154">
+                           <color>
+                              <Color red="0.75" green="0.0625" blue="0.0625" />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color red="0.12975145876407623" green="0.1833820641040802" blue="0.9342105388641357" />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </LinearGradient>
+               </fill>
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Text>
          </children>
       </AnchorPane>
    </center>

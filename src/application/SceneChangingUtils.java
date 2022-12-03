@@ -16,6 +16,7 @@ import controller.ModifyAccountControl;
 import controller.ModifyIndexCardControl;
 import controller.ResetPasswordControl2;
 import controller.SignupPageControl;
+import controller.UnlearnedIndexCardControl;
 import controller.UserPageControl;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -273,4 +274,24 @@ public class SceneChangingUtils {
 		stage.centerOnScreen();
 	}
 
+	
+	public static void unlearnedindexcardScene(ActionEvent e, String title, String file,ArrayList<String> courses) throws IOException{
+		
+		// TODO Auto-generated method stub
+		Parent root = null;
+		FXMLLoader loader = new FXMLLoader(SceneChangingUtils.class.getClassLoader().getResource(file));
+		root = loader.load();
+		
+		UnlearnedIndexCardControl unlearnedindexcardcontrol = loader.getController();
+		unlearnedindexcardcontrol.unlearned_data(courses);
+		
+		Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
+		Scene scene = new Scene(root);
+		stage.setTitle(title);
+		stage.setScene(scene);
+		stage.show();
+		stage.centerOnScreen();
+	}
+
+	
 }
