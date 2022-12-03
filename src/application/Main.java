@@ -17,7 +17,7 @@ import javafx.scene.control.*;
 
 /**
  * Index Card Manager 
- * @Verion 0.9
+ * @Verion 1.0 
  * @author Xiyuan Zhou
  * @author Honghao Ma
  * @author Mengzhen Zhao
@@ -53,6 +53,8 @@ public class Main extends Application {
 	public static void main(String[] args) {
 		
 		//launch(args);
+		
+		DatabaseUtils.test(null);
 
 		Connection connection = null;
 		
