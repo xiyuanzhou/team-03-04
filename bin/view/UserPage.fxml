@@ -91,7 +91,6 @@
                </font></Button>
             <Button fx:id="button_modify" layoutX="320.0" layoutY="428.0" mnemonicParsing="false" style="-fx-background-color: white; -fx-text-fill: purple; -fx-border-color: blue;" text="Modify Cards" />
             <Button fx:id="button_deleteindexcard" layoutX="306.0" layoutY="460.0" mnemonicParsing="false" style="-fx-background-color: white; -fx-text-fill: purple; -fx-border-color: blue;" text="Delete Index Cards" />
-            <Text fill="#d73f21" layoutX="185.0" layoutY="413.0" strokeType="OUTSIDE" strokeWidth="0.0" text="(Select courses and index cards before click the BUTTOM buttons)" />
             <TableView fx:id="my_tableview" layoutX="231.0" layoutY="129.0" prefHeight="240.0" prefWidth="270.0">
               <columns>
                 <TableColumn fx:id="col_indexcard" minWidth="100.0" prefWidth="160.0" text="Indexcard" />
@@ -104,8 +103,6 @@
                <effect>
                   <ColorAdjust />
                </effect></TextArea>
-            <Text fill="#f21515" layoutX="142.0" layoutY="155.0" strokeType="OUTSIDE" strokeWidth="0.0" text="(Choose course and click Generate button)" wrappingWidth="73.44482421875" />
-            <Text fill="#da2121" layoutX="267.0" layoutY="118.0" strokeType="OUTSIDE" strokeWidth="0.0" text="(Click Indexcard show more content)" />
             <Button fx:id="button_learned" layoutX="587.0" layoutY="427.0" mnemonicParsing="false" style="-fx-background-color: WHITE; -fx-border-color: red; -fx-text-fill: red; -fx-border-radius: 5px;" text="Learned Index Cards" />
             <Button fx:id="button_unlearned" layoutX="581.0" layoutY="460.0" mnemonicParsing="false" style="-fx-background-color: white; -fx-border-color: red; -fx-border-radius: 5px; -fx-text-fill: red;" text="Unlearned Index Cards" />
             <Text layoutX="625.0" layoutY="414.0" strokeType="OUTSIDE" strokeWidth="0.0" text="(Review)">

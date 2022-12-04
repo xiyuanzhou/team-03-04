@@ -119,7 +119,8 @@ public class DatabaseUtils {
 				root = loader.load();
 				UserPageControl userPageControl = loader.getController();
 				userPageControl.setUserInformation(username);
-				
+				userPageControl.loadData(Global.hold_courses);
+
 			}catch (IOException e){
 				e.printStackTrace();
 			}
@@ -331,7 +332,7 @@ public class DatabaseUtils {
 	/**
 	 * By signing up for user, passing value to funtion and access into database sqlite
 	 * 
-	 * @param event, username, password, email
+	 * @param event, username, password, email, secret questions and answer
 	 * @return nothing
 	 */
 	public static void signUpUser(ActionEvent event, String username, String password, String email,String secretquestion,String secretquestion_ans) throws ClassNotFoundException {
@@ -715,7 +716,7 @@ public class DatabaseUtils {
 	
 	/**
 	 * Delete course function by user enter course name and search database for the informatin
-	 * check if found in db
+	 * check if found in database
 	 * 
 	 * @param  event,  coursename,  password, email
 	 * @return nothing
@@ -870,7 +871,7 @@ public class DatabaseUtils {
 				psInsert = connection.prepareStatement("UPDATE allcourses set courses = '"+rename+"' where courses = '"+coursename+"'");
 				psInsert.executeUpdate();
 				
-				whole_list = connection.prepareStatement("SELECT * FROM courses");//
+				whole_list = connection.prepareStatement("SELECT courses FROM allcourses WHERE courses_holder = '"+Global.userid+"'");//
 				resultList = whole_list.executeQuery();//
 				Global.hold_courses = new ArrayList<String>();
 				while (resultList.next()) {
@@ -1700,7 +1701,7 @@ public class DatabaseUtils {
 	 * and return the ObservableList
 	 * 
 	 * @param  course, index card
-	 * @return index cards as ObservableList type
+	 * @return learned index cards as ObservableList type
 	 */
 	public static ObservableList getLearnedIndexCard(String course_name) {
 		//System.out.println(course_name);
@@ -1764,7 +1765,7 @@ public class DatabaseUtils {
 	 * and return the ObservableList
 	 * 
 	 * @param  course, index card
-	 * @return index cards as ObservableList type
+	 * @return unlearned index cards as ObservableList type
 	 */
 	public static ObservableList getunLearnedIndexCard(String course_name) {
 		//System.out.println(course_name);
@@ -1825,6 +1826,7 @@ public class DatabaseUtils {
 	/**
 	 * The function recvied coursename and index cards
 	 * and return the ObservableList
+	 * open database and take un learned list and save it
 	 * 
 	 * @param  course, index card
 	 * @return None, nothing
@@ -2014,7 +2016,12 @@ public class DatabaseUtils {
 	
 
 	
-	
+	/**
+	 * this function just testing random things for developer 
+	 * 
+	 * @param  depends
+	 * @return None, nothing
+	 */
 	public static void test(String user) {
 		Connection connection = null;
 
