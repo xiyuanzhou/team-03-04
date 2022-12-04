@@ -54,21 +54,21 @@ public class Main extends Application {
 		
 		//launch(args);
 		
-		DatabaseUtils.test(null);
-
-		Connection connection = null;
-		
-		try {
-			connection = DatabaseUtils.dbConnection();
-			Statement stmt = connection.createStatement();
-			String sql = "DELETE FROM learnedcourses";
-			stmt.executeUpdate(sql);
-			
-			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		DatabaseUtils.test(null);
+//
+//		Connection connection = null;
+//		
+//		try {
+//			connection = DatabaseUtils.dbConnection();
+//			Statement stmt = connection.createStatement();
+//			String sql = "DELETE FROM learnedcourses";
+//			stmt.executeUpdate(sql);
+//			
+//			
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 
 		launch(args);
 	}
